@@ -1,0 +1,25 @@
+% reconstruction_flowchart.tikz
+% Styles
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, align=center]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, align=center]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+% Flowchart
+\begin{tikzpicture}[node distance=2.5cm]
+
+% Define nodes
+\node (start) [startstop] {Given: Reconstruction Method};
+\node (simplify) [process, below of=start] {{\bf Simplify}\\Choose a simplification};
+\node (characterise) [process, below of=simplify] {{\bf Characterise}\\Characterise all conditions when\\decreasing sample size can\\decrease MSE \\ under this simplification};
+\node (existence) [process, below of=characterise] {{\bf Existence}\\Show these conditions\\actually happen};
+\node (asymptotics) [process, below of=existence] {{\bf Asymptotics}\\Study these conditions as $N \to \infty$\\to prove they may happen\\on large graphs};
+\node (end) [startstop, below of=asymptotics] {Complete Analysis};
+
+% Draw arrows
+\draw [arrow] (start) -- (simplify);
+\draw [arrow] (simplify) -- (characterise);
+\draw [arrow] (characterise) -- (existence);
+\draw [arrow] (existence) -- (asymptotics);
+\draw [arrow] (asymptotics) -- (end);
+
+\end{tikzpicture}

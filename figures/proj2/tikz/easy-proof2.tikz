@@ -1,0 +1,46 @@
+\begin{tikzpicture}[scale=0.8]
+% Define constants
+\def\rhovalue{0.6}
+\pgfmathsetmacro{\slope}{\rhovalue/sqrt(1-\rhovalue^2)}
+\def\endX{5}
+\pgfmathsetmacro{\endZ}{\slope*\endX}
+
+% Draw axes
+\draw[->] (0,-3) -- (0,3) node[left] {$Z'$};
+\draw[->] (-4,0) -- (4,0) node[below right] {$X'$};
+
+% Draw the line Z' = rho*X'/sqrt(1-rho^2) constrained within axis bounds
+\pgfmathsetmacro{\leftX}{-3/\slope}  % X value where line reaches Z' = -3
+\pgfmathsetmacro{\rightX}{3/\slope}  % X value where line reaches Z' = 3
+\pgfmathsetmacro{\actualLeftX}{max(-3.5, \leftX)}
+\pgfmathsetmacro{\actualRightX}{min(3.5, \rightX)}
+\pgfmathsetmacro{\actualLeftZ}{\slope*\actualLeftX}
+\pgfmathsetmacro{\actualRightZ}{\slope*\actualRightX}
+\draw[thick] (\actualLeftX, \actualLeftZ) -- (\actualRightX, \actualRightZ) node[above right] {$Z' = \frac{\rho X'}{\sqrt{1-\rho^2}}$};
+
+% Coordinates for angle measurement
+\coordinate (O) at (0,0);
+\coordinate (Zaxis) at (0,1);
+\coordinate (LinePoint) at (1, \slope);
+\coordinate (NegZaxis) at (0,-1);
+\coordinate (NegLinePoint) at (-1, -\slope);
+
+
+% Draw angle arc between Z' axis and the line
+\pic[
+    draw,
+    angle radius=25pt,
+    angle eccentricity=0.75,
+    preaction={draw=white, line width=6pt},
+    "$\theta$"
+] {angle = LinePoint--O--Zaxis};
+
+\pic[
+    draw,
+    angle radius=25pt,
+    angle eccentricity=0.75,
+    preaction={draw=white, line width=6pt},
+    "$\theta$"
+] {angle = NegLinePoint--O--NegZaxis};
+
+\end{tikzpicture}

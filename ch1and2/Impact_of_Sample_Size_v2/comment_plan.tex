@@ -1,0 +1,432 @@
+%!TEX spellcheck = en-US
+%\documentclass[journal]{IEEEtran}
+\documentclass[11pt,onecolumn,journal]{IEEEtran}
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[journal]{../sty/IEEEtran}
+
+
+\usepackage{graphicx, amssymb, amsmath,algorithm}
+\graphicspath{{./fig/}}
+\DeclareGraphicsExtensions{.pdf,.jpg,.jpeg,.png}
+\usepackage{latexsym}
+\usepackage{epsfig}
+\usepackage{subfig}
+\usepackage{amsfonts}
+\usepackage{amsopn}
+\usepackage{caption}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}} \newcommand{\comment}[1]{}
+% \newcommand{\min}{\operatornamewithlimits{min}} \newcommand{\comment}[1]{}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[normalem]{ulem}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\newcommand{\mike}[1]{\textcolor{Green}{\textsc{Mike}: #1}}
+\newcommand{\xd}[1]{\textcolor{Red}{\textsc{Xiaowen}: #1}}
+\newcommand{\pf}[1]{\textcolor{blue}{#1}}
+\newcommand{\dt}[1]{\textcolor{Magenta}{\textsc{Dorina}: #1}}
+
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
+\hspace{-2.5pt}}
+\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
+
+
+\begin{document}
+
+%\maketitle
+%\section*{General Comments Regarding the Reviews}
+\begin{center}
+\large RESPONSES TO REVIEWERS' COMMENTS
+\end{center}
+We would like to thank the Editor and the reviewers for their careful reading of our paper, and the useful comments and encouraging feedback that have undoubtedly helped improve the quality of the manuscript. We have carefully revised the manuscript following the suggestions of the editor and the reviewers. %All the changes are highlighted in blue in the revised paper.
+
+\section*{Responses to Reviewer \#1}
+
+\textbf{Comment}
+\begin{quote}
+1. Can you be more specific about what a $k$-bandlimited Gaussian signal is?
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    %\item[\done] test
+    \item Make sure this term is explicitly defined
+\end{todolist}
+
+\textbf{Comment}
+\begin{quote}
+2. Can the discussion be applied to other statistical models for signal and noise?
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}    
+\item Move Appendix generalizing signal model to the top
+\item Maybe add discussion about generality of noise model
+\end{todolist}
+\textbf{Comment}
+\begin{quote}
+3. I do not fully understand Corollary 2.1 and 2.2. The quantity $\tau_{LS\_bl}$ is assumed to be 1 (in (19)). Then why cannot we just set the condition to be $\text{SNR}<=1$?
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item Answer affirmatively
+    \item Reshape Corr in light of this
+\end{todolist}
+\textbf{Comment}
+\begin{quote}
+4. I do not like the results in Sec III E - F. For example, the statement of Theorem 3 is a complete mess. It is hard to interpret various quantities defined in the theorem. If they are indeed necessary, then the authors need to explain clearly the intuitions and give numerical samples to show what they look like.
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item Simplify as decided
+    \item Sensitivity pictures
+\end{todolist}
+
+\textbf{Comment}
+\begin{quote}
+5. The main focus is on removing a single node. How about removing multiple nodes at the same time?
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item Make explicit what our statement says about removing multiple nodes in text
+\end{todolist}
+
+
+\textbf{Comment}
+\begin{quote}
+6. Does the theory give a practical sampling algorithm? Is it true that one should just same exactly $k$ nodes if the size of bandwidth is $k$ (for small MSE)?
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item ??????
+\end{todolist}
+
+\section*{Responses to Reviewer \#2}
+\textbf{Comment}
+\begin{quote}
+1. The signal model is very specific and unusual. They consider k-bandlimited signals with covariance matrix equal to a projector matrix of rank K. This projector matrix corresponds to the k-dimensional bandlimited subspace. While this is indeed a bandlimited model, this specific choice is unusual and not common in the literature. It feels very artificial and only chosen due to mathematical tractability, but it is not well justified.  
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item Move Appendix around signal model to the top
+\end{todolist}
+
+\textbf{Comment}
+\begin{quote}
+2. Interpolation methods: The authors choose two linear interpolation methods, which are evaluated using MSE.  The interpolation methods to be studied in this paper (table I) are linear. It is known that for Gaussians signals with Gaussian noise (as in this paper’s model), the best reconstruction in the MSE sense to reconstruct x from y is linear and known in closed form (conditional expectation).  Since the error analysis is done using the MSE metric (last equation in Section II), I am surprised the analysis of this paper does not incorporate such a benchmark, thus the analysis is missing a major piece of related work.
+\end{quote}
+\textbf{Response}
+\begin{todolist}
+    \item Copy 'optimal bayesian reconstruction' to linear methods section, rephrase in terms used here to make explicit.
+\end{todolist}
+
+\textbf{Comment}
+\begin{quote}
+3. Beyond Gaussian signals and synthetic data. While it is interesting to understand the relationships between SNR and sampling set size, the paper does not offer any application or use case of this work. As is, the paper is just a detailed theoretical analysis of a signal/noise model, using two carefully chosen reconstruction methods, that depend on the signal model, with all experiments performed on simulated data using random Gaussian signals,  reconstructions algorithms that know the statistics of the data, and synthetic random graphs.  The paper shows no evidence that these results can be useful in any non-synthetic scenario.
+I encourage the authors to consider either experiments with real data/graphs, and/or applications to sampling set selection,  for example you could test the effectiveness of early stop in greedy sampling algorithms in low SNR regimes, as suggested in the conclusions.
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item Non-synthetic experiments on graphs
+    \item test early stopping???
+\end{todolist}
+
+\textbf{Comment}
+\begin{quote}
+4. Organization of main results:  It is hard to connect the contributions (1,2 and 3) stated in the introduction to the main results. Section III is hard to follow. It is not clear what are the most important results, and what is the significance. I suggest spending more time on organizing section III, and emphasizing the most important results.
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item Planned rewrite
+    \item Make clear the most important results
+\end{todolist}
+
+\textbf{Comment}
+\begin{quote}
+Technical comment regarding equation (12) and (15).
+
+The LS interpolator, as well as many other reconstruction algorithms, is sample consistent, that is, the reconstructed signal is equal to the original signal, when restricted to the sampling set.  For this paper, the LS reconstruction is unbiased on the sampling set S, and thus only the reconstructed signal in the complement of S will contribute to the error. This would imply that the variance and bias formulas from (12) can be simplified for this reconstruction, which may affect subsequent results such as (15), and others in section III. Please clarify.
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item Make explicit that we consider LS reconstruction as restriction + reconstruction so is not unbiased
+\end{todolist}
+
+\textbf{Comment}
+\begin{quote}
+Other minor comments
+
+- A few equations in the paper do not have numbers, please add numbers to all of them.  I do not see a reason to not number all equations.
+- The formula from equation (12) should be available in a book, you may save some space by removing the derivation and adding a citation.
+- In the experiments be clearer as to which sampling algorithms were used, and please include references.
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item Number all equations
+    \item[\done] find citation for bias-variance
+    \item Add references for sampling algorithms.
+\end{todolist}
+
+\section*{Responses to Reviewer \#3}
+\textbf{Comment}
+\begin{quote}
+    This paper studied a novel perspective on the sampling and recovery of graph signals with limited bandwidth. Specifically, the paper investigates scenarios where a reduction in the number of samples can paradoxically lead to improved recovery performance. This is an intriguing research point. In conclusion, they investigate conditions to support this phenomena for unbiased LS and biased GLR reconstruction where noise model is bandlimited or full-band.  It suggests for LS recovery that below a certain signal-to-noise ratio threshold and when the sampling number is less than the bandwidth, performance can be improved with fewer samples. For GLR, they focus on the simplification for comparing full / almost full observation with partial observations, which indicates fewer samples will have better performance compared to selecting all samples if SNR is less than some threshold.
+\end{quote}
+\textbf{Response}
+N/A, description.
+
+\textbf{Comment}
+\begin{quote}
+ However, my major concern about this paper is about its value to guide practical design of sampling and reconstruction methods of BL graph signals. Although pure theoretical study is very important, its close connection for algorithm development is also very important to me.  Therefore, before supporting its publication on TSP, the top journal in SP society, we still need the authors to solve my following concerns:
+ \end{quote}
+ 
+\textbf{Response}
+Answer following Qs
+
+\textbf{Comment}
+\begin{quote}
+(1)While the research focus is unique, I must voice my skepticism regarding the practical utility of the outcomes. It would be beneficial to delve deeper into the implications of these findings in real-world applications, a point which I hope the authors emphasize at the very beginning of the article. 
+
+Why is the focus of this paper, to find condition for sampling fewer to perform better, rational and important? For thos existing conditions, for instance, 
+\begin{enumerate}
+    \item Under what circumstances does the scenario of having fewer samples than the bandwidth arise? It is obvious not allowed / preferred for sampling BL graph signals. 
+    \item In which scenarios is the signal-to-noise ratio (SNR) below -10dB for graph signals?
+\end{enumerate}
+Additionally, I have the following queries: 
+" If the performance bound is the primary concern, with the goal of minimizing the number of samples used, would it not be more effective to adopt different recovery methods for different SNR levels? Of course, this depends on what the performance bound entails. However, the authors suggest that we should find fewer samples to achieve better mean squared error (MSE) performance. This scenario is only realized when M
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item Give examples (finance?) of when SNR is that low
+    \item 
+\end{todolist}
+
+\textbf{Comment}
+\begin{quote}
+(2)The authors have examined two types of noise, one of which is full-band noise, characterized by being completely independent and identically distributed. This category of noise is frequently encountered in prior literature and serves as the primary source of noise for performance comparisons. The other type of noise is bandwidth-limited noise. In what scenarios in the graph signal processing field, does this type of noise manifest? The authors are required to furnish sufficient explanations of practical applications, as well as reference literature that elucidates the significance of this type of noise.
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+\item Motivate bandlimited noise better
+    
+\end{todolist}
+
+\textbf{Comment}
+\begin{quote}
+(3)For the proof of Corollary 1.1, equality (24) holds when 0, so I suggest to put this condition into (24) rather than discuss it only in detailed proof procedure. In other words, current version of Corollary 1.1 is not correct without discussing the value of  in the main text. Further, -1 only appears when deleting one sample will reduce the rank of matrix $U_{S,K}$ by one. This property of is very important to understand Table II, Corollary 1.1 and Theorem 2, so I would suggest to discuss the property into main context.
+\end{quote}
+
+\textbf{Response}
+\begin{todolist}
+    \item Discuss this
+\end{todolist}
+
+\textbf{Comment}
+\begin{quote}
+(4)Section III-A outlines the four steps required to achieve the theoretical proof, and the authors subsequently apply these steps to various recovery methods and noise models in Sections III-C, D, E, and F. I suggest that, in different scenarios, the four steps should be demonstrated in a more concrete manner in each subsection, potentially using flowcharts to facilitate understanding for the readers. For instance, one could start by illustrating the constraints on least squares (LS) recovery and greedy sampling, and then proceed to demonstrate how, by constraining the signal-to-noise ratio (SNR) values and the number of samples, the desired conclusions (fewer samples, better performance) can be reached. This flowchart, combined with the series of proof conclusions proposed by the authors, would aid in the overall comprehension of the article. It must be acknowledged that, from a theoretical proof standpoint, the article's proofs are correct; however, the interconnections between the proofs need to be better demonstrated.
+
+\end{quote}
+
+\textbf{Response}
+
+
+\section*{Responses to Reviewer \#4}
+
+
+\textbf{Comment}
+\begin{quote}
+Sec I
+The introduction provides a clear overview of the paper’s aim: reconstructing signals on graphs from noisy observations and exploring how sample size affects reconstruction error. It effectively identifies a gap in the existing literature concerning the role of sample size in determining mean squared error (MSE) under noisy conditions, framing the paper’s contributions as a significant advance. However, the exposition would benefit from enhanced clarity, smoother logical transitions, and greater accessibility.
+
+In the second paragraph, the sentence beginning with “While valuable…” needs more precision. In the third paragraph, the phrase “full sample size range” is ambiguous. It is unclear whether it refers to sampling under a limited number of samples or a fixed sample size, and because these represent distinct mathematical scenarios, clarifying this distinction would avoid confusion. Moreover, although the paragraph references different challenges (reconstruction method, noise intensity, sample size), it remains unclear what the primary challenge is, so readers may struggle to follow a coherent narrative.
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+
+In the fourth paragraph, where the authors mention “we fill the gap,” the specific gap being addressed should be stated more explicitly. Consider including a concise table that summarizes prior studies and identifies open questions, which would help locate this work within the broader research context. In the same paragraph, the sentence that begins “which is important for the application” would be more effective earlier on, to keep the spotlight on the paper’s achievements. The sentence “This breadth is...” also requires refinement for clarity and precision.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+The fifth paragraph contains too many distinct ideas in one place; splitting them into more focused paragraphs would sharpen the discussion. Additionally, while terms like $O(N)$ or references to various random graph models are accurate, more intuitive explanations should be provided for readers less familiar with this notation or these models. Explaining why certain graph families are studied and what is gained by reducing the sample size from nearly NN vertices to $O(N)$ would make the content more approachable.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+It would also help to give a brief overview of the paper’s structure at the end of the introduction, guiding readers through the subsequent sections. Notably, one of the most interesting insights is how the paper challenges the common belief that a larger sample size invariably leads to better reconstruction. By illustrating a counterexample in which reducing the number of samples in a certain range can yield improved accuracy, the work offers both theoretical value and practical significance. Emphasizing this finding early on could more effectively underline the paper’s importance and uniqueness.
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+Sec II
+The opening of Section II uses a somewhat conversational tone and phrases like “what we reconstruct” or “how we reconstruct them,” which might obscure the technical depth of the subject. Replacing these casual expressions with more precise, formal language would help establish a suitably scholarly tone.
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+In Section II-A, the authors could offer intuitive definitions of $B$, $K$, $\Pi_{B}$, and $\Pi_{bl(K)}$, even if these concepts already appear in [20]. For instance, clarifying that NN is the set of vertices or that $\Pi_{bl(K)}$ functions as an ideal low-pass filter on the graph would help readers unfamiliar with the reference.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+
+Section II-B introduces an apparent confusion: the paper distinguishes between “approximately bandlimited signals” and “$k$-bandlimited signals with additive observation noise,” yet how these scenarios differ in the literature is not clearly explained. Clarifying why assuming strictly bandlimited signals plus noise is considered more common, and in what sense, would improve the discussion’s coherence. Also, the text “and to the other case as ‘$k$-bandlimited noise’” could be rephrased for readability, as could the sentence beginning with “In the literature,...” which currently contains dense mathematical expressions and minimal punctuation.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+
+In the first paragraph of Section II-C, consider specifying explicitly whether the signals are noisy or clean when referring to “potentially noisy observations.” The LS and GLR equations appear only in Table I, but given their central role, including them in the main text (in addition to the table) could help readers follow the argument. Also, in the GLR formulation, confirm that the first term in the objective function is squared if that is indeed the intended mathematical definition. Moreover, the columns labeled “Bias” and “Needs” in Table I should be integrated into the text so that their relevance becomes evident. Ensuring the table is visually aligned would further improve readability, and placing it near its first mention accords with standard IEEE formatting guidelines.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+Later in the same subsection, the authors note that GLR is “slightly mismatched” to the assumed signal model. Providing a stronger rationale for using GLR in this context—even if it’s not theoretically perfect—would clarify why it is still valuable or widely used. The concluding sentence of Section II-C, beginning with “Finally, we clarify...,” is somewhat convoluted; splitting it into two shorter sentences would enhance readability.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+If the assumptions of a flat spectrum and $k$-bandlimited signals (from Section II-B) correspond to the models used in Section II-C, making this connection explicit would clarify the overall experimental setup. Additionally, Section II-D refers to focusing on the MMSE criterion, though this detail was not fully established in the introduction; introducing it earlier would keep the discussion consistent. Assigning an equation number to the MMSE criterion, if it is a main focus, would help if you plan to reference it repeatedly throughout the paper.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+Sec III
+The heading for Section III might be rephrased to convey its core content—perhaps, “Main Theoretical Results” or “Key Theorems and Their Implications.” The initial paragraphs appear somewhat repetitive, echoing material from the introduction. Streamlining or rewriting them with an emphasis on the new elements introduced here would keep readers engaged without forcing them to sift through repeated explanations.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+The structure proposed in Section III is relatively broad, prompting some readers to revisit the introduction for clarity on the main objectives. A more concise outline at the beginning of Section III, directly referencing the relevant subsections, could help resolve this. In Section III-B, the paragraph beginning with “In Statistical Learning...” captures the bias-variance perspective, suggesting that increasing the sample size can reduce bias but also increase noise sensitivity, leading to potential overfitting. This is a pivotal insight of the paper but is presented somewhat repetitively. Condensing the paragraph’s content might better highlight the essential argument about how smaller samples might mitigate overfitting.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+After Theorem 1, the text offers many details presumably vital for rigor. However, these details are difficult to follow on first reading. For example, the note “we focus on when $\Delta_2>0$ because…” seems to depend on Appendix A, which the reader may not have seen yet. Incorporating a concise summary of that appendix or briefly restating its key points would prevent confusion. The same issue appears after the Proposition, where “Proposition 1 still leaves room for...” might sound cryptic if readers do not already grasp the underlying context. After Theorem 2, the statement “Theorem 2 also gives us the shape of the MSE...” likewise needs a clearer link to how that shape is derived from the theorem itself.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+Regarding Theorem 3, the assumption that eigenvalues are distinct warrants clarification. In real-world graphs with symmetrical structures, repeated eigenvalues are common. Explaining precisely which graphs or scenarios admit distinct eigenvalues, or how the results might extend otherwise, would address potential reader concerns. Proposition 2 introduces Erdos–Rényi graphs primarily for simplified analysis, yet these are not always the best real-world analog. Stating explicitly why this model is still appropriate or illustrative would strengthen the proposition’s overall motivation.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+Though Section III covers many fascinating results, its heavily technical approach may challenge even experienced readers. Interspersing short, intuitive explanations or “insight” paragraphs can help them keep track of the overarching thread while still appreciating the theoretical depth.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+Sec. IV
+Section IV provides empirical validations and is critical for demonstrating that the theoretical insights hold in practice. Nonetheless, the presentation could be more systematic. To start, clarifying how each experiment maps directly onto the claims or theorems from Section III would help readers recognize the logic and the significance of the parameter choices. Organizing the experiments into subsections based on the type of graph (e.g., Erdos–Rényi, Barabási–Albert) or by research question can also help the audience navigate the section.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+When explaining the experimental parameters—such as noise levels, graph size, and bandwidth $k$—it would be beneficial to indicate how these choices reflect either practical scenarios or established benchmarks in the field. If the authors use any baseline strategies (e.g., purely random sampling), placing them side by side with the proposed approaches can highlight the relative effectiveness of each. Moreover, consistent and clear figure labels (including explanatory captions and well-marked axes) would make it easier for readers to interpret the differences among the graphs or the patterns in MSE as the sample size varies.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+Tying observations to the bias-variance or overfitting themes from earlier sections will reinforce the conceptual continuity of the paper. In particular, where MSE initially decreases but then rises for higher sample sizes under large noise, explicitly drawing the link to the theory can help readers appreciate the empirical manifestation of potential overfitting. If certain experimental outcomes differ from theoretical predictions, briefly discussing plausible causes—like numerical approximations or limitations in the graph models—can offer a nuanced perspective and suggest avenues for future study.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+Summary
+Taken together, these remarks highlight ways to strengthen the paper’s logical structure, clarity, and accessibility. Several sections would benefit from reorganizing the material into smaller, cohesive units that emphasize the key findings and ensure fewer digressions. Providing intuitive explanations or bridging paragraphs can help readers see how each part of the paper—ranging from the signal models to theorems and experiments—fits within the core message. By clarifying the motivations behind parameter choices, offering more succinct theoretical explanations, and drawing explicit links between theoretical results and empirical observations, the manuscript’s impact and readability could be significantly enhanced.
+
+\end{quote}
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+Your work offers a valuable counterintuitive result in graph signal reconstruction, showing that under certain noisy conditions, using fewer samples may improve performance. This insight is inherently appealing for both theoretical and applied researchers. Emphasizing this broader significance while ensuring each section is structured and explained in a straightforward manner should make your study more accessible and compelling to a wide range of readers.
+\end{quote}
+
+\textbf{Response}
+
+
+\textbf{Comment}
+\begin{quote}
+
+\end{quote}
+
+\textbf{Response}
+
+
+
+
+\end{document}

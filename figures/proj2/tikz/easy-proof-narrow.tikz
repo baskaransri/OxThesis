@@ -1,0 +1,64 @@
+\begin{tikzpicture}[scale=0.5, background layer/.style={fill=none}]
+% Define constants
+\def\rhovalue{0.8}
+%\pgfmathsetmacro{\slope}{\rhovalue/sqrt(1-\rhovalue^2)}
+\def\slope{1.33333333333}
+\def\endX{5}
+\pgfmathsetmacro{\endZ}{\slope*\endX}
+
+
+
+% Draw axes
+\draw[->] (0,-3) -- (0,3) node[left] {$Z'$};
+\draw[->] (-4,0) -- (4,0) node[below right] {$X'$};
+
+% Draw the line Z' = rho*X'/sqrt(1-rho^2) constrained within axis bounds
+\pgfmathsetmacro{\leftX}{-3/\slope}  % X value where line reaches Z' = -3
+\pgfmathsetmacro{\rightX}{3/\slope}  % X value where line reaches Z' = 3
+\pgfmathsetmacro{\actualLeftX}{max(-5.5, \leftX)}
+\pgfmathsetmacro{\actualRightX}{min(5.5, \rightX)}
+\pgfmathsetmacro{\actualLeftZ}{\slope*\actualLeftX}
+\pgfmathsetmacro{\actualRightZ}{\slope*\actualRightX}
+\draw[thick] (\actualLeftX, \actualLeftZ) -- (\actualRightX, \actualRightZ) node[right] {$Z' = \frac{\rho X'}{\sqrt{1-\rho^2}}$};
+%\draw[thick] (\actualLeftX, \actualLeftZ) -- (\actualRightX, \actualRightZ) 
+%  node[above right, xshift=-20pt, yshift=-10pt] {$Z' = \frac{\rho X'}{\sqrt{1-\rho^2}}$};
+
+
+% Coordinates for angle measurement
+\coordinate (O) at (0,0);
+\coordinate (Zaxis) at (0,1);
+\coordinate (LinePoint) at (1, \slope);
+\coordinate (NegZaxis) at (0,-1);
+\coordinate (NegLinePoint) at (-1, -\slope);
+\coordinate (Zfar) at (0,3.2);
+\coordinate (linetopfar) at (3.2/\slope, 3.2);
+\coordinate (NegZfar) at (0,-3.2);
+\coordinate (Neglinetopfar) at (-3.2/\slope, -3.2);
+
+    \fill[pattern=north west lines, pattern color=black!40] 
+      (O) -- (NegZfar) -- (Neglinetopfar) -- cycle;
+
+    \fill[pattern=north west lines, pattern color=black!40] 
+      (O) -- (Zfar) -- (linetopfar) -- cycle;
+
+
+% Draw angle arc between Z' axis and the line
+\pic[
+    draw,
+    angle radius=20pt,
+    angle eccentricity=0.6,
+    %preaction={draw=white, line width=6pt},
+    %angle label={$\theta$}
+    %label={\tikz \node[draw,fill=yellow]{2};}
+    pic text=$\theta$,
+] {angle = LinePoint--O--Zaxis};
+
+\pic[
+    draw,
+    angle radius=20pt,
+    angle eccentricity=0.6,
+    %preaction={draw=white, line width=6pt},
+    pic text=$\theta$,
+] {angle = NegLinePoint--O--NegZaxis};
+
+\end{tikzpicture}

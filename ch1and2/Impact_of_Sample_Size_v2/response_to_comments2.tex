@@ -1,0 +1,138 @@
+%!TEX spellcheck = en-US
+%\documentclass[journal]{IEEEtran}
+\documentclass[11pt,onecolumn,journal]{IEEEtran}
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[journal]{../sty/IEEEtran}
+
+
+\usepackage{graphicx, amssymb, amsmath,algorithm}
+\graphicspath{{./fig/}}
+\DeclareGraphicsExtensions{.pdf,.jpg,.jpeg,.png}
+\usepackage{latexsym}
+\usepackage{epsfig}
+\usepackage{subfig}
+\usepackage{amsfonts}
+\usepackage{amsopn}
+\usepackage{caption}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}} \newcommand{\comment}[1]{}
+% \newcommand{\min}{\operatornamewithlimits{min}} \newcommand{\comment}[1]{}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[normalem]{ulem}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\newcommand{\mike}[1]{\textcolor{Green}{\textsc{Mike}: #1}}
+\newcommand{\xd}[1]{\textcolor{Red}{\textsc{Xiaowen}: #1}}
+\newcommand{\pf}[1]{\textcolor{blue}{#1}}
+\newcommand{\dt}[1]{\textcolor{Magenta}{\textsc{Dorina}: #1}}
+
+\begin{document}
+
+%\maketitle
+%\section*{General Comments Regarding the Reviews}
+\begin{center}
+\large RESPONSES TO REVIEWERS' COMMENTS
+\end{center}
+We would like to again thank the Editor and the reviewers for their insightful comments that have undoubtedly helped improve the quality of the manuscript. We have carefully revised the manuscript following the suggestions of the editor and the reviewers. We provide a point-to-point response to each comment in detail below.
+
+\section*{Responses to Reviewer \#1}
+
+We are pleased the reviewer felt we addressed many of his/her concerns. We address the comments made in this round of review in detail below. We hope the reviewer finds the revision of the paper satisfactory.
+% hope to provide the adequate response to address these final comments.
+
+\textbf{Comment}
+
+\begin{quote}
+    I still have issues with the experiments when the generating ground truth is just the low pass signal. The authors show us the results in Table I of the response document: I see that the performance is fairly similar irrespective of the degree, and also to [6] Diffusion and Cosine [2]. How do the authors then claim 'Thus, this shows that our model is still superior even when the data profile
+    matches the different model'. Indeed the difference between their method and the others mentioned are in less than a dB. And this metric is not the MSE but the probability itself - and I am not sure again in less than 1dB can be called superior.
+\end{quote}
+
+\textbf{Response}
+
+We admit the previous claim was not accurate, as the differences are marginal against the baselines that suited well to the profile of the data. A more accurate claim would be the polynomial is able to produce comparable performances on low-pass data, when the baseline models have suitable profile for the data. The difference is more visible when the data also exhibits band- and high-pass profiles. We have not included this experiment in the main text (given that we have already included a low-pass data in the synthetic experiments); however, if the Reviewer feels this should be included in the paper, we would be very happy to do so.
+
+\textbf{Comment}
+
+\begin{quote}
+    Secondly, a more pressing concern is that the proposed approach seems to perform better when the degree is higher all the way up to 4. The ground truth on the other hand corresponds to degree 1. How can the method then be claimed to be recovering the filter even for the simplest case of low-pass signals? The authors should make this very clear.
+\end{quote}
+
+\textbf{Response}
+
+We assume the Reviewer is referring to the ground truth filter of $(\mathbf{I} + \alpha\mathbf{L})^{-1}$. The existence of the inverse means this is not a degree 1 polynomial; % as this is a curved shape, whereas degree 1 polynomials should 
+indeed it has a curved shape rather than a straight line. Another way to view this is to express the filter using the expansion of $(1 - x)^{-1}$ in which case we get
+\begin{align}
+    (\mathbf{I} + \alpha\mathbf{L})^{-1} = \mathbf{I} - \alpha \mathbf{L} + \alpha^2\mathbf{L}^2 - \alpha^3\mathbf{L}^3 + \dots
+\end{align}
+and therefore we see this can be viewed as an infinite degree polynomial. This means despite the low-pass nature there is higher-order dependency between values of nodes that are far away, hence it can be expected that a higher degree may lead to improved performance.
+
+\textbf{Comment}
+\begin{quote}
+    I find it strange that instead of stating that G as a function of L could lead to different spectral profiles in [6], the authors continue to insist that the work doesn't admit it by stating 'the filter as defined in [3,6,7] have only been demonstrated to perform well on low-pass signals, and it is unclear what modifications are needed to adapt the filters for band- or high-pass signals”.' Really, it is quite clear here.
+\end{quote}
+
+\textbf{Response}
+
+Thank you for the comment. We understand this claim is again too strong. We have changed this to ``modifications are required to adapt to band- or high-pass signals" in Introduction.
+
+\textbf{Comment}
+\begin{quote}
+    The GFT coefficients are now included, thanks for that. However, they are still left hanging as a plot -what are we supposed to see in these?
+\end{quote}
+
+The GFT coefficients show the existence of higher frequency elements, and therefore the readers can see the shapes of the learnt filters resembled that of the data. We have added sentences to comment on these plots in the main text.
+
+\section*{Responses to Reviewer \#2 }
+
+We are again thankful for the positive rating from the reviewer.
+
+\section*{Responses to Reviewer \#3}
+
+We are pleased the reviewer was positive on our paper. We address the comments of the reviewer in detail below. We hope the reviewer finds the revision of the paper satisfactory.
+
+\textbf{Comment}
+
+\begin{quote}
+    ... the proposed methods have better likelihood than the baselines, yet the baselines seem to have lower error in most cases as shown in Table II. Please explain why a method such as Laplacian [1] (second row in baselines in Table II) can have such bad likelihood scores, and yet achieve the smallest standard error?
+\end{quote}
+
+\textbf{Response}
+
+Thank you for raising this point. The test signals are split into 10 subsets, on each of which we compute the posterior log-likelihood. The means and standard errors are over the 10 log-likelihoods, i.e. $\mu(\{l_1, \dots, l_{10}\})$ and $\text{std}(\{l_1, \dots, l_{10}\})/\sqrt{10}$ respectively, and $l_i$ is test log-likelihood on subset $i$. We do this to obtain standard errors as otherwise the GP will only provide one log-likelihood over the whole test data. We would also like to remark this is not the MSE, which would be computed between the posterior mean and the test signal.
+We added the mathematical notations to the revised main text to further clear this up.
+
+The likelihoods are on average higher mainly due to the smaller standard deviations of the predictions on each node, as shown in Fig. 5 of revised manuscript. The standard errors being higher indicates that the model still mis-predicted some signals, and when the prediction is not good the likelihoods can vary, leading to higher standard errors. This will not imply that the MSE of the predictions will be higher or lower for any of the models. We have added to the explanations of fMRI and Uber data to hopefully clear this up.
+
+\textbf{Comment}
+
+\begin{quote}
+    Is the high frequency information not useful for prediction?.
+    
+    It would be good to have other more convincing examples or applications, either in the introduction or in the experiments, that show more clearly the advantages of incorporating higher frequency information. While the model can represent the data more accurately, I find that the paper is weakened by not having a more convincing evaluation of the usefulness.
+\end{quote}
+
+\textbf{Response}
+
+Thank you for raising this important point. We are indeed claiming higher frequency information is useful for prediction. Firstly, this is demonstrated in the synthetic experiments in Section VI.B.3, where the performance improvements are most noticeable in band- and high-pass cases, which contains higher frequencies.
+
+Secondly, visually, we showed in Fig. 5 that the predictions from our polynomial on the weather dataset is much better than a low-pass as the polynomial picked up a small amount of less smooth high-frequency elements while the low-pass produced something overly smooth. Numerically, we can see the prediction is more similar to the test signal's graph smoothness ($\mathbf{z}^\top \mathbf{L} \mathbf{z}$). We have added this to the descriptions of the Weather experiment in the main text.
+
+Finally, in all three real world experiments, our polynomials picked up high-frequency elements of some degree, with Uber dataset the most visible as shown in Fig. 4 (c) and (f). This is reflected in the models' predictive log-likelihood, which are interpreted as the log-probability that the model predicts the test signal given the posterior mean and covariance, and we see these are significantly higher in all three cases.
+
+We have firstly added multiple remarks in the revised main text commenting on how capturing higher frequency (band- or high-pass) lead to improvements. We also added clarification in Introduction about the usefulness of high frequency information, commenting that high frequencies generally correspond to non-smooth data and sometimes this can be recognized spatially as heterophilic graphs.
+
+\textbf{Comment}
+
+\begin{quote}
+    Last paragraph of page 7. Do you mean Fig. 2 instead of Fig 4?
+\end{quote}
+
+\textbf{Response}
+
+You are correct this should be Fig. 2, thank you spotting this. %We gave the two figures the same LateX label so it displayed the same figure number instead.
+This has been corrected.
+
+\end{document}

@@ -63,7 +63,8 @@
 \renewcommand*{\bibfont}{\raggedright\small}
 
 % Change this to the name of your .bib file (usually exported from a citation manager like Zotero or EndNote).
-\addbibresource{references.bib}
+\addbibresource{combo.bib}
+\addbibresource{sample.bib}
 
 
 % Uncomment this if you want equation numbers per section (2.3.12), instead of per chapter (2.18):
@@ -71,11 +72,13 @@
 
 
 
+
+
 %%%%% THESIS / TITLE PAGE INFORMATION
 % Everybody needs to complete the following:
-\title{Suitably impressive thesis title}
-\author{Your Name}
-\college{Your College}
+\title{Learning on Graph with Incomplete Information}
+\author{Baskaran Sripathmanathan}
+\college{Pembroke College}
 
 % Master's candidates who require the alternate title page (with candidate number and word count)
 % must also un-comment and complete the following three lines:
@@ -88,7 +91,7 @@
 % Your full degree name.  (But remember that DPhils aren't "in" anything.  They're just DPhils.)
 \degree{Doctor of Philosophy}
 % Term and year of submission, or date if your board requires (eg most masters)
-\degreedate{Michaelmas 2014}
+\degreedate{Trinity 2025}
 
 
 %%%%% YOUR OWN PERSONAL MACROS
@@ -99,6 +102,158 @@
 	\newcommand{\nd}{\textsuperscript{nd}}
 	\renewcommand{\st}{\textsuperscript{st}}
 	\newcommand{\rd}{\textsuperscript{rd}}
+
+
+%%%%%% BASKARAN PERSONAL PREAMBLE (search END BASKARAN for end)
+
+%\usepackage[pdfencoding=auto, psdextra]{hyperref}
+\usepackage{amsmath,amsfonts,amsthm}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\matr}[1]{\bm{#1}}
+\usepackage{bm}
+%\usepackage{cite}
+\newcommand{\vect}[1]{\bm{#1}}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}[theorem] % Use theorem counter as `parent`
+%\newtheorem{defn}{Definition}[section]
+\newtheorem{defn}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{propn}[]{Proposition}
+\newtheorem{lemma}[]{Lemma}
+\newtheorem{proofpart}{Part}[theorem]
+\renewcommand\theproofpart{\arabic{proofpart}}
+\usepackage{bbm}
+\usepackage{algorithmic}
+\usepackage{calc}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage{mathtools}
+
+\usepackage{makecell}
+\renewcommand\theadfont{\bfseries}
+
+\usepackage[font=normalsize,labelfont=sf,textfont=sf]{subcaption}
+
+\usepackage{textcomp}
+\usepackage{stfloats}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{xcolor}
+%\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
+\usepackage{balance}
+\usepackage{booktabs}
+\usepackage{cases}
+\usepackage[capitalise]{cleveref}
+%%%% Some specific notation
+%% To Do: use msub to factor out these things
+\usepackage{xstring}
+\DeclareMathSymbol{\Theta}{\mathord}{operators}{"02}
+\newcommand{\set}[1]{\mathcal{#1}}
+%\newcommand{\set}[1]{\if1#1 \{1\}\else \mathcal{#1}\fi}
+\newcommand{\sqfrob}[1]{\left\lvert\left\lvert#1\right\rvert\right\rvert^{2}_{F}}
+\newcommand{\sqnormvec}[1]{\left\lvert\left\lvert#1\right\rvert\right\rvert^{2}_{2}}
+\newcommand{\normvec}[1]{\left\lvert\left\lvert#1\right\rvert\right\rvert_{2}}
+\newcommand{\trace}[1]{\textrm{tr}\left(#1\right)}
+\newcommand{\rank}[1]{\textrm{rank}\left(#1\right)}
+\NewDocumentCommand{\msub}{o o m}
+{
+    \IfValueT{#2}{\left[#3\right]_{\set{#1}, \set{#2}}}
+    \IfNoValueTF{#1}{#3}{\left[#3\right]_{\set{#1}}}
+}
+\NewDocumentCommand{\msubgen}{o o m}
+{
+    \IfValueT{#2}{\left[#3\right]_{#1, #2}}
+    \IfNoValueTF{#1}{#3}{\left[#3\right]_{#1}}
+}
+\NewDocumentCommand{\matrsub}{ o o m }
+{
+    \IfValueT{#2}{[\matr{#3}]_{\set{#1}, \set{#2}}}
+    \IfNoValueTF{#1}{\matr{#3}}{[\matr{#3}]_{\set{#1}}}
+}
+\NewDocumentCommand{\matrsubpow}{ o o m m}
+{
+    \IfValueT{#2}{[\matr{#3}^{#4}]_{\set{#1}, \set{#2}}}
+    \IfNoValueTF{#1}{\matr{#3}^{#4}}{[\matr{#3}^{#4}]_{\set{#1}}}
+}
+\NewDocumentCommand{\vectsub}{ o o m }
+{
+    \IfValueT{#2}{[\vect{#3}]_{\set{#1}, \set{#2}}}
+    \IfNoValueTF{#1}{\vect{#3}}{[\vect{#3}]_{\set{#1}}}
+}
+\NewDocumentCommand{\vectsubgen}{ o o m }
+{
+    \IfValueT{#2}{[{#3}]_{{#1}, {#2}}}
+    \IfNoValueTF{#1}{{#3}}{[{#3}]_{{#1}}}
+}
+%Optional arguments are for submatrix indexing
+\NewDocumentCommand{\projbl}{ o o }
+{
+    \IfValueT{#2}{[\matr{\Pi}_{bl(\set{K})}]_{\set{#1},\set{#2}}}
+    \IfNoValueTF{#1}{\matr{\Pi}_{bl(\set{K})}}{[\matr{\Pi}_{bl(\set{K})}]_{\set{#1}}}
+}
+\NewDocumentCommand{\projblgen}{ o o }
+{
+    \IfValueT{#2}{[\matr{\Pi}_{bl(\set{K})}]_{{#1},{#2}}}
+    \IfNoValueTF{#1}{\matr{\Pi}_{bl(\set{K})}}{[\matr{\Pi}_{bl(\set{K})}]_{{#1}}}
+}
+%Optional arguments are for submatrix indexing
+\NewDocumentCommand{\proj}{ o o m }
+{
+    \IfValueT{#2}{[\matr{\Pi}_{\set{#3}}]_{\set{#1}, \set{#2}}}    \IfNoValueTF{#1}{\matr{\Pi}_{\set{#3}}}{[\matr{\Pi}_{\set{#3}}]_{\set{#1}}}
+}
+\NewDocumentCommand{\projgen}{ o o m }
+{
+    \IfValueT{#2}{[\matr{\Pi}_{\set{#3}}]_{{#1}, {#2}}}
+    \IfNoValueTF{#1}{\matr{\Pi}_{{#3}}}{[\matr{\Pi}_{{#3}}]_{{#1}}}
+}
+\NewDocumentCommand{\expect}{ o m }
+{
+    \IfNoValueTF{#1}{{\mathbb{E}}\left[{{#2}}\right] }{{\mathbb{E}}_{#1}\left[{{#2}}\right]}
+}
+\NewDocumentCommand{\prob}{ o m }
+{
+    \IfNoValueTF{#1}{{\mathbb{P}}\left({{#2}}\right) }{{\mathbb{P}}_{#1}\left({{#2}}\right)}
+}
+\NewDocumentCommand{\expectnobig}{ o m }
+{
+    \IfNoValueTF{#1}{{\mathbb{E}}[{{#2}}] }{{\mathbb{E}}_{#1}[{{#2}}]}
+}
+%As we do this so often
+\newcommand{\matrsubU}[1]{\matrsub[#1, K]{U}}
+\newcommand{\matrsubUGen}[1]{[\matr{U}]_{#1, \set{K}}}
+\newcommand{\xd}[1]{\textcolor{black}{#1}}
+\newcommand{\bs}[1]{\textcolor{black}{#1}}
+
+%proj2
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{angles, quotes, patterns, backgrounds, shapes.geometric, shapes.misc, arrows, positioning}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{adjustbox}
+
+\makeatletter
+\def\fixedlabel#1#2{%
+  \@bsphack%
+  \protected@write\@auxout{}%
+         {\string\newlabel{#1}{{#2}{\thepage}}}%
+  \@esphack}
+\makeatother
+
+\usepackage{dsfont}
+
+
+%%%GLR chapter
+\usepackage{enumitem}
+
+%%%%%%% END BASKARAN
+
+
 
 %%%%% THE ACTUAL DOCUMENT STARTS HERE
 \begin{document}
@@ -201,16 +356,18 @@
 %%%%% CHAPTERS
 % Add or remove any chapters you'd like here, by file name (excluding '.tex'):
 \flushbottom
-\include{text/ch1-intro}
-\include{text/ch2-litreview}
-
+%\include{text/ch1-intro}
+%\include{text/ch2-litreview}
+\include{text/proj1_LS}
+\include{text/proj1_GLR}
+\include{text/proj2}
 
 %% APPENDICES %% 
 % Starts lettered appendices, adds a heading in table of contents, and adds a
 %    page that just says "Appendices" to signal the end of your main text.
 \startappendices
 % Add or remove any appendices you'd like here:
-\include{text/appendix-1}
+\include{text/appendix-proj1_LS}
 
 
 %%%%% REFERENCES

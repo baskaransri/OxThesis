@@ -1,0 +1,60 @@
+\begin{tikzpicture}[scale=0.5]
+    \def\slope{3}
+    \def\xA{5.5}
+    \def\yA{0}
+    \def\xB{1.2}
+    \def\yB{\xB * \slope}
+    \pgfmathsetmacro{\etaValue}{atan(\slope)}
+    
+    %\pgfmathsetmacro{\slope}{\rhovalue/sqrt(1-\rhovalue^2)}
+    % Define the vertices of the triangle
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\xA,\yA);
+    \coordinate (B) at (\xB,\yB);
+    
+    \pgfmathsetmacro{\otherRot}{atan2(\yA - \yB, \xA - \xB}
+
+
+    
+    % Draw the triangle
+    %\draw[thick] (O) -- (A) -- (B) -- cycle;
+    
+    \draw[thick] (O)--(A)  node[midway, below] {$\sigma_{i}(\matr{G})$}; %{$\sqrt{\text{Var}(f(\matr{X}))_i}$};
+    
+    \draw[thick] (O)--(B)  node[midway, above, rotate=\etaValue] {$\nu_{i}(\matr{G})$}; %{$\sqrt{\text{Var}(f(\hat{\matr{X}}))_i}$};
+    
+    \draw[thick] (A)--(B)  node[midway, above, rotate=\otherRot, align=center] {
+    $\text{Error}_{out,i} \cdot d^{-1} $
+    };
+
+    %\draw[thick] (A)--(B)  node[midway, above, rotate=\otherRot, align=center, text width=100pt] {Final layer reconstruction error at node $i$}; %{$\sqrt{\expect{||(f(\matr{X}))_i - (f(\hat{\matr{X}}))_i||^2}}$} ;
+    % Label the vertices
+    \iffalse
+    \node[below left] at (O) {$0$};
+    \node[below right] at (A) {$f(\matr{X})_i$};
+    \node[above] at (B) {$f(\hat{\matr{X}})_i$};
+    \fi
+    
+    
+\pic[
+    draw,
+    angle radius=20pt,
+    angle eccentricity=1,
+    preaction={draw=white, line width=6pt},
+    %"Classification\\Error",%"${\eta}$"
+] {angle = A--O--B};
+\node[right, xshift=4pt, yshift=8pt, text width=50pt] at (O) {$\alpha$};%{Node $i$ Classification Error };
+%\node[right, rotate=\etaValue/2, xshift=20pt, yshift=0pt, text width=50pt] at (O) {Node $i$ Misclassification Probability};%{Node $i$ Classification Error };
+
+\node[below, right] at (\xA,\yB-0.4) {$\alpha = \parbox[t][][t]{2.4cm}{Node $i$ misclassification probability }$};
+%\node[above, text width=3cm] at (\xA,-2) {Node $i$ Misclassification Probability};
+
+
+
+    % Add small circles at vertices for clarity
+    \iffalse
+    \fill (O) circle (1pt);
+    \fill (A) circle (1pt);
+    \fill (B) circle (1pt);
+    \fi
+\end{tikzpicture}
