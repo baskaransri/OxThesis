@@ -1,8 +1,55 @@
 \chapter{\label{ch:proj1_GLR}On the Impact of Sample Size in Reconstructing Noisy Graph Signals: Graph Laplacian Regularised Reconstruction}
 
+
+\iffalse
 \section{Introduction}
+This chapter continues our investigation of the relationship between sample size and reconstruction error, in this case focusing on the GLR reconstruction method, a method commonly used in the presence of noise. Once more, we prove theoretically and experimentally that the phenomenon of reducing sample size reducing reconstruction error occurs with GLR reconstruction under sufficiently much noise. We give a direct characterisation based on graph properties of a class of graphs this phenomenon occurs for, and derive a suggested `optimal sample size' for high noise reconstruction. Our previous chapter's Theorem BLAH applies, showing our results are robust to changes in signal model, and we also derive similar results under bandlimited noise using novel linear algebraic results, proving robustness of our results to changes in the noise model. We prove asymptotic results showing that this phenomenon occurs for arbitrarily large graphs. Finally, we support our theoretical results with extensive experimental results on both synthetic and real-world graphs, showing that our characterised class of graphs covers nearly all graphs from multiple synthetic graph models.
+\fi
 
+\section{Introduction}
+In the previous Chapter and in Chapter (LIT REVIEW), we identified the limitations of the GSP literature around the analysis of reconstruction error with regards to sample size -- how the literature lacked theoretical analysis which covers the full range of possible sample sizes and noise levels. In the last chapter, we provided a theoretical characterisation of when decreasing sampling size could decrease reconstruction error, and derived the conditions under which this would happen for Least Squares reconstruction, which requires high noise.
 
+The GSP sampling and reconstruction literature focuses on both variants of LS and variants of GLR reconstruction as the two main classes of reconstruction method. 
+Given that our analysis in the last chapter focused on unregularized methods (LS) under high noise, it is pertinent to consider a regularized method (GLR) under noise, and identify whether decreasing sample size can decrease error in this case. While there is analysis on Optimal Bayesian Reconstruction \cite{chamon2017greedy} (a regularized form of LS where reducing sample size cannot reduce reconstruction error), it requires accurate knowledge of the noise levels and computation of the Laplacian eigenbasis, which may be expensive or unavailable in practice, making GLR particularly relevant.
+
+Theoretical results on GLR in the GSP literature on the impact of sample size on reconstruction error are non-existent (CHECK, Table BLAH), despite the practical importance of the GLR reconstruction method, especially in high noise and large graph settings. 
+
+In this chapter, we provide a theoretical characterisation of the impact of sample size on MMSE across the full range of sample sizes and the full range of noise levels for GLR reconstruction. We focus on whether under sufficiently low SNRs, decreasing sample size may actually decrease MSE, which is important for the application of GLR reconstruction, a robust method, to domains where the noise may be greater than the signal. Like in the previous Chapter, this breadth is only possible through our rigorous theoretical characterisations which allow us to understand behaviour at high noise levels, to characterise behaviour on arbitrarily large graphs and to show when certain behaviours of MSE happen and why.
+
+Our results begin by establishing why the `single vertex' simplification employed in the previous chapter cannot work. We introduce a new simplification and a new framework which bounds $\xi_{2}$ for all possible sample sets (Lemma \ref{lemma:GLR_xi_2_bound_main}) with powerful tools borrowed from the study of estimator efficiency in statistics the 80s. Using this Lemma, we prove that under GLR, if certain graph invariants hold on a graph with $N$ vertices, reducing sample size from almost $N$ vertices to $\mathcal{O}(\sqrt{N})$ vertices will reduce MSE at high noise levels (Section \ref{sec:GLR_full_band}, Proposition \ref{propn:GLR_simple}), and that these invariants hold for large Erdős–Rényi graphs with high probability {\color{black}(Section \ref{sec:GLR_full_band}, Proposition \ref{propn:GLR_big_N})}. We also present equivalent results under bandlimited noise (Section \ref{sec:GLR_bandlimited}), constructing novel linear algebraic results (Lemma \ref{lemma:bandlimited_kantorovich}) to do so, which demonstrates the robustness of our results to changes in noise distribution. Our experiments (Section \ref{sec:experiments_GLR}) validate this for large Stochastic Blockmodel and Barabasi-Albert graphs as well, demonstrating the applicability of our results to graphs with community structure and large scale-free networks. %We also investigate how sensitive our results are to different kinds of noise by presenting variants of our theoretical and empirical results under both bandlimited \bs{(Section \ref{sec:GLR_bandlimited}} and full-band noise \bs{(Section \ref{sec:GLR_full_band})}. %\xd{Although our results are mainly of theoretical nature, they may provide useful guidance on choosing the appropriate sample size in light of noise levels in the data.}
+
+\iffalse
+This chapter presents four primary contributions: 
+\begin{enumerate}
+    \item A theoretical characterisation of how decreasing sample size may decrease MSE under GLR, a regularised method. 
+    \item Analysis of GLR under bandlimited noise to show non-monotonicity of the MSE is not caused by just the high frequency component of the noise.
+    \item Asymptotic analysis, showing how the non-monotonicity of the MSE with sample size persists as $N \to \infty$.
+    \item Extensive experimental simulations illustrating the theoretical results under both full-band and bandlimited noise.
+\end{enumerate}
+\fi
+
+\section{Problem Setting}
+We retain the same problem setting as in Chapter \ref{ch:proj1_LS}, except that the theoretical results in this chapter \emph{only} apply to the combinatorial Laplacian. We assume:
+\begin{itemize}
+    \item A known graph $\mathcal{G}$ which is connected and undirected.
+    \item A known bandwidth $k$.
+    \item A clean underlying $k$-bandlimited signal $\vect{x}$ drawn from a known distribution.
+    \item Observations of $\vect{x}$ are corrupted by noise which is either:
+    \begin{itemize}
+        \item full-band, so we observe a non-bandlimited signal.
+        \item $k$-bandlimited, so we observe a $k$-bandlimited signal.
+    \end{itemize}
+    \item GLR reconstruction.
+\end{itemize}
+
+\section{Theoretical Results}
+\subsection{Overview and Proof Approaches}
+We retain the same narrative structure as presented in the flowchart in the previous Chapter (Section \ref{sec:theory-overview}, Figure \ref{fig:theory_structure_flowchart}), which we outline for this Chapter in Table \ref{tbl:general_theory_GLR}.
+
+Like in Chapter \ref{ch:proj1_LS}, we characterise when decreasing sample size can decrease reconstruction error by showing that $\Delta_{2}$ can be positive for GLR; therefore Proposition \ref{propn:averages_generalise_to_forall} applies to all theorems in this Chapter, and thus whenever we show for a graph that decreasing sample size can decrease reconstruction error above a level of noise for the bandlimited signal model, we are also showing that for that graph, decreasing sample size can decrease reconstruction level for \emph{any} signal model at some level of noise (dependent on the signal model).
+
+For GLR, we show that the single vertex simplification presented in the previous chapter does not work (Section \ref{sec:GLR_full_band_overview}), and instead compare observing the full graph to observing a subset of the vertices. We call this the `full observation' simplification. We present results which hold for all possible sample sets of a certain size without repeated nodes, but focus on graphs which satisfy certain graph invariants. %(Subsection \ref{sec:GLR_full_band}). %We justify these simplifications in the relevant subsections below.
+We present theoretical results for full-band noise (Section \ref{sec:GLR_full_band}), bandlimited noise (Section \ref{sec:GLR_bandlimited}), and experimental results demonstrating their validity and applicability (Section \ref{sec:experiments_GLR}). 
 
 
 \begin{table}[h]
@@ -23,17 +70,39 @@
 \emph{Asymptotics} &  Propn \ref{propn:GLR_big_N} & Propn \ref{propn:GLR_big_N_bl}\\
 \bottomrule
 \end{tabular}
-\label{tbl:general_theory}
+\label{tbl:general_theory_GLR}
 \end{table}
 
-\section{Theoretical Results}
+
 \subsection{GLR with full-band noise}
 \label{sec:GLR_full_band}
 In this subsection, we show how decreasing sample size can decrease MSE under GLR reconstruction and full-band noise. 
 
 
-\subsubsection{\bs{Overview and Simplification}}
-We start by trying to simplify Theorem \ref{main_general}. Table \ref{tbl:GLR_Reconstruction_Delta} contains no $\times$ scenarios and so the `single vertex' simplification cannot eliminate any conditions in Theorem \ref{main_general}: surprisingly, $\matr{R}_{\set{S} \backslash \{ v \}}$ can be \emph{less} biased than $\matr{R}_{\set{S}}$ for GLR, which can be observed experimentally.
+\subsubsection{Overview and Simplification}
+\label{sec:GLR_full_band_overview}
+We start by trying to simplify Theorem \ref{main_general}.  We first see if the `single vertex' simplification presented in Chapter \ref{ch:proj1_LS} can be used to simplify Theorem \ref{main_general}. We compute a table like Table \ref{tbl:LS_Reconstruction_Delta}:
+
+\begin{table}[h]
+\centering
+        \begin{tabular}{lcc}
+        \toprule
+         & \thead{$\Delta_{2}>0$} & \thead{$\Delta_{2} \leq 0$} \\
+        \midrule
+        $\Delta_{1} > 0$ & $\checkmark$ & $\checkmark$\\
+        $\Delta_{1} < 0$ & $\checkmark$ & $\checkmark$\\
+        $\Delta_{1} = 0$ & $\sim$ & $\sim$\\
+        \bottomrule
+       \end{tabular}
+    \caption{Possible signs of $\Delta_{1}(\set{S},v)$ and $\Delta_{2}(\set{S},v)$ under GLR}
+        \label{tbl:GLR_Reconstruction_Delta}
+\end{table}
+
+\noindent In Table \ref{tbl:GLR_Reconstruction_Delta}, $\times$ will not happen, $\checkmark$ may happen and $\sim$ may theoretically happen but are unlikely. We see that Table \ref{tbl:GLR_Reconstruction_Delta} does not rule out any option. In experiments with Erdős–Rényi graphs, all options marked as $\checkmark$ in Table \ref{tbl:GLR_Reconstruction_Delta} can be observed at some sample size without too much difficulty under random or WMSE sampling.
+
+The options marked $\sim$ do not turn up in such experiments, but may happen for very specific values of $\mu$ dependent on the graph and sampling scheme.
+
+Table \ref{tbl:GLR_Reconstruction_Delta} contains no $\times$ scenarios and therefore the `single vertex' simplification cannot eliminate any conditions in Theorem \ref{main_general}: surprisingly, $\matr{R}_{\set{S} \backslash \{ v \}}$ can be \emph{less} biased than $\matr{R}_{\set{S}}$ for GLR, which can be observed experimentally.
 Instead, as we focus on tractability and showing that it is possible to reduce sample size to reduce MSE, rather than fully characterizing all such cases, we pick a situation where $\Delta_{1} \geq 0$ so we can simplify Theorem \ref{main_general}. Specifically, we compare the full observation set $\set{S}=\set{N}$ to a subset of it, which we call the `full observation' simplification. As it is hard to interpret what reconstruction means under full observation \cite{chen2017GLRbias}, our results should be understood as approximately showing that reducing the sample size from nearly full observation to some smaller size may reduce MSE.
 
 Our approach is then as follows. We first characterise under exactly which conditions a sample set $\set{S} \subset \set{N}$ is better than $\set{N}$ (Corollary \ref{corr:main_GLR_iff}). We then show that these conditions must occur if certain graph invariants hold (Theorem \ref{thm:main_GLR_exist}). Finally, we analyse the parameters in Theorem \ref{thm:main_GLR_exist} to obtain a `suggested sample size' (Remark \ref{remark:mopt}) and show the conditions still occur as $N \to \infty$ (Proposition \ref{propn:GLR_big_N}). 
@@ -68,23 +137,47 @@ The other condition in (\ref{eq:GLR_corol_iff_weird}), i.e., $0 < \Delta_2(\set{
 \subsubsection{\bs{Existence}}
 Like Corollary \ref{main_ls}, Corollary $\ref{corr:main_GLR_iff}$ does not show that any set $\set{S}$ is ever better than $\set{N}$, i.e., that $\tau(\set{N},\set{S}^{c}) > 0$ ever happens. {\color{black} As described in Section \ref{sec:every_x}, we will find $\set{S}$ s.t. $\Delta_{2}(\set{N},\set{S}^{c}) > 0$. We illustrate our proof method in Fig.~\ref{fig:GLR_diagram}.
 
+\iffalse
 \begin{figure}[t]
     \centering
     %\resizebox{\width}{0.75\columnwidth}
     \resizebox{0.75\width}{0.75\height}
-    {\includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_diagram/diagram_GLR.png}}
+    {\includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_diagram/diagram_GLR.svg}}
     \caption{Proof direction to show $\Delta_{2}(\set{N},\set{S}^{c}) > 0$}
     \label{fig:GLR_diagram}
 \end{figure}
+\fi
 
 \noindent Fundamentally, our approach rests on the fact that $\xi_{2}$, which is approximately proportional to $\text{MSE}_{\set{S}}$ at high noise levels, is  approximately U-shaped, and we can use an upper bound to approximate the minimum and thus bound $\Delta_{2}(\set{N},\set{S}^{c})$ below. Explicitly, our method to show $\Delta_{2}(\set{N},\set{S}^{c}) > 0$ is:
+\iffalse
 \begin{enumerate}
     \item Find an upper bound $B(\cdot)$ for $\xi_{2}(\set{S})$ that only depends on $\matr{L}$ and $|\set{S}|$, not on $\mu$ or the choice of $\set{S}$.
     \item Find the sample size $m_{opt}$ that minimises the bound and show $m_{opt} < N$.
     \item Identify when $\xi_{2}(\set{N}) - B(m_{opt}) > 0$ (this is the `$\Delta_{2}$ bound' in Fig. \ref{fig:GLR_diagram}). As this quantity is a lower bound for $\Delta_{2}(\set{N},\set{S}^{c})$ this shows that $\Delta_{2}(\set{N},\set{S}^{c})>0$ for any $\set{S}$ of size $m_{opt}$.
     \item Bound $\Delta_{1}$ using the same tools and use these to lower bound $\tau(\set{N}, \set{S}^{c})$
 \end{enumerate}
+\fi
+\begin{figure}[H]
+    \begin{minipage}[T]{0.48\columnwidth}
+    %\vspace{0pt}
+        \raggedright \begin{enumerate}
+    \item Find an upper bound $B(\cdot)$ for $\xi_{2}(\set{S})$ that only depends on $\matr{L}$ and $|\set{S}|$, not on $\mu$ or the choice of $\set{S}$.
+    \item Find the sample size $m_{opt}$ that minimises the bound and show $m_{opt} < N$.
+    \item Identify when $\xi_{2}(\set{N}) - B(m_{opt}) > 0$ (this is the `$\Delta_{2}$ bound' in Fig. \ref{fig:GLR_diagram}). As this quantity is a lower bound for $\Delta_{2}(\set{N},\set{S}^{c})$ this shows that $\Delta_{2}(\set{N},\set{S}^{c})>0$ for any $\set{S}$ of size $m_{opt}$.
+    \item Bound $\Delta_{1}$ using the same tools and use these to lower bound $\tau(\set{N}, \set{S}^{c})$
+\end{enumerate}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[T]{0.48\columnwidth}
+        \centering
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_diagram/diagram_GLR.png}
+    \captionof{figure}{Proof direction to show $\Delta_{2}(\set{N},\set{S}^{c}) > 0$}
+    \label{fig:GLR_diagram}
+    \end{minipage}
+\end{figure}
+
 We see that $m_{opt}$ suggests an `optimal sample size', in the sense that the $\xi_{2}$ upper bound approximates $\xi_{2}$, and we can optimise it as a surrogate. Following step 1, we now bound $\xi_{2}(\set{S})$.
+
 
 \iffalse
 To show that $\tau$ can be positive under GLR, we bound it from below similarly to Theorem \ref{thm:noiseless_optimality_means_noise_sensitivity}.{\color{black} We start with a weaker, easier-to-understand version of the full theorem:
@@ -112,7 +205,7 @@ To show that $\tau$ can be positive under GLR, we bound it from below similarly 
 
 The function $\omega$ arises from the Kantorovich inequality, commonly used in variance bounds \cite{khatri1982some, householder1965kantorovich}. $\omega$ is an increasing function and for $x>1, \omega(x) \leq x$; this means $r$ increases with $\frac{\lambda_{N}}{\lambda_{2}}$. We discuss $r$ in more detail in Appendix \ref{app:GLR_sensitivity}.
 
-As mentioned, in step 4 we need a bound on $\xi_{1}(\set{S})$ to lower bound $\tau(\set{N},\set{S}^{c})$. The shape and accuracy of this bound do not affect the core of our argument, only how tight our approximation of $\tau$ is. Therefore, we leave it in Appendix \ref{app:proof_unif_ub_xi_1_MSE}; the term $B_{k}(m)$ it introduces in the proof is a tightening of $B(m)$ ($B_{k}(m) < B(m)$) and is explained in Appendix  \ref{app:GLR_bandlimited}.
+As mentioned, in step 4 we need a bound on $\xi_{1}(\set{S})$ to lower bound $\tau(\set{N},\set{S}^{c})$. The shape and accuracy of this bound do not affect the core of our argument, only how tight our approximation of $\tau$ is. Therefore, we leave it in Appendix \ref{app:proof_unif_ub_xi_1_MSE}; the term $B_{k}(m)$ it introduces in the proof is a tightening of $B(m)$ ($B_{k}(m) < B(m)$) and is explained in the subsection on GLR under bandlimited noise (Section \ref{sec:GLR_bandlimited}).
 
 Following steps 2, 3 and 4 using the bound $B(m)$ in Lemma \ref{lemma:GLR_xi_2_bound_main} yields: 
 
@@ -148,16 +241,16 @@ the weaker bound (\ref{eq:xi_2_GLR_bound_weak}). This bound is a linear transfor
     \begin{flalign}
         &\text{If} \hspace{0.35\columnwidth} 2r\sqrt{N} < N& \label{eq:weak_GLR_constraint}
     \end{flalign}
-    Let
-    \begin{align}
-        \mu_{ub\_weak} &= \bar{\lambda}^{-1}\left(\sqrt[4]{N}\cdot ({2r})^{-\frac{1}{2}} - 1 \right) \\
-        \tau_{GLR\_weak} &=  \frac{\sqrt{N}(1 + \mu\bar{\lambda})^{-2} - 2r}{\sqrt{N} + 2r \cdot \frac{N}{k} }
-    \end{align}
-    then under GLR with parameter $\mu \in (0,\mu_{ub\_weak})$, if
-    \begin{equation}
-        \text{SNR} < \tau_{GLR\_weak}(\mu)
-    \end{equation}
-    then \emph{any} sample set $\set{S}$ of size $\lceil\sqrt{N}\rceil$ is better than $\set{N}$.
+\begin{flalign}
+    &\text{Let} \hspace{0.25\columnwidth} \mu_{ub\_weak} = \bar{\lambda}^{-1}\left(\sqrt[4]{N}\cdot ({2r})^{-\frac{1}{2}} - 1 \right)& 
+    \\ &\phantom{\text{Let}} \hspace{0.25\columnwidth} \tau_{GLR\_weak} =  \frac{\sqrt{N}(1 + \mu\bar{\lambda})^{-2} - 2r}{\sqrt{N} + 2r \cdot \frac{N}{k} }&
+\end{flalign}
+ 
+\noindent then under GLR with parameter $\mu \in (0,\mu_{ub\_weak})$,
+\begin{flalign}
+&\text{if} \hspace{0.35\columnwidth} \text{SNR} < \tau_{GLR\_weak}(\mu)&
+\end{flalign}
+then \emph{any} sample set $\set{S}$ of size $\lceil\sqrt{N}\rceil$ is better than $\set{N}$.
 \end{propn}
 \begin{proof}[Proof Sketch]
     We bound $\xi_{1}(\set{S})$ and $\xi_{2}(\set{S})$ in terms of $r\left(\frac{N}{m} + m - 1\right)$, which is minimised at $m = \sqrt{N}$. We explicitly compute $\xi_{i}(\set{N})$ and apply Corollary \ref{corr:main_GLR_iff}. See Appendix \ref{app:proof_propn_GLR_simple} for a full proof.
@@ -223,7 +316,7 @@ We use these to bound $\Delta_{i}$, and finally apply Corollary \ref{corr:main_G
 
 
 %{\color{black}Finally, we would like to experimentally see what our bound looks like and how it corresponds to MSEs. }
-The proof of Theorem \ref{thm:main_GLR_exist} leads to an upper bound of $\text{MSE}_{\set{S}}$. {\color{black} We present this upper bound to link the experiments in Section \ref{sec:experiments} with Fig. \ref{fig:GLR_diagram}, which can be considered to be the case where $\sigma^{2} \to \infty$.
+The proof of Theorem \ref{thm:main_GLR_exist} leads to an upper bound of $\text{MSE}_{\set{S}}$. {\color{black} We present this upper bound to link the experiments in Section \ref{sec:experiments_GLR} with Fig. \ref{fig:GLR_diagram}, which can be considered to be the case where $\sigma^{2} \to \infty$.
 \begin{corollary}
 \label{corr:unif_ub_xi_1_MSE}
     Let $B(m)$ be defined as in Lemma \ref{lemma:GLR_xi_2_bound_main} and $B_{k}(m)$ be defined as it will be in Lemma \ref{lemma:GLR_xi_2_bound_main_bl}. 
@@ -400,7 +493,7 @@ In the literature on Network Synchronisation \cite{barahona2002synchronization},
 \fi
 
 \subsubsection{\bs{Asymptotics}}
-Finally, we consider the case of large graphs.{\color{black} While our sensitivity analysis suggests that $\tau_{GLR} \to 0$ as $N$ gets large, this is an oversimplification from assuming indepence of parameters in our analysis. We present a Proposition to show that that $\tau_{GLR} \not\to 0$ as $N \to \infty$ for ER graphs.
+Finally, we consider the case of large graphs. While our sensitivity analysis suggests that $\tau_{GLR} \to 0$ as $N$ gets large, this is an oversimplification from assuming indepence of parameters in our analysis. We present a Proposition to show that that $\tau_{GLR} \not\to 0$ as $N \to \infty$ for ER graphs.
 \begin{propn}
 \label{propn:GLR_big_N}
 For Erdős–Rényi graphs, as $N \to \infty$, condition (\ref{eq:GLR_exist_thm_B_constraint}) in Theorem \ref{thm:main_GLR_exist} holds w.h.p. and $\tau_{GLR}$ tends to a positive constant even under optimal choice of $\mu$ \cite{chen2017GLRbias}.
@@ -409,7 +502,7 @@ For Erdős–Rényi graphs, as $N \to \infty$, condition (\ref{eq:GLR_exist_thm_
     Full statement and proof in Appendix 
  \ref{app:Proof_GLR_big_N}.
 \end{proof}
-}
+
 {\color{black} This shows that reducing sample size can reduce MSE on arbitrarily large graphs under GLR even with optimal $\mu$. 
 }
 %We analyse Theorem \ref{thm:main_GLR_exist} to show that $\tau_{GLR} \not\to 0$ as $N \to \infty$ and so our analysis is also relevant for large graphs. We only consider Erdős–Rényi graphs to simplify the analysis. 
@@ -463,7 +556,7 @@ then $m_{opt\_bl} \leq \lceil \frac{N+1}{2} \rceil$. Furthermore $\exists \mu_{u
 
 Given the similarity of the bounds and proof approaches between Theorems \ref{thm:main_GLR_exist} and \ref{thm:main_GLR_bl}, the same analysis of parameters applies to Theorem \ref{thm:main_GLR_bl} as Theorem \ref{thm:main_GLR_exist}. Thus we expect the parameters in Theorem \ref{thm:main_GLR_bl} -- $m_{opt\_bl}$, $B_{k}(m_{opt\_bl})$, $\mu_{ub\_bl}$ and $\tau_{GLR\_bl}$ to behave similarly to their non-bandlimited counterparts. This is reinforced by the asymptotics, which we will see in Proposition \ref{propn:GLR_big_N_bl}.
 
-We again present an MSE upper bound to link our experiments in Section \ref{sec:experiments} to Fig \ref{fig:GLR_diagram}:
+We again present an MSE upper bound to link our experiments in Section \ref{sec:experiments_GLR} to Fig \ref{fig:GLR_diagram}:
 \begin{corollary}
 \label{corr:unif_ub_xi_1_MSE_bl}
     Let $B_{k}(m)$ be defined as in Lemma \ref{lemma:GLR_xi_2_bound_main_bl}. For a sample set $\set{S}$ of size $m$,
@@ -644,7 +737,7 @@ This shows that even with bandlimited noise, for sufficiently large noise we pre
 
 
 \section{Experiments}
-\label{sec:experiments}
+\label{sec:experiments_GLR}
 \label{experiments_sec}
 
 %threshold_plots
@@ -914,67 +1007,41 @@ This shows that even with bandlimited noise, for sufficiently large noise we pre
 \end{figure*}
 \fi
 
-Our theoretical results show how the relationship between sample size and MSE changes with the level of noise, focusing on how reducing sample size will reduce MSE if the SNR is below a threshold. In this section, we demonstrate  the applicability and validity of these results via empirical experiments. 
+As in Chapter \ref{ch:proj1_LS}, our theoretical results show how the relationship between sample size and MSE changes with the level of noise, focusing on how reducing sample size will reduce MSE if the SNR is below a threshold. In this section, we demonstrate  the applicability and validity of these results via empirical experiments. 
 
 %Note that we always consider SNR in ratio form --- as $10^{x}$ rather than $\frac{x}{10} dB$ --- which is always positive. For the SNR to be below a given threshold (and so for us to show reducing sample size will decrease MSE) the threshold must be positive.
 
-We first demonstrate the applicability of our results with plots of the thresholds $\tau(\set{S},v)$, $\tau_{GLR}$ and $\tau_{GLR\_bl}$ against sample size (Figs. \ref{LS_SNR_Threshold_plots_all} and \ref{GLR_Threshold_plots}). These plots show concrete SNR values for the thresholds, giving a practical understanding of how high noise levels need to be for reducing sample size to reduce MSE for different random graph models and parameters. Additionally, we empirically tabulate the probabilities that graphs from each model  satisfy the conditions of our theorems (Table \ref{tbl:empirical_probabilities_conditions}), allowing the reader to evaluate the impact of our theorems across different applications. We then demonstrate the validity of our results by plotting $\textrm{MSE}_{\set{S}}$ against sample size (Figs. \ref{LS_ER_MSE_fig} and  \ref{GLR_ER_MSE_fig}) at SNRs below, near and above the derived thresholds, showing that the behaviour of $\textrm{MSE}_{\set{S}}$ follows our theoretical results. \bs{We finally present similar results on real-world datasets, validating the applicability of our results to real world datasets.}
+We first demonstrate the applicability of our results with plots of the thresholds $\tau_{GLR}$ and $\tau_{GLR\_bl}$ against sample size (Fig. \ref{GLR_Threshold_plots}). These plots show concrete SNR values for the thresholds, giving a practical understanding of how high noise levels need to be for reducing sample size to reduce MSE for different random graph models and parameters. Additionally, we empirically tabulate the probabilities that graphs from each model  satisfy the conditions of our theorems (Table \ref{tbl:empirical_probabilities_conditions}), allowing the reader to evaluate the impact of our theorems across different applications. We then demonstrate the validity of our results by plotting $\textrm{MSE}_{\set{S}}$ against sample size (Figs. \ref{LS_ER_MSE_fig} and  \ref{GLR_ER_MSE_fig}) at SNRs below, near and above the derived thresholds, showing that the behaviour of $\textrm{MSE}_{\set{S}}$ follows our theoretical results. We finally present similar results on real-world datasets, validating the applicability of our results to real world datasets.
 
 \subsection{Experimental Setup}
-We now present the setup of the experiments. All results are presented with 90\% confidence intervals and all experiments use the combinatorial Laplacian $\matr{L}$ and its eigenbasis.
-\subsubsection{\bs{Synthetic} Graph Generation}
-We consider each of the following unweighted random graph models:
-\begin{itemize}
-    \item Erdős–Rényi (ER) with edge probability $p=0.8$ (experiments with other values of $p$ show similar results)
-    \item Barabási-Albert (BA) with a preferential attachment to 3 vertices at each step of its construction
-    \item Stochastic Blockmodel (SBM) with intra- and inter-cluster edge probabilities of $0.7 \text{ and }0.1$ respectively
-    %\item Ring (Ring).
-\end{itemize}
-We consider 10 instantiations of each model for plots, and 1000 instantiations of each model to assess the probability the graph invariant conditions in our Theorems are met.
+\begin{mccorrect}
+    We follow the experimental setup in Chapter \ref{ch:proj1_LS}, with a few changes noted here.
+\end{mccorrect}
 
-We present threshold plots for graphs with 500, 1000, 2000 and 3000 vertices. We only present MSE plots for graphs with 500 vertices  {\color{black}  (like \cite[Fig 8]{bai2020fast})} as they are intended as an accompaniment to our threshold plots and theorems to demonstrate their validity, and a single graph size suffices. 
+\subsubsection{Synthetic Graph Generation}
+We generate graphs as in Chapter \ref{ch:proj1_LS}; we consider 10 instantiations of each model for plots, However, we also consider 1000 instantiations of each model to assess the probability the graph invariant conditions in our Theorems are met.
 
 \subsubsection{\xd{Synthetic} Signal Generation}
-We set the bandwidth  $k = \lfloor \frac{N}{10} \rfloor$, as per \cite{bai2020fast}.  We consider the following SNRs:
+We consider the following SNRs:
 
 \begin{itemize}
     \item \makebox[4.1\labelwidth][l]{Full-band noise:} $10^{-1},\ 0.5,\ 10^{10}$ (i.e. $-10\,\mathrm{dB},\ -3\,\mathrm{dB},\ 100\,\mathrm{dB}$)
     \item \makebox[4.1\labelwidth][l]{Bandlimited noise:} $10^{-2},\ 0.5,\ 10^{10}$ (i.e. $-20\,\mathrm{dB},\ -3\,\mathrm{dB},\ 100\,\mathrm{dB}$)
 \end{itemize}
 
+As in Chapter \ref{ch:proj1_LS}, these SNRs are chosen to demonstrate that there are three regimes for MSE with distinctive properties---the high noise regime, the transitionary regime and the approximately noiseless regime---and that $\tau_{GLR}$ captures when the regimes change. Suitable values of SNRs to demonstrate this vary between reconstruction methods and noise types, hence our choices.
 
-
-
-These SNRs are chosen to demonstrate that there are three regimes for MSE with distinctive properties---the high noise regime, the transitionary regime and the approximately noiseless regime---and that $\tau$ captures when the regimes change. Suitable values of SNRs to demonstrate this vary between reconstruction methods and noise types, hence our choices.
-%Note that we always consider SNR in ratio form---as $10^{x}$ rather than $\frac{x}{10} dB$---which is always positive. For the SNR to be below a given threshold (and so for us to show reducing sample size will decrease MSE) the threshold must be positive.
-
-To test the MSE in reconstructing signals from samples \bs{on random graph models}, we generate 200 signals by sampling $\vect{y} = \vect{x}_{raw} + \sigma \cdot \epsilon_{raw}$ where:
-\begin{enumerate}
-    \item $\vect{x}_{raw} \sim \mathcal{N}(\vect{0}, \matr{\Pi}_{bl(\set{K})})$ 
-    \item[2a)] If full-band noise, $\vect{\epsilon}_{raw} \sim \mathcal{N}(\vect{0}, \matr{I}_{N})$, $\sigma = \sqrt{\frac{k}{{N \cdot\text{SNR}}}}$
-    \item[2b)]  If bandlimited noise, $\vect{\epsilon}_{raw} \sim \mathcal{N}(\vect{0}, \projbl )$, $\sigma = \frac{1}{\sqrt{\text{SNR}}}$ 
-    %\item Normalise $\vect{x}_{raw}$ and $\vect{\epsilon}_{raw}$ to have norm 1
-    %\item Normalise: $\vect{x} = \frac{\vect{x}_{raw}}{||\vect{x}_{raw}||_{2}}$ and $\vect{\epsilon} = \frac{\vect{\epsilon}_{raw}}{ ||\vect{\epsilon}_{raw}||_{2}}$
-    %\item[3)] Return $\vect{y} = \vect{x} + \frac{\vect{\epsilon}}{\sqrt{\text{SNR}}}$
-    %\item[3)] Return $\vect{y} = \vect{x} + \sigma \cdot \epsilon$
-\end{enumerate}
-%For the cases of bandlimited noise, in step (1) we generate $\vect{\epsilon}_{raw} \sim \mathcal{N}(\vect{0}, \projbl )$ instead.
+We generate signals for to test the MSE of reconstructing signals in the same way as Chapter \ref{ch:proj1_LS}.
 
 \subsubsection{Real World Datasets}
-\bs{
-We also consider two real world datasets as in \cite{zhi2023gaussian}. The first is an FMRI dataset, where the original graph consists of 4465 nodes corresponding to voxels of the cerebellum, with 292 Blood-Oxygen-Level-Dependent (BOLD) signals derived from FMRI. We sample a connected subgraph of 367 nodes via Neighbourhood Sampling \cite{hamilton2017inductive}. The second is a Weather dataset, where a $10$-nearest neighbours graph of 45 cities in Sweden is constructed, with 95 signals derived from the temperature. See \cite{venkitaraman2020gaussian, behjat2016signal, zhi2023gaussian} for details on graph construction and signal generation in both cases. 
-We generate $\vect{x}$ by $k$-bandlimiting the original signals, where For FMRI we set $k=36$ and for Weather dataset we set $k=8$. We otherwise follow the above methodology in Synthetic Signal Generation for generating signals with full-band noise.
-}
-
+We consider the same real world datasets as in Chapter \ref{ch:proj1_LS}.
 
 \subsubsection{Sample-Set Selection}
-%The literature provides several approximations to make vertex sample-set selection efficient; for example, approximating the projection matrix $\projbl$ \cite{wang2018optimal} (subsets of which are used to compute optimality criteria) with a polynomial in $\matr{L}$, and approximating optimality criteria for easier computation \cite{bai2020fast}. 
 
 We generate sample sets greedily using exact analytic forms and by exactly computing $\matr{\Pi}_{bl(\set{K})}$.
-\begin{itemize}
-    \item[GLR:] We exactly compute the MMSE criterion, which is a function of SNR and noise type, and the WMSE criterion {\color{black}\cite{EOptimalChen}}, which is not. We also consider uniform random sampling.
-\end{itemize}
-Note that sampling schemes in the literature tend to differ from ours mainly in that they approximate our setup for computational efficiency reasons; e.g. approximating the projection matrix $\projbl$ with a polynomial in $\matr{L}$ \cite{wang2018optimal}, and approximating optimality criteria \cite{bai2020fast}. As these differences are for efficiency reasons, we do not expect them to matter in our experiments.
+For GLR, we exactly compute the MMSE criterion, which is a function of SNR and noise type, and the WMSE criterion {\color{black}\cite{EOptimalChen}}, which is not. We also consider uniform random sampling.
+
+As in Chapter \ref{ch:proj1_LS}, we note that sampling schemes in the literature tend to differ from ours mainly in that they approximate our setup for computational efficiency reasons; e.g. approximating the projection matrix $\projbl$ with a polynomial in $\matr{L}$ \cite{wang2018optimal}, and approximating optimality criteria \cite{bai2020fast}. As these differences are for efficiency reasons, we do not expect them to matter in our experiments.
 
 \subsubsection{Parameters of Reconstruction Methods} We consider GLR with $\mu \in \{10^{-4}, 10^{-2}, 1 \}$.
 
@@ -1035,9 +1102,147 @@ Note that sampling schemes in the literature tend to differ from ours mainly in 
 %\label{bandlimited_GLR_ER_MSE_fig}
 \end{figure*}
 
+\begin{figure*}%
+    \centering
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/SBM_500_bandwidth_50_SNRdbs_-10.0_samps_500_mus_0.0001_0.01_1_full_band.png}
+    \caption{SNR = $10^{-1}$}
+    \label{GLR_SBM_MSE_subfiga}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/SBM_500_bandwidth_50_SNRdbs_-3.01_samps_500_mus_0.0001_0.01_1_full_band.png}
+    \caption{SNR = $\frac{1}{2}$}%
+    \label{GLR_SBM_MSE_subfigb}%
+    \end{subfigure}\hfill%
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/SBM_500_bandwidth_50_SNRdbs_100.0_samps_500_mus_0.0001_0.01_1_full_band.png}
+    \caption{SNR = $10^{10}$}%
+    \label{GLR_SBM_MSE_subfigc}%
+    \end{subfigure}%
+    \caption{\color{black}Average MSE for GLR reconstruction on SBM Graphs (\#vertices=500, bandwidth = 50) with different SNRs, line without markers is an upper bound}
+\label{GLR_SBM_MSE_fig}
+\end{figure*}
 
-For full-band noise, we present threshold plots for all graphs and MSE plots for ER graphs in the main body of the paper. MSE plots for BA and SBM graphs are presented in Appendix \ref{plot_appendix}. For bandlimited noise, we present threshold plots, MSE plots and discussion of how the experimental and theoretical results correspond in Appendix \ref{app:Experiments_Bandlimited}.
-{\color{black} We also present Table \ref{tbl:theory_experiment_correspondence} showing how our plots correspond to our theoretical results, which also corresponds to the summary of theoretical results in Table \ref{tbl:general_theory}.}
+
+\begin{figure*}%
+    \centering
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/BA_3_500_bandwidth_50_SNRdbs_-10.0_samps_500_mus_0.0001_0.01_1_full_band.png}
+    \caption{SNR = $10^{-1}$}
+    \label{GLR_BA_MSE_subfiga}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/BA_3_500_bandwidth_50_SNRdbs_-3.01_samps_500_mus_0.0001_0.01_1_full_band.png}
+    \caption{SNR = $\frac{1}{2}$}%
+    \label{GLR_BA_MSE_subfigb}%
+    \end{subfigure}\hfill%
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/BA_3_500_bandwidth_50_SNRdbs_100.0_samps_500_mus_0.0001_0.01_1_full_band.png}
+    \caption{SNR = $10^{10}$}%
+    \label{GLR_BA_MSE_subfigc}%
+    \end{subfigure}%
+    \caption{\color{black}Average MSE for GLR reconstruction on BA Graphs (\#vertices=500, bandwidth = 50) with different SNRs, line without markers is an upper bound}
+\label{GLR_BA_MSE_fig}
+\end{figure*}
+
+
+\begin{figure*}%
+    \centering
+    \begin{subfigure}{0.3\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_threshold/ER_bl.png}}
+    \caption{Erdős–Rényi ($\tau_{GLR\_bl}$)}
+    \label{tau_GLR_bl_er}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.333\columnwidth}
+    \resizebox{\width}{0.55\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_threshold/BA_bl.png}}
+    \caption{Barabási-Albert ($\tau_{GLR\_bl}$)}%
+    \label{tau_GLR_bl_BA}%
+    \end{subfigure}
+    \hfill%
+    \begin{subfigure}{0.3\columnwidth}
+    
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_threshold/SBM_bl.png}}
+    \caption{SBM ($\tau_{GLR\_bl}$)}%
+    \label{tau_GLR_bl_SBM}%
+    \end{subfigure}%
+    \caption{$\tau_{GLR\_bl}$ for different random graph models (\#vertices = colour, bandwidth = $\frac{\text{\# vertices}}{10}$)}
+\label{GLR_Threshold_plots_bl}
+\end{figure*}
+
+\begin{figure*}%
+    \centering
+    \begin{subfigure}{0.3\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/ER_0pt8_500_bandwidth_50_SNRdbs_-20.0_samps_500_mus_0.0001_0.01_1_bl_noise.png}}
+    \caption{Bandlimited noise, SNR = $10^{-2}$}
+    \label{bandlimited_GLR_MSE_subfiga}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/ER_0pt8_500_bandwidth_50_SNRdbs_-3.01_samps_500_mus_0.0001_0.01_1_bl_noise.png}}
+    \caption{Bandlimited noise, SNR = $\frac{1}{2}$}%
+    \label{bandlimited_GLR_MSE_subfigb}%
+    \end{subfigure}\hfill%
+    \begin{subfigure}{0.3\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/ER_0pt8_500_bandwidth_50_SNRdbs_100.0_samps_500_mus_0.0001_0.01_1_bl_noise.png}}
+    \caption{Bandlimited noise, SNR = $10^{10}$}%
+    \label{bandlimited_GLR_MSE_subfigc}%
+    \end{subfigure}%
+    \caption{Average MSE under GLR on ER Graphs (\#vertices=500, bandwidth = 50), line without markers is an upper bound}
+\label{GLR_ER_MSE_fig_bl}
+%\label{bandlimited_GLR_ER_MSE_fig}
+\end{figure*}
+
+\begin{figure*}%
+    \centering
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/SBM_500_bandwidth_50_SNRdbs_-20.0_samps_500_mus_0.0001_0.01_1_bl_noise.png}
+    \caption{SNR = $10^{-2}$}
+    \label{bandlimited_GLR_SBM_MSE_subfiga}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/SBM_500_bandwidth_50_SNRdbs_-3.01_samps_500_mus_0.0001_0.01_1_bl_noise.png}
+    \caption{SNR = $\frac{1}{2}$}%
+    \label{bandlimited_GLR_SBM_MSE_subfigb}%
+    \end{subfigure}\hfill%
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/SBM_500_bandwidth_50_SNRdbs_100.0_samps_500_mus_0.0001_0.01_1_bl_noise.png}
+    \caption{SNR = $10^{10}$}%
+    \label{bandlimited_GLR_SBM_MSE_subfigc}%
+    \end{subfigure}%
+    \caption{\color{black}Average MSE for GLR reconstruction on SBM Graphs under bandlimited noise (\#vertices=500, bandwidth = 50) with different SNRs, line without markers is an upper bound}
+\label{bandlimited_GLR_SBM_MSE_fig}
+\end{figure*}
+
+\begin{figure*}%
+    \centering
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/BA_3_500_bandwidth_50_SNRdbs_-20.0_samps_500_mus_0.0001_0.01_1_bl_noise.png}
+    \caption{SNR = $10^{-2}$}
+    \label{bandlimited_GLR_BA_MSE_subfiga}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/BA_3_500_bandwidth_50_SNRdbs_-3.01_samps_500_mus_0.0001_0.01_1_full_band.png}
+    \caption{SNR = $\frac{1}{2}$}%
+    \label{bandlimited_GLR_BA_MSE_subfigb}%
+    \end{subfigure}\hfill%
+    \begin{subfigure}{0.3\columnwidth}
+    \includegraphics[width=\columnwidth]{figures/proj1/plots/GLR_MSE/BA_3_500_bandwidth_50_SNRdbs_100.0_samps_500_mus_0.0001_0.01_1_full_band.png}
+    \caption{SNR = $10^{10}$}%
+    \label{bandlimited_GLR_BA_MSE_subfigc}%
+    \end{subfigure}%
+    \caption{\color{black}Average MSE for GLR reconstruction on BA Graphs under bandlimited noise (\#vertices=500, bandwidth = 50) with different SNRs, line without markers is an upper bound}
+\label{bandlimited_GLR_BA_MSE_fig}
+\end{figure*}
+
+\clearpage
+For full-band noise, we present threshold plots for all graphs and MSE plots for ER graphs in the main body of the paper. MSE plots for BA and SBM graphs are presented in Appendix \ref{plot_appendix}.
+ We also present Table \ref{tbl:theory_experiment_correspondence_GLR} showing how our plots correspond to our theoretical results, which also corresponds to the summary of theoretical results in Table \ref{tbl:general_theory_LS}.
 
 \iffalse
 \begin{table}[h]
@@ -1118,7 +1323,7 @@ For full-band noise, we present threshold plots for all graphs and MSE plots for
 
 
 %\subsubsection{\texorpdfstring{$\tau$ and $\tau_{GLR}$ plots}{\texttau and \texttau\_GLR plots}}
-\subsubsection{$\tau_{GLR}$ plots (GLR)}
+\subsubsection{$\tau_{GLR}$ plots -- Full-band noise}
 %\emph{[GLR]:}  
 In Figs. \ref{tau_GLR_er}-\ref{tau_GLR_SBM}, we plot $\tau_{GLR}$, where if $\textrm{SNR} < \tau_{GLR}$, then there is a sample size $m_{opt} < N$ where \emph{any} sample set of size $m_{opt}$ is better than $\set{N}$. Unlike with LS, our theorems are only sufficient so $\text{SNR} > \tau_{GLR}$ is uninformative. %We interpret the subplots of Fig. \ref{GLR_Threshold_plots}:
 %%Figs. \ref{GLR_Threshold_plots} and \ref{bandlimited_GLR_Threshold_plots} plot $\tau_{GLR}$ and $\tau_{GLR_bl}$. 
@@ -1137,7 +1342,15 @@ As $\tau_{GLR} > 0$, Figs. \ref{tau_GLR_er}-\ref{tau_GLR_SBM} show we can reduce
 Finally, Proposition \ref{propn:GLR_big_N} proves that $\tau_{GLR} \not\to 0$ as $N \to \infty$ for $\mu = \frac{c}{\lambda_{2}}$,  or $\frac{c}{\lambda_{N}}$, or $\frac{c}{\sqrt{\lambda_{2}\lambda_{N}} }$ on ER graphs, i.e. for decreasing $\mu$ as $N$ increases. We note that Figs. \ref{tau_GLR_er}-\ref{tau_GLR_SBM}  provide empirical evidence that this might hold for all graph models tested.
 
 
-\subsubsection{MSE plots (GLR)}
+\subsubsection{$\tau_{GLR}$ plots -- bandlimited noise}
+
+
+
+Our purpose in showing bandlimited variants is to show that reducing sample size can reduce MSE even under bandlimited noise. Figs. \ref{tau_GLR_bl_er}- \ref{tau_GLR_bl_SBM} show the same overall trend as Figs. \ref{tau_GLR_er}-\ref{tau_GLR_SBM}, i.e. $\tau_{GLR\_bl}$ can be positive for ER, {\color{black} BA} and SBM graphs, giving evidence to our claim. \iffalse Fig. \ref{tau_GLR_bl_BA} is entirely negative, and so entirely uninformative, i.e. it does not prove whether reducing sample size can or cannot reduce MSE under bandlimited noise for BA graphs, at least based on our theoretical results.\fi As with the full-band case, Fig. \ref{tau_GLR_bl_er} validates our asymptotic result for ER graphs (Proposition \ref{propn:GLR_big_N_bl}).
+
+
+
+\subsubsection{MSE plots -- Full-band noise}
 As with LS, the MSE plots demonstrate the validity of our theoretical results linking MSE and sample size.
 %\emph{[GLR]:}
 Figs. \ref{GLR_MSE_subfiga}-\ref{GLR_MSE_subfigc} show how MSE changes with sample size for different values of $\mu$ under full-band noise, along with an upper bound (light blue) which is not dependent on $\mu$. This bound is approximately U-shaped in all cases.
@@ -1157,8 +1370,13 @@ Finally, Figs. \ref{GLR_MSE_subfiga}-\ref{GLR_MSE_subfigc} illustrate the depend
 Figs. \ref{GLR_MSE_subfiga}-\ref{GLR_MSE_subfigc} also demonstrate some limitations of the characterisation in Corollary \ref{corr:unif_ub_xi_1_MSE} and Theorem \ref{thm:main_GLR_exist}. We see from Fig. \ref{GLR_MSE_subfigb} that even though the MSE at $m_{opt}$ is lower than at $N$, our bound never goes below the maximum observed MSE, so is too loose to show this. This is partly because the Theorem and the Corollary bound $\xi_{2}(\set{S})$ only as a function of $|\set{S}|$, ignoring $\mu$ and the composition of $\set{S}$. This limitation corresponds to a gap between $\tau_{GLR}$ and $\tau(\set{N},\set{S}^{c})$, demonstrating $\tau_{GLR}$ is a lower bound for $\tau(\set{N},\set{S}^{c})$ rather than an exact characterisation.
 
 
+\subsubsection{MSE plots -- Bandlimited noise}
+
+
+Our observations about Figs. \ref{GLR_MSE_subfiga}-\ref{GLR_MSE_subfigc}  and Theorem \ref{thm:main_GLR_exist} also apply to Figs. \ref{bandlimited_GLR_MSE_subfiga}-\ref{bandlimited_GLR_MSE_subfigc} and Theorem \ref{thm:main_GLR_bl}; specifically, for sufficiently small $\mu$ and SNR, MSE is minimised at sample sizes well below $N$ under bandlimited noise and $\tau_{GLR\_bl}$ is a lower bound for $\tau(\set{N},\set{S}^{c})$ rather than an exact characterisation.
+
 \subsubsection{Checking Conditions}
-While our theorems for LS apply to all graphs, Theorem \ref{thm:main_GLR_exist} for GLR relies on conditions around graph invariants. We sample graphs from each random graph model to empirically show the probability the conditions of Theorem \ref{thm:main_GLR_exist} are met at a sample size of $m_{opt}$ for some $\mu > 0$:
+While our theorems for LS apply to all graphs, Theorems \ref{thm:main_GLR_exist} and \ref{thm:main_GLR_bl} for GLR rely on conditions around graph invariants. We sample graphs from each random graph model to empirically show the probability the conditions of Theorem \ref{thm:main_GLR_exist} and \ref{thm:main_GLR_bl} are met at a sample size of $m_{opt}$ for some $\mu > 0$:
 
 \begin{table}[h!]
 \caption{Probability theorem conditions are met}
@@ -1168,20 +1386,33 @@ While our theorems for LS apply to all graphs, Theorem \ref{thm:main_GLR_exist} 
         & \textbf{ER} & \textbf{SBM} & \textbf{BA} \\ 
         \midrule
         Theorem \ref{thm:main_GLR_exist} conditions met & 100\% & 100\% & 99.9\% \\ 
-        % Theorem \ref{thm:main_GLR_bl} conditions met & 100\% & 100\% & 99.4\% \\
+        Theorem \ref{thm:main_GLR_bl} conditions met & 100\% & 100\% & 99.4\% \\
         \bottomrule
         \end{tabular}
     \end{center}
     \label{tbl:empirical_probabilities_conditions}
 \end{table}
 
-Proposition \ref{propn:GLR_big_N} shows the conditions in Theorem \ref{thm:main_GLR_exist} hold w.h.p. for ER graphs as $N \to \infty$. However, the proposition does not say whether the conditions hold for a graph of a given size, or other graph models. The results in Table \ref{tbl:empirical_probabilities_conditions} show empirically that the conditions hold under full-band noise (Theorem \ref{thm:main_GLR_exist}) for ER, BA and SBM graphs with $500$ vertices. This outlines the applicability of our theorems.
+Propositions \ref{propn:GLR_big_N} and \ref{propn:GLR_big_N_bl} show the conditions in Theorems \ref{thm:main_GLR_exist} and \ref{thm:main_GLR_bl} respectively hold w.h.p. for ER graphs as $N \to \infty$. However, the proposition does not say whether the conditions hold for a graph of a given size, or other graph models. The results in Table \ref{tbl:empirical_probabilities_conditions} show empirically that the conditions hold under full-band noise (Theorem \ref{thm:main_GLR_exist}) and bandlimited noise (Theorem \ref{thm:main_GLR_bl}) for ER, BA and SBM graphs with $500$ vertices. This outlines the applicability of our theorems.
 
 If the conditions on our Theorems are not met, they provide no information about the shape of the MSE. However, Figs. \ref{bandlimited_GLR_BA_MSE_fig} and  \ref{bandlimited_GLR_SBM_MSE_fig} in Appendix \ref{plot_appendix} show empirically that for BA and SBM graphs under bandlimited noise with $\text{SNR} \in \{10^{-2}, \frac{1}{2}\}$ under GLR with $\mu \in 
 \{10^{-2}, 10^{-4}\}$, even if the conditions of Theorem \ref{thm:main_GLR_bl} are not met, reducing sample size from ${N}$ to below ${N}$ reduces MSE under the presented sampling schemes. We leave further investigation of this as future work. %It is future work to sharpen Theorem \ref{thm:main_GLR_bl} to include these cases.
 
-{\color{black}
+
 \subsection{Experimental Results --- Real World Datasets}
+
+
+We first discuss the plots of $\tau_{GLR}$ for real world datasets. In practice, one cannot know for sure what the signal model of a real world signal is; however, computation of $\tau_{GLR}$ is dependent on our choice of theoretical signal model. We have therefore computed $\tau$ under the signal model assumptions given in Section \ref{sec:signal_model}.  
+
+%By Proposition \ref{propn:averages_generalise_to_forall}, we know that there is a threshold $\tau > 0$ whenever $\tau$ is positive under our bandlimited signal model. This means that we have proven the sign of $\tau$ in \ref{LS_SNR_Threshold_plots_all_real} is correct, even though our assumption that the covariance of the signal model is $\projbl$ may not hold. We validate the accuracy of the value of our computed $\tau(\set{S},v)$ in our discussion of the MSE plots.
+
+\subsubsection{$\tau$ plots}
+By Theorem \ref{thm:main_GLR_exist}, $\tau_{GLR}$ being positive means $\tau(\set{N},\set{S}^{C}) >0$ under the bandlimited signal model. As Theorem \ref{thm:main_GLR_exist} functions by showing $\Delta_{2} >0$, by Proposition \ref{propn:averages_generalise_to_forall}, $\tau_{GLR}$ being positive under one signal model means $\tau(\set{N},\set{S}^{C})$ is positive under any signal model. We use this to interpret Fig. \ref{GLR_Threshold_plots_real}.
+We can see from Fig. \ref{tau_GLR_fmri} that if $\mu<0.01$ then at some noise level, any set of size $m_{opt}$ is better than $\set{N}$. Fig. \ref{tau_GLR_weather} which shows $\tau_{GLR} < 0$ for all $\mu$ is completely uninformative -- $\tau_{GLR}$ is a lower bound for $\tau(\set{N},\set{S}^{C})$, and a negative lower bound cannot tell us whether the bounded quantity is or isn't positive. We validate this in the MSE section.
+
+\subsubsection{MSE plots}
+All four figures in Fig. \ref{GLR_real_MSE_fig} corresponding to $\text{SNR} \leq \frac{1}{2}$ and $\mu < 1$ show the minimum MSE at sample size of significantly less than $N$, which validates Theorem \ref{thm:main_GLR_exist} combined with Proposition \ref{propn:averages_generalise_to_forall}. This is expected for the FMRI graph for $\mu<0.01$, as $\tau_{GLR} > 0$ and we had proof that decreasing sample size from $N$ would decrease MSE. However, it is the case for the Weather graph, even though our computation of $\tau_{GLR}$ was negative; this is not unexpected as Theorem \ref{thm:main_GLR_exist} is sufficient but not necessary.
+
 
 %%% REAL DATASET experiments
 
@@ -1248,14 +1479,20 @@ If the conditions on our Theorems are not met, they provide no information about
 %\label{bandlimited_GLR_ER_MSE_fig}
 \end{figure*}
 
-We first discuss the plots of $\tau_{GLR}$ for real world datasets. In practice, one cannot know for sure what the signal model of a real world signal is; however, computation of $\tau_{GLR}$ is dependent on our choice of theoretical signal model. We have therefore computed $\tau$ under the signal model assumptions given in Section \ref{sec:signal_model}.  
-}
-%By Proposition \ref{propn:averages_generalise_to_forall}, we know that there is a threshold $\tau > 0$ whenever $\tau$ is positive under our bandlimited signal model. This means that we have proven the sign of $\tau$ in \ref{LS_SNR_Threshold_plots_all_real} is correct, even though our assumption that the covariance of the signal model is $\projbl$ may not hold. We validate the accuracy of the value of our computed $\tau(\set{S},v)$ in our discussion of the MSE plots.
+\clearpage
 
-\subsubsection{$\tau$ plots (GLR)}
-By Theorem \ref{thm:main_GLR_exist}, $\tau_{GLR}$ being positive means $\tau(\set{N},\set{S}^{C}) >0$ under the bandlimited signal model. As Theorem \ref{thm:main_GLR_exist} functions by showing $\Delta_{2} >0$, by Proposition \ref{propn:averages_generalise_to_forall}, $\tau_{GLR}$ being positive under one signal model means $\tau(\set{N},\set{S}^{C})$ is positive under any signal model. We use this to interpret Fig. \ref{GLR_Threshold_plots_real}.
-We can see from Fig. \ref{tau_GLR_fmri} that if $\mu<0.01$ then at some noise level, any set of size $m_{opt}$ is better than $\set{N}$. Fig. \ref{tau_GLR_weather} which shows $\tau_{GLR} < 0$ for all $\mu$ is completely uninformative -- $\tau_{GLR}$ is a lower bound for $\tau(\set{N},\set{S}^{C})$, and a negative lower bound cannot tell us whether the bounded quantity is or isn't positive. We validate this in the MSE section.
+\section{Discussion}
+In this Chapter we studied the impact of sample size on linear reconstruction of noisy graph signals under GLR reconstruction. We showed theoretically and experimentally, under robust reconstruction and in the same settings as much of the sample set selection literature, that for a class of graphs, reconstruction error can be improved by reducing sample size at sufficiently low SNRs, regardless of the sample selection scheme. We have empirically validated that most graphs generated from Erdős–Rényi, Stochastic Blockmodel and Barabasi-Albert graph models fall in this class of graphs. We have also derived a suggested `optimal sample size' for high noise sampling.
 
-\subsubsection{MSE plots (GLR)}
-All four figures in Fig. \ref{GLR_real_MSE_fig} corresponding to $\text{SNR} \leq \frac{1}{2}$ and $\mu < 1$ show the minimum MSE at sample size of significantly less than $N$, which validates Theorem \ref{thm:main_GLR_exist} combined with Proposition \ref{propn:averages_generalise_to_forall}. This is expected for the FMRI graph for $\mu<0.01$, as $\tau_{GLR} > 0$ and we had proof that decreasing sample size from $N$ would decrease MSE. However, it is the case for the Weather graph, even though our computation of $\tau_{GLR}$ was negative; this is not unexpected as Theorem \ref{thm:main_GLR_exist} is sufficient but not necessary.
+One practical implication of our theoretical results is that it can provide useful guidance on how to make use of the sampling budget available. For example, if one is aware of potentially high noise present in the observed signals, to minimise MSE of reconstruction, it might be preferable to not use all of the provided sampling budget.
 
+Another use case could be a practical sampling algorithm. For GLR reconstruction, with a fixed $\mu$ and belief that the signal model in Section \ref{sec:every_x} applies (the latter could be assessed based on past observations and is required for computation of the SNR threshold $\tau$), then our results suggest the following sampling algorithm can be considered. Given the graph structure, before observing any nodes:
+\begin{enumerate}
+    \item Check whether condition \eqref{eq:GLR_exist_thm_B_constraint} in Theorem \ref{thm:main_GLR_exist} applies (this only depend on graph structure);
+    \item If they do, compute $\tau_{GLR}$;
+    \item If it is believed that $\text{SNR} < \tau_{GLR}$ holds, sample $m_{opt}$ (approximately $\sqrt{N}$) nodes at random and reconstruct from those nodes.
+\end{enumerate}
+
+%We finally remark that future work includes extending the analysis on GLR to the normalised graph Laplacian, providing bounds on $\xi_2$ for LS, analysing other graph models such as Ring graphs or studying a mode detailed ``early-stopping'' mechanism in sequential sampling schemes that do not use the full sample budget.
+
+%%% LS plots

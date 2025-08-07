@@ -1,0 +1,77 @@
+
+
+\chapter{\label{ch:2.5-litreview}Last Chapter Introduction}
+\section{Introduction}
+
+
+\iffalse
+\begin{itemize}
+    \item signal processing and machine learning on graphs are increasing common with many applications
+    \item data are often noisy and sometimes even incomplete; while the SP community has addressed this via extending classical sampling and reconstruction to graph setting, the ML community hasn't produced much theoretical results in the setting of learning with missing data (as well as its relation to the SP case, due to the difference in ``downstream'' tasks) 
+    \item to fill this gap, we provide theoretical results on classification error in presence of missing data, and compare that with results for sampling \& reconstruction (emphasising the trade-off between the two)
+    \item Based on the theoretical results, we present a sampling scheme for classification, and show its effectiveness in both the classical setting and by linearly approximating a GCN
+    \item [optional] compare empirically how the optimal sample set in one compares to that in the other (based on characteristics of the sample set)
+    \item results on real-world data
+\end{itemize}
+
+Questions:
+\begin{itemize}
+    \item Do I need to compare it to GCN methods for missing data?
+\end{itemize}
+\fi
+Signal processing and machine learning on graphs have become increasingly common, with many applications such as analysing and predicting brain fMRI signals \cite{itani2021graph}, urban air pollution \cite{jain2014big}, political preferences \cite{renoust2017estimating} and \bs{protein function \cite{szklarczyk2019string}}. However, data defined on a network domain, often called `graph signals', is frequently noisy and sometimes even incomplete, %-> this is a general paragraph about context and problem statement 
+making such tasks challenging.
+
+\iffalse
+%(to be moved to paragraphs below) 
+The signal processing community has addressed this by generalising classical sampling and reconstruction tools to the graph setting, with a focus on efficient reconstruction of signals via sample choice or reconstruction method \cite{ortega2018graph}. Theoretical results have also been derived on the performance of signal reconstruction and sample choice under reconstruction loss \cite{pesenson2008sampling, puy2018random, chamon2016near, chamon2017greedy, shomorony2014sampling}. However, there is a significant lack of investigation of the impact of incomplete data on downstream tasks such as classification. The machine learning literature has so far only been centered around developing empirical frameworks in this setting \cite{rossi2021unreasonable}, while theoretical results on classification under this missing data on graphs setting are scarce. 
+%While the machine learning literature on this setting is centered around empirical results \cite{rossi2021unreasonable}, the signal processing community has generalised classical sampling and reconstruction tools to the graph setting, with a focus on efficient reconstruction of signals via sample choice or reconstruction method \cite{wang2018optimal}[cite]. However, theoretical results in graph signal processing have mainly focused on the performance of signal reconstruction and sample choice under reconstruction loss [cites], rather than with the loss induced by more complex downstream tasks such as classification with a GCN.
+\fi
+
+The graph signal processing (GSP) community has addressed the issue of noisy and incomplete data by generalising the tools of sampling and reconstruction from classical signal processing, via extending the classical shift operator to a graph shift operator \cite{ortega2018graph} such as the Laplacian. The majority of studies on graph-based sampling focus on designing efficient sampling schemes for criteria which approximate \cite{wang2018optimal, wang2019low, mfn, tremblay2017graph, jayawant2021doptimal,puy2018random, pakiyarajah2025graph} or bound \cite{bai2020fast,eoptimalchen} reconstruction loss, grounded in the optimal design of experiments \cite{pukelsheim2006optimal}, \bs{with some work simultaneously learning the underlying graph topology \cite{zhang2025graph, berger2020efficient, sridhara2024towards}}.  Theoretical results have also been derived on the performance of sample choice and signal reconstruction under reconstruction loss \cite{pesenson2008sampling, puy2018random, chamon2016near, chamon2017greedy, shomorony2014sampling, chen2016signal}. %with those on perfect reconstruction \cite{pesenson2008sampling} generalising to other downstream tasks, as perfect reconstruction of the data implies perfect reconstruction of any function of the data. 
+%However, those results require a bandlimited signal model and computationally expensive reconstruction, and are sensitive to these assumptions \cite{sripathmanathan2024impact}, limiting their applicability. 
+\bs{However, these results do not immediately carry over to other tasks such as classification, as they rely on the specific structure of reconstruction loss -- e.g., the proof of near-optimality of greedy sampling on graphs \cite{chamon2016near} relies on the loss's (approximate) supermodularity. Thus, there is a significant lack of investigation in the GSP literature of the impact of incomplete data on downstream learning tasks.} %with Graph Neural Networks (GNNs).}
+
+\iffalse
+However, as these works focus on reconstruction error, the theoretical results only apply specifically to this setting -- e.g., the results on the near-optimality of greedy sampling \cite{chamon2016near} depend on the (approximate) supermodularity of the specific reconstruction loss, and hence do not immediately apply to the classification setting \bs{which has} a different goal and error characterization. Except for results on perfect reconstruction in the noiseless setting \cite{pesenson2008sampling}, theoretical results on reconstruction in the broader settings \cite{puy2018random,chamon2016near, chamon2017greedy,shomorony2014sampling, sripathmanathan2024impact} do not immediately carry over to the classification setting. Thus, there is a significant lack of investigation in the GSP literature of the impact of incomplete data on downstream tasks such as classification.
+\fi
+\bs{
+The graph machine learning (GML) community, on the other hand, does address the issue of incomplete data, often in the context of downstream tasks such as node classification. They take two main approaches -- label prediction and feature imputation. Label prediction sidesteps the issue of missing data by directly predicting the missing node class labels, such as by label propagation \cite{zhou2003learning} or by using graph neural networks (GNNs) on the partial data with modified message passing \cite{jiang2020incomplete, chen2020learning}. Feature imputation involves reconstructing the graph signals, potentially alongside missing edges, usually as a pre-processing step to inference. Such methods include matrix completion methods \cite{kalofolias2014matrix} and autoencoder-based methods \cite{spinelli2020missing}. Another example is feature propagation \cite{rossi2021unreasonable}, which is a graph Laplacian-based feature imputation method that applies a GSP-motivated approach to downstream tasks such as classification with GNNs. Finally, some approaches combine label prediction and feature imputation in an end-to-end training framework \cite{taguchi2021graph, you2020handling}. While work in GML engages with missing data in settings with varied downstream tasks, it has done so through an empirical lens -- evaluating the performance of the proposed methods on specific datasets -- and thus theoretical results remain scarce.}
+
+\iffalse
+The graph machine learning (GML) community, on the other hand, takes two approaches to addressing the problem of missing data -- feature imputation and label prediction. Feature imputation involves reconstructing the graph signals, \bs{potentially along with missing edges}, and such methods include matrix completion methods \cite{kalofolias2014matrix} \iffalse \cite{candes2012exact,cai2010singular}\fi and autoencoder-based methods \cite{spinelli2020missing}. Label prediction \bs{sidesteps the issue of missing data by} directly predicting the missing node class labels, such as \bs{by} label propagation \cite{zhou2003learning} or directly using GNNs on the partial data with adjusted message passing \cite{jiang2020incomplete, taguchi2021graph, chen2020learning}. Some approaches combine the two \cite{you2020handling}. We note that Feature Propagation \cite{rossi2021unreasonable} makes inroads into bridging the GSP and GML approaches by feature imputation motivated by a graph Laplacian-based criterion while evaluating its effectiveness under a more complex downstream task. While work in GML engages with missing data in settings with significantly more complex downstream tasks than graph signal processing, it has done so through an empirical lens -- evaluating the performance of the proposed methods on specific datasets -- and thus theoretical results remain scarce. %Our work attempts to fill this gap.
+%a paragraph on summary of II.A: work in SP and limitations 
+
+%a paragraph summary of II.B: work in ML and limitations 
+\fi
+
+
+The separation of the two lines of work above points to an important aspect of dealing with incomplete data: sampling and reconstruction should be designed to serve the downstream task at hand and, depending on the task, the ``reconstruction error'' we care about might be different. For example, \bs{with recommender systems with incomplete participant data, our goal is to make effective recommendations (which can be formulated as a classification task) rather than reconstructing the attributes of the participants.}
+
+
+In this paper, we fill this gap in the literature by providing a theoretical characterisation of the performance of binary classification \bs{with a linearized graph convolutional network (GCN)} under missing data and noisy observation (Theorem \ref{thm:general_class_err}). We provide a bound showing the relationship between classification and reconstruction error (Corollary \ref{corr:relationship}), and compare the change in classification versus reconstruction error as a function of the sample size both theoretically and empirically. %We present a diagram showing the relationship under our model (Fig. \ref{fig:class_rec_rel_fig}), and compare the change in classification error versus reconstruction error as a function of the sample size both theoretically and empirically. 
+%comparison between classification and reconstruction
+\bs{We show that optimal sampling derived in the reconstruction setting can underperform random sampling when applied to classification tasks}. We then apply our theoretical results to derive a novel sample selection scheme for classification under a linearized GCN, and demonstrate that it improves upon using sample selection schemes which are optimal in the reconstruction setting. %We provide empirical experiments demonstrating how mean classification error and reconstruction error vary under sample size, under both synthetic and real world data.
+
+\iffalse
+\section{Related work}
+\subsection{Sampling and reconstruction in graph signal processing}
+Graph signal processing generalises the tools of sampling and reconstruction from classical signal processing by extending the classical shift operator to a graph shift operator \cite{ortega2018graph} such as the Laplacian. The majority of studies on graph-based sampling focus on designing efficient sampling schemes for criteria which approximate \cite{wang2018optimal, wang2019low, mfn, tremblay2017graph, jayawant2021doptimal,puy2018random} or bound \cite{bai2020fast,eoptimalchen} reconstruction loss, grounded in the optimal design of experiments \cite{pukelsheim2006optimal}. Such schemes optimizing mean squared reconstruction error are called `A-optimal'.
+
+As these works focus on reconstruction error, the theoretical results apply specifically to this setting -- for example, the results on the near-optimality of greedy sampling \cite{chamon2016near} depend on the (approximate) supermodularity of the specific loss, and so do not immediately apply to the classification setting. Except for results on perfect reconstruction in the noiseless setting \cite{pesenson2008sampling} (which would imply perfect classification in our setting), results on the performance of reconstruction in the broader setting \cite{puy2018random,chamon2017greedy,shomorony2014sampling} do not immediately carry over to the classification setting.
+\iffalse
+1. empirical sampling schemes
+2. theoretical results on reconstruction
+\fi
+\fi
+
+\iffalse
+\subsection{Graph ML tasks in presence of missing data}
+Graph Machine Learning takes two approaches to the problem of missing data -- feature imputation and label prediction. Feature imputation involves reconstructing the graph signal, and such methods include classical matrix completion methods \cite{candes2012exact,cai2010singular} and autoencoder-based methods \cite{spinelli2020missing}, which also can tackle issues around missing edges. Label prediction involves directly predicting the class, such as Label Propagation \cite{zhou2003learning} or directly using GNNs on the partial data with adjusted message passing \cite{jiang2020incomplete, taguchi2021graph}. Some approaches combine the two \cite{you2020handling}. We note that Feature Propagation (FP) \cite{rossi2021unreasonable} makes inroads into bridging the Graph ML approach and the GSP approach by doing imputation motivated by a Graph Laplacian-based criterion while evaluating the effectiveness under a more complex downstream task.
+
+While work in graph ML engages with missing data in settings with significantly more complex downstream tasks than graph signal processing, it has done so through an empirical lens -- evaluating the performance of their methods on specific datasets -- and thus there is a dearth of theoretical results. Our work attempts to fill this gap.
+\iffalse
+1. empirical frameworks
+2. lack of theoretical results
+\fi
+\fi

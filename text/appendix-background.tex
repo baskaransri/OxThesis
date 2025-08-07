@@ -1,0 +1,57 @@
+
+\chapter{\label{app:0-background}Chapter \ref{ch:2-litreview} Appendix}
+
+\section{Characterisation of Feature Propagation}
+\label{app:Feature_Propagation_limit_is_GLR}
+In this Section, we prove that Feature Propagation is the limit of GLR as $\mu \to 0$. 
+\begin{lemma}
+    Let $\matr{R}_{\set{S}}^{GLR, \mu}$ be the $\matr{R}_{\set{S}}$ corresponding to GLR with regularisation parameter $\mu$, and $\matr{R}_{\set{S}}^{FP}$ be the $\matr{R}_{\set{S}}$ corresponding to Feature Propagation. Then:
+    \begin{equation}
+        \forall \set{S}, \vect{x} \in \mathbb{R}^{N}: \matr{R}_{\set{S}}^{GLR, \mu}\vectsub[S]{x} \to \matr{R}_{\set{S}}^{FP}\vectsub[S]{x} \text{ as } \mu \to 0.
+    \end{equation}
+\end{lemma}
+\begin{proof}
+We decompose $(\proj{S} + \mu\matr{L})^{-1}$ blockwise. We first show that $\msubgen[\set{S}]{(\proj{S} + \mu\matr{L})^{-1}} \to \proj{S}$ as $\mu \to 0$. We use the theory of Schur Complements \cite[Section 0.8.5]{horn-and-johnson}, which gives a blockwise decomposition of the inverse of a matrix in terms of Schur complements which is presented in \cite[(0.7.3.1)]{horn-and-johnson}.
+
+For a submatrix $\matr{A}$ of $\matr{X}$, we write $(\matr{X} / \matr{A})$ for the Schur complement of $\matr{A}$ in $\matr{X}$.
+Let $\matr{M} = (\proj{S} + \mu\matr{L})$, then the Schur complement of $\msubgen[\set{S}^{C}]{\matr{M}}$ in $\matr{M}$ is
+\begin{align}
+    \matr{M} / \msubgen[\set{S}^{C}]{\matr{M}} &= \matrsub[S]{M} - \msubgen[\set{S},\set{S}^{C}]{\matr{M}}\msubgen[\set{S}^{C}]{\matr{M}}^{-1}\msubgen[\set{S}^{C},\set{S}]{\matr{M}}
+    \\ &= (\matr{I}_{\set{S}} + \mu\matrsub[S]{L}) - \msubgen[\set{S},\set{S}^{C}]{\mu\matr{L}} \msubgen[\set{S}^{C}]{\mu\matr{L}}^{-1} \msubgen[\set{S}^{C},\set{S}]{\mu\matr{L}} \\
+    &= \matr{I}_{\set{S}} + \mu\left(\matrsub[S]{L} - \msubgen[\set{S},\set{S}^{C}]{\matr{L}} \msubgen[\set{S}^{C}]{\matr{L}}^{-1} \msubgen[\set{S}^{C},\set{S}]{\matr{L}}  \right) \\
+    &= \matr{I}_{\set{S}} + \mu(\matr{L} / \msubgen[\set{S}^{C}]{\matr{L}})
+\end{align}
+
+We can take the inverse of $\msubgen[\set{S}^{C}]{\matr{L}}$ as we have assumed that $\mathcal{G}$ is connected, so the only null eigenvector of $\matr{L}$ is $\vect{1}$, and this vector cannot live in the subspace described by the basis vectors corresponding to $\set{S}^{C}$.
+
+By \cite[(0.7.3.1)]{horn-and-johnson}, $\matrsub[S]{\matr{M}}^{-1} = (\matr{M} / \msubgen[\set{S}^{C}]{\matr{M}})^{-1}$. We want to show that for all $\vect{y}$, $(\matr{M} / \msubgen[\set{S}^{C}]{\matr{M}})^{-1}\vect{y} \to \vect{y}$ as $\mu \to 0$. This statement can be proven by the continuity of matrix inversion around $\matr{I}$ in $GL(\mathbb{R}^{N})$, but we provide a more elementary proof below.
+
+Write everything in the basis of $(\matr{L} / \msubgen[\set{S}^{C}]{\matr{L}})$. This diagonalises $(\matr{M} / \msubgen[\set{S}^{C}]{\matr{M}})^{-1}$ for all $\mu$. For any diagonal $\matr{D}$:
+\begin{align}
+    ((\matr{I}_{\set{S}} + \mu\matr{D})^{-1}\vect{y})_{i} = \frac{1}{1 + \mu \matr{D}_{ii}}\vect{y}_{i} \to \vect{y}_{i} \text{ as }\mu \to 0.
+\end{align}
+Therefore for all vectors $\vect{y}$, 
+\begin{equation}
+\label{app:eq:schur_complement_limit}
+ \matrsub[S]{\matr{M}}^{-1}\vect{y} = (\matr{M} / \msubgen[\set{S}^{C}]{\matr{M}})^{-1}\vect{y} \to \vect{y} \text{ as } \mu \to 0.    
+\end{equation}
+
+
+We now need to take the limit of $\msubgen[\set{S}^{C},\set{S}]{\matr{M}^{-1}}$ as $\mu \to 0$. By \cite[(0.7.3.1)]{horn-and-johnson},
+\begin{align} 
+    \msubgen[\set{S}^{C},\set{S}]{\matr{M}^{-1}} &= \msubgen[\set{S}^{C}]{\matr{M}}^{-1}\msubgen[\set{S}^{C},\set{S}]{\matr{M}} (\matr{M} / \msubgen[\set{S}^{C}]{\matr{M}})^{-1} \\
+    &= \msubgen[\set{S}^{C}]{\mu\matr{L}}^{-1}\msubgen[\set{S}^{C},\set{S}]{\mu\matr{L}} (\matr{M} / \msubgen[\set{S}^{C}]{\matr{M}})^{-1} \\
+    &= \msubgen[\set{S}^{C}]{\matr{L}}^{-1}\msubgen[\set{S}^{C},\set{S}]{\matr{L}} (\matr{M} / \msubgen[\set{S}^{C}]{\matr{M}})^{-1}
+\end{align}
+Then, using \eqref{app:eq:schur_complement_limit},
+\begin{align}
+    \msubgen[\set{S}^{C},\set{S}]{\matr{M}^{-1}}\vectsub[S]{x} &= \msubgen[\set{S}^{C}]{\matr{L}}^{-1}\msubgen[\set{S}^{C},\set{S}]{\matr{L}} (\matr{M} / \msubgen[\set{S}^{C}]{\matr{M}})^{-1}\vectsub[S]{x} \\
+    &\to \msubgen[\set{S}^{C}]{\matr{L}}^{-1}\msubgen[\set{S}^{C},\set{S}]{\matr{L}}\vectsub[S]{x} \text{ as }\mu \to 0.
+\end{align}
+Combining these two statements gives:
+\begin{align}
+    \matr{R}_{\set{S}}^{GLR, \mu}\vectsub[S]{x} &= \msubgen[\set{N}, \set{S}]{\matr{M}^{-1}}
+    \\ &\to \vectsub[S]{x} + \msubgen[\set{S}^{C}]{\matr{L}}^{-1}\msubgen[\set{S}^{C},\set{S}]{\matr{L}}\vectsub[S]{x} \text{ as } \mu \to 0.
+\end{align}
+This limit is $\matr{R}_{\set{S}}^{FP}\vectsub[S]{x}$.
+\end{proof}

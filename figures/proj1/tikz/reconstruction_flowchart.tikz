@@ -8,7 +8,7 @@
 \begin{tikzpicture}[node distance=2.5cm]
 
 % Define nodes
-\node (start) [startstop] {Given: Reconstruction Method};
+\node (start) [startstop] {Given: Reconstruction Method \\ \& noise type};
 \node (simplify) [process, below of=start] {{\bf Simplify}\\Choose a simplification};
 \node (characterise) [process, below of=simplify] {{\bf Characterise}\\Characterise all conditions when\\decreasing sample size can\\decrease MSE \\ under this simplification};
 \node (existence) [process, below of=characterise] {{\bf Existence}\\Show these conditions\\actually happen};

@@ -1,4 +1,4 @@
-\begin{tikzpicture}[scale=0.5]
+\begin{tikzpicture}[scale=0.6]
     \def\slope{3}
     \def\xA{5.5}
     \def\yA{0}

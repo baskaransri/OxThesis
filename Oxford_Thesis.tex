@@ -23,11 +23,11 @@
 % The most common choices should be below.  You can also do other things, like replacing "a4paper" with "letterpaper", etc.
 
 % This one will format for two-sided binding (ie left and right pages have mirror margins; blank pages inserted where needed):
-\documentclass[a4paper,twoside]{ociamthesis}
+%\documentclass[a4paper,twoside]{ociamthesis}
 % This one will format for one-sided binding (ie left margin > right margin; no extra blank pages):
 %\documentclass[a4paper]{ociamthesis}
 % This one will format for PDF output (ie equal margins, no extra blank pages):
-%\documentclass[a4paper,nobind]{ociamthesis} 
+\documentclass[a4paper,nobind]{ociamthesis} 
 
 
 
@@ -247,9 +247,37 @@
 
 \usepackage{dsfont}
 
+%%%Introduction
+\usepackage{nameref}
 
 %%%GLR chapter
 \usepackage{enumitem}
+
+%%%% SVGs
+\usepackage{svg}
+
+%%% Fancy Theorems
+\definecolor{oxfordblue}{RGB}{4,30,66}
+
+\usepackage[framemethod=tikz]{mdframed}
+
+\mdfdefinestyle{baskyLinestyle}{
+  linecolor=oxfordblue,
+  hidealllines=true,
+  leftline=true,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  innertopmargin=0pt,
+}
+\mdfdefinestyle{baskyBoxstyle}{
+  linecolor=cyan,
+  roundcorner=5pt,
+  linewidth=1pt,
+}
+
+\surroundwithmdframed[style=baskyLinestyle]{theorem}
+%\theoremstyle{definition}
+%\newmdtheoremenv[style=mystyle]{defi}{Definition}
 
 %%%%%%% END BASKARAN
 
@@ -356,18 +384,22 @@
 %%%%% CHAPTERS
 % Add or remove any chapters you'd like here, by file name (excluding '.tex'):
 \flushbottom
-%\include{text/ch1-intro}
-%\include{text/ch2-litreview}
+\include{text/ch1-intro}
+\include{text/ch2-litreview}
+%\include{text/last_chapter_intro}
 \include{text/proj1_LS}
 \include{text/proj1_GLR}
 \include{text/proj2}
+
 
 %% APPENDICES %% 
 % Starts lettered appendices, adds a heading in table of contents, and adds a
 %    page that just says "Appendices" to signal the end of your main text.
 \startappendices
 % Add or remove any appendices you'd like here:
+\include{text/appendix-background}
 \include{text/appendix-proj1_LS}
+\include{text/appendix-proj1_GLR}
 
 
 %%%%% REFERENCES

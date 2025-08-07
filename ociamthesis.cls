@@ -330,7 +330,8 @@
 % http://dcwww.camd.dtu.dk/~schiotz/comp/LatexTips/LatexTips.html#captfont
 
 \renewcommand{\topfraction}{0.85}
-\renewcommand{\textfraction}{0.1}
+%\renewcommand{\textfraction}{0.1}
+\renewcommand{\textfraction}{0.2}
 \renewcommand{\floatpagefraction}{0.75}
 
 
@@ -373,6 +374,10 @@
 
 
 \usepackage[grey,utopia]{quotchap} 
+%BASKARAN: Set title number to oxford blue
+%\definecolor{oxfordblue}{RGB}{4,30,66}
+%\colorlet{chaptergrey}{oxfordblue}
+%\usepackage[shadecolor,utopia]{quotchap} 
 	% To put nice quotes at the beginning of the chapters
 
 \usepackage[nottoc]{tocbibind}
