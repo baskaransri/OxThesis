@@ -1,0 +1,35 @@
+\begin{savequote}[8cm]
+“Your scientists were so preoccupied with whether they could, they didn’t stop to think if they should.”
+  \qauthor{--- Dr. Ian Malcolm, \emph{Jurassic Park}}
+\end{savequote}
+
+
+\chapter{\label{ch:conclusion}Conclusion}
+
+\section{Summary}
+In this thesis, we have provided theoretical and empirical results to help understand incomplete information in the context of learning on graphs. We briefly summarise our contributions.
+
+Our first contribution was given in Chapter \ref{ch:proj1_LS}, where we demonstrated that reconstruction error was not monotonic in sample size for LS, an unregularised method. We showed that optimal sampling as currently understood in the literature cannot mitigate this non-monotonicity, and that under such `optimal' methods at high noise levels the reconstruction error must be $\Lambda$-shaped.
+
+\section{Limitations \& Future Work}
+Limitation in setting - didn't consider e..g. unknown graph
+Limitations in approach - assumptions/proof strategy
+
+Limitations in the broader literature (spatiotemporal)
+\begin{itemize}
+    \item \textbf{Entries to Laplacian eigenvectors \& nodal domains}
+    \item \textbf{Stochastic Blockmodel and Concentration of Measure}
+    \item \textbf{The process of leaning with missing data}
+    \item \textbf{Formalisation of minibatch sampling via GSP}
+    \item \textbf{Manifold symmetries for graph sampling} Much work relates the graph setting to the manifold setting, with parallel literature on graph and manifold learning and data reconstruction, and links via treating graphs as discretisations of manifolds. Indeed, equivariant GNNs have made steps forward in physics-driven applications. However, these data symmetries have not yet been exploited in the context of graph sampling, and this has implication for minibatch sampling for physics applications.
+    \item \textbf{Distributional assumptions around missing data}
+\end{itemize}
+
+
+\section{Perspectives}
+\begin{itemize}
+    %\item \textbf{Graph models with broader spectra} Synthetic graph model need to be complex enough to model real-world data, while also simple enough to allow for some amount of analytic understanding. Our bounds in Chapter \ref{ch:proj1_GLR} rely on the spectral ratio $\frac{\lambda_{N}}{\lambda_{2}}$, and bound synthetic graphs much more tightly than real world examples. This suggests that tractable synthetic graph models with much broader spectra would be imporant in understanding aspects of real world graphs not currently covered by 
+    %\item \textbf{Why is the data missing?} Work in the field of graph sampling tends to assume that either the data is missing at random, or  
+    \item \textbf{Should the inferred data match the missing data?} Work in GNNs separates out the notion of a computational graph and the actual data graph, noting that the true graph may not lead to the best inference because of limitations elsewhere (e.g. GNNs struggling with bottlenecks). The current models of handling missing data 
+    \item \textbf{Is work on missing data moral?} This thesis outlines ways of handling missing data, which can be excluded for privacy reasons. As techniques for inference get better, we can accurately predict things that people may not want us to know, and act on them in ways which could be harmful -- an infamous example being the supermarket Target sending ads for pregnancy-related items to a woman living with her father who didn't know about the pregnancy and may have disapproved. Graph-related methods have obvious potential for both great help, e.g., with regards to drug discovery, and great harm, e.g., with regards to inference of private data via social networks, and it is incumbent upon us researchers to understand the potential impact of our work on society, and each weigh up the impact we want to have on the world.
+\end{itemize}

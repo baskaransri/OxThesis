@@ -1,0 +1,35 @@
+Notes from chat with Lawrence on presenting.
+
+We want to give a narrative! Start with something safe and acceptable then go into difficulty. Also, gotta think about what people in my field would consider safe. Focus on the narrative and understanding, rather than pushing how hard the technical results are!
+
+e.g.
+1. When given more correct information, a good learner learns more.
+
+(least squares, increasing sample size)
+
+2. When given more information which is slightly incorrect, the best possible learner will still learn more, but this is dependent on the learner.
+
+3. What happens when the information can be very incorrect? e.g. finance, econ, biology.
+How do different methods react?
+-- we found with LS and noise, this odd pattern happens (show heatmap)
+
+4. by considering the incorrectness as noise, we can use statistical tools, like Bias-Variance!
+(show the addition) we prove that for LS these look like this.
+
+5. Of course, there are robust methods, like GLR -- important in high noise situations, computationally efficient, understudied. LapRLS (variant) used in drug-target interaction work. Only theoretical research is in the learning literature and requires the reconstructed signal to sum to 0 across all nodes - a big restriction! We build a new framework to estimate this. 
+
+How does GLR look?  <<picture>>
+
+
+U-shaped, we get an 'optimal sample size'!
+
+6. We've only talked about completing the information. What if we have a downstream task - e.g. we have partial social network data, and a good predictor of wants? E.g. we trained a predictor for marketing or political preferences on a country with full census data on one network, and we want to use it on a new country without total data?
+
+We show how these are related, and give a way to pick out which samples matter.
+
+pictures:
+case 1. LS with increasing sample size with no noise
+
+case 2. Optimal Bayesian LS with any noise
+
+case 3. we foun

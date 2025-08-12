@@ -41,9 +41,9 @@ The signal processing community has addressed this by generalising classical sam
 %While the machine learning literature on this setting is centered around empirical results \cite{rossi2021unreasonable}, the signal processing community has generalised classical sampling and reconstruction tools to the graph setting, with a focus on efficient reconstruction of signals via sample choice or reconstruction method \cite{wang2018optimal}[cite]. However, theoretical results in graph signal processing have mainly focused on the performance of signal reconstruction and sample choice under reconstruction loss [cites], rather than with the loss induced by more complex downstream tasks such as classification with a GCN.
 \fi
 
-The graph signal processing (GSP) community has addressed the issue of noisy and incomplete data by generalising the tools of sampling and reconstruction from classical signal processing, via extending the classical shift operator to a graph shift operator \cite{ortega2018graph} such as the Laplacian. The majority of studies on graph-based sampling focus on designing efficient sampling schemes for criteria which approximate \cite{wang2018optimal, wang2019low, mfn, tremblay2017graph, jayawant2021doptimal,puy2018random, pakiyarajah2025graph} or bound \cite{bai2020fast,eoptimalchen} reconstruction loss, grounded in the optimal design of experiments \cite{pukelsheim2006optimal}, \bs{with some work simultaneously learning the underlying graph topology \cite{zhang2025graph, berger2020efficient, sridhara2024towards}}.  Theoretical results have also been derived on the performance of sample choice and signal reconstruction under reconstruction loss \cite{pesenson2008sampling, puy2018random, chamon2016near, chamon2017greedy, shomorony2014sampling, chen2016signal}. %with those on perfect reconstruction \cite{pesenson2008sampling} generalising to other downstream tasks, as perfect reconstruction of the data implies perfect reconstruction of any function of the data. 
+The graph signal processing (GSP) community has addressed the issue of noisy and incomplete data by generalising the tools of sampling and reconstruction from classical signal processing, via extending the classical shift operator to a graph shift operator \cite{ortega2018graph} such as the Laplacian. The majority of studies on graph-based sampling focus on designing efficient sampling schemes for criteria which approximate \cite{wang2018optimal, wang2019low, mfn, tremblay2017graph, jayawant2021doptimal,puy2018random, pakiyarajah2025graph} or bound \cite{bai2020fast,eoptimalchen} reconstruction loss, grounded in the optimal design of experiments \cite{pukelsheim2006optimal}, \bs{with some work simultaneously learning the underlying graph topology \cite{zhang2025graph, berger2020efficient, sridhara2024towards}}.  Theoretical results have also been derived on the performance of sample choice and signal reconstruction under reconstruction loss \cite{pesenson2008sampling, puy2018random, chamon2016near, chamon2017greedy, shomorony2014sampling, chen2016signal} -- \mccorrect{see also Chapters} \ref{ch:proj1_LS} \& \ref{ch:proj1_GLR}. %with those on perfect reconstruction \cite{pesenson2008sampling} generalising to other downstream tasks, as perfect reconstruction of the data implies perfect reconstruction of any function of the data. 
 %However, those results require a bandlimited signal model and computationally expensive reconstruction, and are sensitive to these assumptions \cite{sripathmanathan2024impact}, limiting their applicability. 
-\bs{However, these results do not immediately carry over to other tasks such as classification, as they rely on the specific structure of reconstruction loss -- e.g., the proof of near-optimality of greedy sampling on graphs \cite{chamon2016near} relies on the loss's (approximate) supermodularity. Thus, there is a significant lack of investigation in the GSP literature of the impact of incomplete data on downstream learning tasks.} %with Graph Neural Networks (GNNs).}
+However, these results do not immediately carry over to other tasks such as classification, as they rely on the specific structure of reconstruction loss -- e.g., the proof of near-optimality of greedy sampling on graphs \cite{chamon2016near} relies on the loss's (approximate) supermodularity. \mccorrect{While some works} \cite{chamon2017greedy, gama2020rethinking} \mccorrect{have considered linear transforms of the signal, the requirement of linearity restricts the scope of these works.} Thus, there is a significant lack of investigation in the GSP literature of the impact of incomplete data on downstream learning tasks. %with Graph Neural Networks (GNNs).}
 
 \iffalse
 However, as these works focus on reconstruction error, the theoretical results only apply specifically to this setting -- e.g., the results on the near-optimality of greedy sampling \cite{chamon2016near} depend on the (approximate) supermodularity of the specific reconstruction loss, and hence do not immediately apply to the classification setting \bs{which has} a different goal and error characterization. Except for results on perfect reconstruction in the noiseless setting \cite{pesenson2008sampling}, theoretical results on reconstruction in the broader settings \cite{puy2018random,chamon2016near, chamon2017greedy,shomorony2014sampling, sripathmanathan2024impact} do not immediately carry over to the classification setting. Thus, there is a significant lack of investigation in the GSP literature of the impact of incomplete data on downstream tasks such as classification.
@@ -106,11 +106,11 @@ We consider the following losses:
     &\text{Reconstruction Loss} = \expect{||{\vect{X} - \hat{\vect{X}}}||^{2}_{F}}.
     %\text{Classification Loss} &= \expect{\# \text{ misclassifications}}.
 \end{align}
-
+\mccorrect{We also define a multi-class classification loss specifically for our experiments in Section} \ref{sec:experimental_setup}
 %\bs{TODO here $f(X_i)$ means}
 
-\bs{The classification loss defined above is the sum of per-node misclassification probabilities. We refer to $f(\matr{X}) \in \mathbb{R}^{N}$ and $f(\hat{\matr{X}}) \in \mathbb{R}^{N}$ as vectorial `clean output' and `reconstructed output', respectively, and $f(\matr{X}) - f(\hat{\matr{X}})$ as the `output error'. We let $f(\matr{X})_{i}$ denote the component of $f(\matr{X})$ at node $i$. %Our results also apply to the trivial GCN $f(\matr{X})=\matr{X}$, which gives a simple extension of the GSP reconstruction setting.
-}
+The classification loss defined above is the sum of per-node misclassification probabilities. We refer to $f(\matr{X}) \in \mathbb{R}^{N}$ and $f(\hat{\matr{X}}) \in \mathbb{R}^{N}$ as vectorial `clean output' and `reconstructed output', respectively, and $f(\matr{X}) - f(\hat{\matr{X}})$ as the `output error'. We let $f(\matr{X})_{i}$ denote the component of $f(\matr{X})$ at node $i$. %Our results also apply to the trivial GCN $f(\matr{X})=\matr{X}$, which gives a simple extension of the GSP reconstruction setting.
+
 
 %The smoothness of the features with regards to the graph comes from choice of $\matr{\Sigma}$, such as $\projbl$ \cite{sripathmanathan2024impact} or $\matr{L}^{\dagger}$ \cite{dong2016learning}.
 
@@ -148,7 +148,7 @@ Let $r = \frac{\rho}{\sqrt{1-\rho^2}}$ and $Z' = \frac{1}{\sqrt{1-\rho^{2}}}(\rh
     \begin{minipage}[T]{0.48\columnwidth}
         \raggedright
         Let $r = \frac{\rho}{\sqrt{1-\rho^2}}$ and $Z' = rX' - \sqrt{1+r^{2}} Y'$ \iffalse $Z' = \frac{1}{\sqrt{1-\rho^{2}}}(\rho X' - Y')$\fi. 
-        Then $\binom{X'}{Z'} \sim \mathcal{N}\left(\vect{0}, \matr{I}\right)$ and 
+        Then $\binom{X'}{Z'} \sim \set{N}\left(\vect{0}, \matr{I}\right)$ and 
         $\prob{X'Y'<0}$
         \noindent$ = \prob{rX'^{2} < X'Z'} $ 
         \noindent$= 
@@ -207,10 +207,9 @@ We now characterise our losses for a class of linear $f$ which we interpret as a
 
 % Note that classification loss is only dependent on $\matr{G}$, not $\vect{w}$.
 
-\bs{
+
 If we let $\matr{G}$ be a polynomial $p$ of $\tilde{\matr{A}}_{\gamma}$, then $\vect{l} = \text{sign}(p(\tilde{\matr{A}}_{\gamma})\matr{X}\matr{w})$, which corresponds to a multi-layer SGC \cite{wu2019simplifying} or a single layer polynomial-based GNN\footnote{We assume that all feature dimensions share the same polynomial filter.} like Chebnet \cite{defferrard2016convolutional}, FavardGNN \cite{guo2023Favard}, JacobiNet \cite{guo2023manipulating} or BernNet \cite{he2021bernnet}. Then the classification loss in Theorem \ref{thm:general_class_err} is the difference in output when applying the GNN to the full data $\matr{X}$ versus to the reconstructed data $\hat{\matr{X}}$. 
 Note that in the case where the columns of $\matr{X}$ are independent, $\matr{C} = \matr{\Sigma}$, and therefore for SGC the classification loss does not depend on the weights, only on the number of layers.
-}
 
 %We can use \bs{Theorem \ref{thm:general_class_err}} to calculate the classification \bs{loss} for an $r$-layer \bs{linearized} GCN without bias, setting $\matr{G} = (\tilde{\matr{A}}_{\gamma})^{r}$ and $\vect{w} = \prod \matr{W}_{i}$. The classification \bs{loss then} does not depend on the weights \bs{$\vect{w}$} -- if our linearized GCN is an accurate representation of the true function, then the classification \bs{loss} is not dependent on its weights, only its structure \bs{$\matr{G}$} (i.e. the number of layers). 
 
@@ -283,11 +282,67 @@ where $||\matr{G}||$ is the spectral norm of $\matr{G}$. The left of \eqref{eq:b
 
 %Next we consider any reconstruction method, in the case that $\matr{G}=\matr{I}$. We see that on a node-by-node basis, both losses are decreasing in $c_{i}$ and increasing in $\phi_{i}$ and $\nu_{i}$. We therefore expect both objectives to work well for each other but not optimally.
 
-\bs{
 \subsection{Sampling for Classification}
 \label{sec:optimal_sampling_design}
-We use Theorem \ref{thm:general_class_err} to design a sampling scheme specifically for classification, minimising mean classification loss rather than the common mean reconstruction loss objective \cite{wang2018optimal,wang2019low,sripathmanathan2024impact, mfn}. We propose greedily choosing $\set{S}$ to optimize \eqref{eq:gen_class_err} from Theorem \ref{thm:general_class_err}. %and compare it to random and A-optimal sampling under both reconstruction and classification.
-}
+In previous chapters, we have focused on optimality criteria related to reconstruction loss, which in Chapter \ref{ch:2-litreview} we have related to various objectives (MMSE, WMSE, Confidence Ellipsoid) -- indeed, the optimality criteria can be derived from the given objectives through mathematical analysis of particular gaussian models. We have also noted that these optimality criteria are purely focused on reconstruction, and do not take the downstream task into account. In this vein, rather than focusing on MMSE or WMSE, we can use our theoretical results to propose a new sampling scheme based on our theoretical characterisation of classification error. We call this a classification-optimal scheme.
+
+We use Theorem \ref{thm:general_class_err} to design a sampling scheme specifically for classification, minimising mean classification loss rather than the common mean reconstruction loss objective. We propose greedily choosing $\set{S}$ to optimize \eqref{eq:gen_class_err} from Theorem \ref{thm:general_class_err}. 
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\begin{algorithm}
+\caption{Classification-Optimal Sampling}\label{alg:class_opt_samp}
+\begin{algorithmic}[1]
+
+\Require $m:$ Sample size, 
+\Require $\sigma:$ Noise standard deviation,
+\Require $f:\, \mathbb{R}^{N \times d} \to \mathbb{R}^{N}: $ linear function s.t. the target classifier is $\matr{X} \to \text{sign}(f(\matr{X}))$
+\Require $\matr{G}, \vect{w}:$ Linear classifier parameters defining $f(\matr{X}) = \matr{G}\matr{X}\vect{w}$
+%\Require $\matr{G}, \vect{w}:$ Matrix and vector s.t. $f(\matr{X}) = \matr{G}\matr{X}\vect{w}$, \Require $R:$ Reconstruction method s.t. $R(\set{S}) = \matr{R}_{\set{S}}$
+\Require $\matr{C}:$ $\text{Cov}(\matr{X}\vect{w})(\sqnormvec{\vect{w}})^{-1}$; this is $\text{Cov}((\matr{X}^{T})_{1})$ if the columns of $\matr{X}$ are i.i.d.
+\Ensure Vertex Sample Set $\set{S} \subseteq \set{N}$ of size $m$
+\iffalse
+\If{Columns of $\matr{X}$ are i.i.d.}
+    \State $\matr{C} \gets \matr{\Sigma}$
+\Else
+    \State $\matr{C} \gets \text{Cov}(\matr{X}\vect{w})(\sqnormvec{\vect{w}})^{-1}$
+\EndIf
+\fi
+\State $\matr{C}_{noisy} \gets \matr{C} + \sigma^{2}\matr{I}_{N}$
+\State $\set{S} \gets \varnothing$
+%\State $\set{V}_{rem} \gets \set{N}$
+\State $\vect{\phi}^{2} \gets \text{diag}(\matr{G}\matr{C}\matr{G}^{T})$
+\While {$|\set{S}| < m$}
+    \State $l^{*} \leftarrow +\infty$
+    \For{each $v \in \set{N} \,\backslash\, \set{S}$}
+        \State $\matr{H}_{\set{S} \cup v} \gets \matr{G}R(\set{S} \cup v)$ \label{alg:defn_H_S}
+        \State $\vect{c} \gets \text{diag}(\matr{H}_{\set{S} \cup v}\msubgen[\set{S} \cup v,\set{N}]{\matr{C}}\matr{G}^{T})$
+        \State $\vect{\nu}^{2} \gets \text{diag}(\matr{H}_{\set{S} \cup v}\msubgen[\set{S} \cup v]{\matr{C}_{noisy}}\matr{H}^{T})$
+        \For{$1 \leq i \leq N$}
+        \State $\vect{\rho}_{i} \gets \frac{\vect{c}_{i}}{\sqrt{\vect{\phi}^{2}_{i}\vect{\nu}^{2}_{i}}}$
+        \EndFor
+        \State $l \gets \sum_{1 \leq i \leq N} \frac{1}{\pi}\text{arccos}(\vect{\rho}_{i})$
+        \Comment{The classification loss for $\set{S} \cup v$}
+        \If{$  l <  l*$}
+            \State $l^* \gets l$
+            \State $v^* \leftarrow v$
+        \EndIf
+    \EndFor
+    \State $\set{S} \leftarrow \set{S} \cup \{v^*\}$
+    %\State $\set{V}_{rem} \leftarrow \set{V}_{rem} \setminus \{v^*\}$
+\EndWhile
+\State \Return $\set{S}$
+\end{algorithmic}
+\end{algorithm}
+
+%and compare it to random and A-optimal sampling under both reconstruction and classification.
+
+\subsection{Relations to previous work}
+We now discuss our work in relation to Gama et al. \cite{gama2020rethinking} and Chamon et al. \cite{chamon2017greedy}, the main works in the GSP literature focusing on downstream tasks in the context of sampling. We first survey their theoretical results. Gama et al. focus on designing efficient joint sampling and reconstruction schemes under a linear reconstruction task represented by a matrix $\matr{H}$. They seek to construct an optimal `sketching operator' $\matr{H}_{\set{S}}$ which, when applied to the noisy observations, most closely approximates $\matr{H}$ applied to the true signal. From \cite[Proposition 2]{gama2020rethinking}, we can view their sketching operator as a combination of applying $\matr{H}$ after applying a reconstruction operator which they express as $\matr{R}_{X}\matr{C}^{T}\left(\matr{C}(\matr{R}_{X} + \matr{R}_{w})\matr{C}^{T}\right)^{-1}$, which in our notation would be $\msubgen[\set{N},\set{S}]{\text{Cov}(\vect{x})}\msubgen[\set{S}]{\text{Cov}(\matr{x}) + \text{Cov}(\matr{w})}^{-1}$. We mirror this definition in Line \ref{alg:defn_H_S} of our algorithm.  This \cite[Proposition 2]{gama2020rethinking}, along with \cite[(17) \& (18)]{gama2020rethinking} can be seen a version of our Theorem \ref{thm:general_class_err} for linear downstream tasks. We note that their \cite[Proposition 2]{gama2020rethinking} capture
+
+Chamon et al. \cite{chamon2017greedy}, on the other hand, focus on greedy sampling and submodularity; similarly to Gama et al., they focus on a setting jointly optimising sampling and reconstruction in light of the setting. While their theoretical results do incorporate a linear `transform', understanding the impact of this transform, or downstream task, is not the focus of their work, and so analysis in this direction is limited.
+
+One core difference between our work and that of Gama et al. and Chamon et al. is the setting. They focus on linear downstream tasks -- regression tasks -- such as estimating Gaussian Fourier coefficients and linear SVMs under a custom reconstruction operator. In contrast, we consider classification tasks via a sign nonlinearity, requiring more complex analysis (see Lemma \ref{lemma:gaussian_sign}) but also allowing us to directly contrast reconstruction and classification error with theoretical tools (see Corollary \ref{corr:relationship}). Both our work and Gama et al. apply their respective theoretical results empirically to a multi-class classification problem. This reflects the different goals of each of the works; we seek to understand the impact of downstream tasks on choices around sampling and reconstruction, focusing on the relationship between classification loss and reconstruction loss as sample size varies. Handling the non-linearity is therefore essential to our theoretical framework, as is using established reconstruction operators such as LS and FP. We analyse classification error and generate a sampling scheme specialised to classification in order to show how important considering the downstream task when sampling and reconstructing is. By contrast, Gama et al. sought to design an efficient sampling and reconstruction scheme, their results emphasise implementation efficiency e.g., \cite[Proposition 3]{gama2020rethinking}, and  do not include the same theoretical analysis as ours. Similarly, Chamon et al. focus on analysis on the optimality of greedy sampling, and thus do not interpret the impact of their linear downstream task on their theoretical results, except briefly before \cite[Remark 2]{chamon2017greedy} and for the specific task of kernel PCA.
 
 \section{Empirical Results}
 %We now validate our theoretical results by empirical experiments \bs{and compare the performance of our classification-optimal sampling scheme to other sample schemes designed with reconstruction in mind.} %and  We also apply our theoretical results to propose an optimal sampling scheme for classification under our setup, and compare its performance to other optimal sampling schemes aiming for reconstruction only.
@@ -341,19 +396,21 @@ We consider two choices of $f$: $f_{simple}$ and $f_{sgc}$. We let
 \begin{equation}
     f_{simple}(\matr{X}) = \matr{X}.
 \end{equation}
-For each graph, we construct $f_{sgc}$ as a linearized GCN with randomly initialized weights and added self-loops ($\gamma=1)$. We choose our architecture to mimic the strong baselines in \cite{luo2024classic}, but keep to a single convolutional layer to minimise oversmoothing.
+For each graph, we construct $f_{sgc}$ as a linearized GCN with randomly initialized weights and added self-loops ($\gamma=1)$. We choose our architecture to mimic the strong baselines in \cite{luo2024classic}; we keep to a single convolutional layer to minimise oversmoothing in the case that $\matr{\Sigma} = \projbl$, and extend to two layers in the case $\matr{\Sigma} = \matr{L}^{\dagger}$.
 Specifically, we set
 \begin{equation}
- f_{sgc}(\matr{X}) = \tilde{\matr{A}}_{1}\matr{X}\left(\matr{W}_{1}\matr{W}_{2} \right) \label{eq:SGC_structure}
+ f_{sgc}(\matr{X}) =  \begin{cases}
+\left(\tilde{\matr{A}}_{1}\matr{X}\matr{W}_{1} \right)\matr{W}_{readout} &\text{if }\matr{\Sigma} = \projbl \\
+\left(\tilde{\matr{A}}_{1}\left(\tilde{\matr{A}}_{1}\matr{X}\matr{W}_{1}\right)\matr{W}_{2} \right) \matr{W}_{readout} &\text{if }\matr{\Sigma} = \matr{L}^{\dagger} \\
+\end{cases}\label{eq:SGC_structure}
 \end{equation}
- where $\matr{W}_{1} \in \mathbb{R}^{64 \times 32}$, $\matr{W}_{2} \in \mathbb{R}^{32 \times 1}$ are both populated via Glorot initialization \cite{glorot2010understanding}.
+ where $\matr{W}_{1} \in \mathbb{R}^{64 \times 32}$, $\matr{W}_{2} \in \mathbb{R}^{32 \times 32}$,  $\matr{W}_{readout} \in \mathbb{R}^{32 \times 1}$ are all populated via Glorot initialization \cite{glorot2010understanding}.
 
 \subsubsection{Real-world Datasets}
 We consider an FMRI dataset with nodes corresponding to brain regions and 292 graph signals corresponding to blood oxygen levels \cite{zhi2023gaussian, sripathmanathan2024impact}, subsampling a connected graph with $N=367$ nodes using neighbourhood sampling \cite{hamilton2017inductive}. We do not bandlimit the \bs{given} signals. We construct a classification task by subtracting the mean from all signals and taking the sign as node class labels, representing high or low blood oxygen levels.
 
 \begin{mccorrection}
 We also consider the CoRA and Citeseer datasets, which are multi-class classification datasets. We take the largest connected component, bandlimit the features to each have bandwidth $k=\left\lfloor \frac{N}{10} \right\rfloor$, and construct $f$ by training a 2-layer SGC (structured as in \eqref{eq:SGC_structure}) using cross-entropy loss with bandlimited features and original labels. 
-
 On these datasets we then evaluate `multi-class loss', between the original bandlimited signal and the reconstructed signal, which is:
 \begin{align}
     &\text{Multi-Class Classification Loss} = {\sum_{i \in \set{V}}\prob{\text{argmax}\left(f(\matr{X})_{i}\right) \neq \text{argmax}(f(\hat{\matr{X}})_{i})}}
@@ -376,7 +433,35 @@ We consider three sampling methods:
 
 To sample on real world data, we need to compute losses for our sampling to optimize. This requires making assumptions about the noise level and distribution of the features. For the FMRI dataset, we assume the features are i.i.d. $\mathcal{N}(\vect{0},\projbl)$ with $k = \lfloor \frac{N}{10}\rfloor$ and that the SNR is $20dB$ (i.e., $\sigma^{2}=10^{-3}$). 
 
+\subsubsection{Figure Overview}
+We present a table of the settings of the following figures. We consider Figs. \ref{subfig:BA_noiseless_sgc_LS} \& \ref{subfig:BA_noiseless_sgc_LS_lpinv} as baseline experimental setups, and vary one parameter per figure. After this, we present our two real world experiments. We use \texttt{''} to indicate when a setting is the same as the previous figure
 
+\begin{table*}[ht]
+\centering
+\label{tab:downstream_experiments_summary}
+\begin{tabular}{l l l l l c}
+\toprule
+Figure & $\matr{\Sigma}$ & Function & Reconstruction & Graph Model / Dataset & Noisy? \\
+\midrule
+Fig. \ref{subfig:BA_noiseless_simple_LS}       & $\projbl$ & Simple & LS & BA & $\times$ \\
+Fig. \ref{subfig:BA_noiseless_sgc_LS}          & \texttt{''} & SGC    & \texttt{''} & \texttt{''} & $\times$ \\
+Fig. \ref{subfig:BA_noiseless_sgc_feat_prop}   & \texttt{''} & \texttt{''} & FP & \texttt{''} & $\times$ \\
+Fig. \ref{subfig:BA_noisy_vs_noisy_sgc_LS}     & \texttt{''} & \texttt{''} & LS & \texttt{''} & \checkmark \\
+Fig. \ref{subfig:SBM_noiseless_sgc_LS}         & \texttt{''} & \texttt{''} & \texttt{''} & SBM & $\times$ \\
+Fig. \ref{subfig:BA_noiseless_simple_LS_lpinv} & $\matr{L}^{\dagger}$ & Simple & \texttt{''} & BA & $\times$ \\
+Fig. \ref{subfig:BA_noiseless_sgc_LS_lpinv}    & \texttt{''} & SGC    & \texttt{''} & \texttt{''} & $\times$ \\
+Fig. \ref{subfig:BA_noiseless_sgc_feat_prop_lpinv} & \texttt{''} & \texttt{''} & FP & \texttt{''} & $\times$ \\
+Fig. \ref{subfig:BA_noisy_vs_noisy_sgc_LS_lpinv}  & \texttt{''} & \texttt{''} & LS & \texttt{''} & \checkmark \\
+Fig. \ref{subfig:SBM_noiseless_sgc_LS_lpinv}   & \texttt{''} & \texttt{''}    & \texttt{''} & SBM & $\times$ \\
+Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI dataset ($k=36$) & \checkmark \\
+ Fig. \ref{fig:cora} & --- & --- & \texttt{''} & CoRA dataset ($k=248$) & \checkmark \\
+\bottomrule
+\end{tabular}
+\caption{Summary of experimental settings for figures}
+\end{table*}
+
+
+\clearpage
 %\setlength{\belowcaptionskip}{-3pt}
 %\captionsetup[subfigure]{aboveskip=-1pt,belowskip=-4pt}
 %\captionsetup[subfigure]{aboveskip=-1pt,belowskip=-2.5pt}
@@ -406,7 +491,7 @@ To sample on real world data, we need to compute losses for our sampling to opti
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noiseless_simple_LS_class_emp}
     \end{subfigure}%
-    \caption{ $f_{simple}$, LS Reconstruction, BA graph model, noiseless}
+    \caption{ $f_{simple}$, LS Reconstruction, BA graph model, noiseless, $\Sigma = \projbl$}
 \label{subfig:BA_noiseless_simple_LS}
 \end{figure*}
 %%% SGC, LS, BA, Noiseless
@@ -441,7 +526,7 @@ To sample on real world data, we need to compute losses for our sampling to opti
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noiseless_sgc_LS_class_emp}
     \end{subfigure}%
-    \caption{$f_{sgc}$, LS Reconstruction, BA graph model, noiseless}
+    \caption{$f_{sgc}$, LS Reconstruction, BA graph model, noiseless, , $\Sigma = \projbl$}
 \label{subfig:BA_noiseless_sgc_LS}
 \end{figure*}
 
@@ -477,7 +562,7 @@ To sample on real world data, we need to compute losses for our sampling to opti
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noiseless_sgc_feat_prop_class_emp}
     \end{subfigure}%
-    \caption{$f_{sgc}$, FP Reconstruction, BA graph model, noiseless}
+    \caption{$f_{sgc}$, FP Reconstruction, BA graph model, noiseless, , $\Sigma = \projbl$}
 \label{subfig:BA_noiseless_sgc_feat_prop}
 \end{figure*}
 
@@ -514,7 +599,7 @@ To sample on real world data, we need to compute losses for our sampling to opti
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noisy_sgc_LS_class_emp}
     \end{subfigure}%
-    \caption{$f_{sgc}$, LS Reconstruction, BA graph model, Noisy ($20dB$ signal)}
+    \caption{$f_{sgc}$, LS Reconstruction, BA graph model, Noisy ($20dB$ signal), $\Sigma = \projbl$}
 \label{subfig:BA_noisy_vs_noisy_sgc_LS}
 \end{figure*}
 
@@ -551,41 +636,192 @@ To sample on real world data, we need to compute losses for our sampling to opti
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:SBM_noiseless_sgc_LS_class_emp}
     \end{subfigure}%
-    \caption{$f_{sgc}$, LS Reconstruction, SBM graph model, noiseless}
+    \caption{$f_{sgc}$, LS Reconstruction, SBM graph model, noiseless, $\matr{\Sigma} = \projbl$}
 \label{subfig:SBM_noiseless_sgc_LS}
 \end{figure*}
 
+%%%%%%%%%%%%%%%%%%
+%%% L+ experiments
+%%%%%%%%%%%%%%%%%%
 
-\iffalse
-%%% NEW FIG
-
-
-\begin{figure*}
-    \renewcommand{\arraystretch}{0}
-  \centering
-  \begin{tabular}{p{4pt} >{\centering\arraybackslash}p{0.29\columnwidth}@{\quad}ccc}
-    & Setting & \hspace{20pt}(i) Reconstruction Loss & \hspace{13pt} (ii) Class. Loss (Analytic) & \hspace{13pt} (iii) Class. Loss (Empirical) \\ 
-    \raisebox{0.26\columnwidth}[0pt][0pt]{(a)} & \raisebox{0.26\columnwidth}[0pt][0pt]{\parbox[t]{0.31\columnwidth}{\raggedright  LS Reconstruction, \\ BA graph model, \\ Noiseless}} & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_recon.png}\fixedlabel{fig:syn:LS_BA_Noiseless_rec}{a.i.} 
-      & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_classif.png} \fixedlabel{fig:syn:LS_BA_Noiseless_class_anal}{a.ii.} 
-      & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_class_empiric.png} \fixedlabel{fig:syn:LS_BA_Noiseless_class_emp}{a.iii.}
-      \\
-    \raisebox{0.26\columnwidth}[0pt][0pt]{(b)} & \raisebox{0.26\columnwidth}[0pt][0pt]{\parbox[t]{0.31\columnwidth}{\raggedright FP Reconstruction, \\ BA graph model, \\ Noiseless}} & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_200_nodes_1_layers_recon.png}\fixedlabel{fig:syn:FP_BA_Noiseless_rec}{b.i.} 
-      & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_200_nodes_1_layers_classif.png}\fixedlabel{fig:syn:FP_BA_Noiseless_class_anal}{b.ii.}
-      & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_200_nodes_1_layers_class_empiric.png}\fixedlabel{fig:syn:FP_BA_Noiseless_class_emp}{b.iii.} 
-      \\
-    \raisebox{0.26\columnwidth}[0pt][0pt]{(c) } & \raisebox{0.26\columnwidth}[0pt][0pt]{\parbox[t]{0.31\columnwidth}{\raggedright LS Reconstruction, \\ BA graph model, \\ Noisy ($20dB$ signal)}} & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_recon.png} \fixedlabel{fig:syn:LS_BA_Noisy_rec}{c.i.} 
-      & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_classif.png} \fixedlabel{fig:syn:LS_BA_Noisy_class_anal}{c.ii.}
-      & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_class_empiric.png} \fixedlabel{fig:syn:LS_BA_Noisy_class_emp}{c.iii.}
-      \\
-    \raisebox{0.26\columnwidth}[0pt][0pt]{(d)} & \raisebox{0.26\columnwidth}[0pt][0pt]{\parbox[t]{0.31\columnwidth}{\raggedright LS Reconstruction, \\ SBM graph model, \\ Noiseless}} & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_recon.png}\fixedlabel{fig:syn:LS_SBM_Noiseless_rec}{d.i.} 
-      & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_classif.png}\fixedlabel{fig:syn:LS_SBM_Noiseless_class_anal}{d.ii.}
-      & \includegraphics[width=0.5\columnwidth,height=0.3\columnwidth,keepaspectratio=false]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_class_empiric.png}\fixedlabel{fig:syn:LS_SBM_Noiseless_class_emp}{d.iii.}
-  \end{tabular}
-  \caption{Experiments on synthetic data, varying reconstruction method, graph model and noise level}
-  \label{fig:synthetic_experiments}
-    
+\begin{figure*}%
+    \centering
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/simple/BA_bl_LS_0_noise_500_nodes_recon.png}}
+    \caption{Reconstruction Loss}%
+    \label{subsubfig:BA_noiseless_simple_LS_rec_lpinv}
+    \end{subfigure}
+    \hfill%
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/simple/BA_bl_LS_0_noise_500_nodes_classif.png}}
+    \caption{Class. Loss (Analytic)}
+    \label{subsubfig:BA_noiseless_simple_LS_class_anal_lpinv}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/simple/BA_bl_LS_0_noise_500_nodes_class_empiric.png}}
+    \caption{Class. Loss (Empirical)}%
+    \label{subsubfig:BA_noiseless_simple_LS_class_emp_lpinv}
+    \end{subfigure}%
+    \caption{ $f_{simple}$, LS Reconstruction, BA graph model, noiseless, $\Sigma = \matr{L}^{\dagger}$}
+\label{subfig:BA_noiseless_simple_LS_lpinv}
 \end{figure*}
-\fi
+%%% SGC, LS, BA, Noiseless
+\begin{figure*}%
+    \centering
+    \iffalse
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth, trim={1000cm 2cm 0 0}, clip]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_class_vs_rec.png}}
+    \caption{Loss Comparison \\}
+    \label{subsubfig:BA_noiseless_sgc_LS_comp_lpinv}
+    \end{subfigure}
+    \hfill
+    \fi
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_recon.png}}
+    \caption{Reconstruction Loss}%
+    \label{subsubfig:BA_noiseless_sgc_LS_rec_lpinv}
+    \end{subfigure}
+    %\hfill%
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_classif.png}}
+    \caption{Class. Loss (Analytic)}
+    \label{subsubfig:BA_noiseless_sgc_LS_class_anal_lpinv}
+    \end{subfigure}%
+    %\hfill
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_class_empiric.png}}
+    \caption{Class. Loss (Empirical)}%
+    \label{subsubfig:BA_noiseless_sgc_LS_class_emp_lpinv}
+    \end{subfigure}%
+    \caption{$f_{sgc}$, LS Reconstruction, BA graph model, noiseless, , $\Sigma = \matr{L}^{\dagger}$}
+\label{subfig:BA_noiseless_sgc_LS_lpinv}
+\end{figure*}
+
+%%% SGC, feat_prop, BA, Noiseless
+\begin{figure*}%
+    \centering
+    \iffalse
+    \begin{subfigure}[T]{0.5\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_200_nodes_1_layers_class_vs_rec.png}}
+    \caption{Loss Comparison \\}
+    \label{subsubfig:BA_noiseless_sgc_feat_prop_comp_lpinv}
+    \end{subfigure}
+    \hfill
+    \fi
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_500_nodes_1_layers_recon.png}}
+    \caption{Reconstruction Loss}%
+    \label{subsubfig:BA_noiseless_sgc_feat_prop_rec_lpinv}
+    \end{subfigure}
+    %\hfill%
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_500_nodes_1_layers_classif.png}}
+    \caption{Class. Loss (Analytic)}
+    \label{subsubfig:BA_noiseless_sgc_feat_prop_class_anal_lpinv}
+    \end{subfigure}%
+    %\hfill
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_500_nodes_1_layers_class_empiric.png}}
+    \caption{Class. Loss (Empirical)}%
+    \label{subsubfig:BA_noiseless_sgc_feat_prop_class_emp_lpinv}
+    \end{subfigure}%
+    \caption{$f_{sgc}$, FP Reconstruction, BA graph model, noiseless, , $\Sigma = \matr{L}^{\dagger}$}
+\label{subfig:BA_noiseless_sgc_feat_prop_lpinv}
+\end{figure*}
+
+%%% SGC, LS, BA, Noisy
+\begin{figure*}%
+
+    \centering
+    \iffalse
+    \begin{subfigure}[T]{0.5\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_class_vs_rec.png}}
+    \caption{Loss Comparison}
+    \label{subsubfig:BA_noisy_sgc_LS_comp_lpinv}
+    \end{subfigure}
+    \hfill
+    \fi
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_recon.png}}
+    \caption{Reconstruction Loss}%
+    \label{subsubfig:BA_noisy_sgc_LS_rec_lpinv}
+    \end{subfigure}
+    %\hfill%
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_classif.png}}
+    \caption{Class. Loss (Analytic)}
+    \label{subsubfig:BA_noisy_sgc_LS_class_anal_lpinv}
+    \end{subfigure}%
+    %\hfill
+    \begin{subfigure}[T]{0.33\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_class_empiric.png}}
+    \caption{Class. Loss (Empirical)}%
+    \label{subsubfig:BA_noisy_sgc_LS_class_emp_lpinv}
+    \end{subfigure}%
+    \caption{$f_{sgc}$, LS Reconstruction, BA graph model, Noisy ($20dB$ signal), $\Sigma = \matr{L}^{\dagger}$}
+\label{subfig:BA_noisy_vs_noisy_sgc_LS_lpinv}
+\end{figure*}
+
+
+%%% SGC, LS, SBM, Noiseless
+\begin{figure*}[h]%
+    \centering
+    \iffalse
+    \begin{subfigure}[T]{0.3\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_class_vs_rec.png}}
+    \caption{Loss Comparison \\}
+    \label{subsubfig:SBM_noiseless_sgc_LS_comp_lpinv}
+    \end{subfigure}
+    \fi
+    %\hfill
+    \begin{subfigure}[T]{0.3\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_recon.png}}
+    \caption{Reconstruction Loss}%
+    \label{subsubfig:SBM_noiseless_sgc_LS_rec_lpinv}
+    \end{subfigure}
+    %\hfill%
+    \begin{subfigure}[T]{0.3\columnwidth}
+    \resizebox{\width}{0.62\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_classif.png}}
+    \caption{Class. Loss (Analytic)}
+    \label{subsubfig:SBM_noiseless_sgc_LS_class_anal_lpinv}
+    \end{subfigure}%
+    %\hfill
+    \begin{subfigure}[T]{0.333\columnwidth}
+    \resizebox{\width}{0.55\columnwidth}{
+    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_class_empiric.png}}
+    \caption{Class. Loss (Empirical)}%
+    \label{subsubfig:SBM_noiseless_sgc_LS_class_emp_lpinv}
+    \end{subfigure}%
+    \caption{$f_{sgc}$, LS Reconstruction, SBM graph model, noiseless, $\matr{\Sigma} = \matr{L}^{\dagger}$}
+\label{subfig:SBM_noiseless_sgc_LS_lpinv}
+\end{figure*}
+
+
+
+
+%%%%%%%%%%%%%%%%%%
+%%% Real World experiments
+%%%%%%%%%%%%%%%%%%
+
 
 %%% SGC, LS, fmri, Noiseless
 \begin{figure*}[h!btp]%
@@ -628,6 +864,7 @@ To sample on real world data, we need to compute losses for our sampling to opti
     \label{subfig:cora_LS_rec}
     \end{subfigure}
     \caption{CoRA dataset, LS reconstruction,  $k=248$, Multi-class classification error}
+\label{fig:cora}
 \end{figure*}
 \iffalse
 %%% SGC, LS, CoRA, Noiseless
@@ -653,11 +890,10 @@ To sample on real world data, we need to compute losses for our sampling to opti
 \end{figure*}
 \fi
 
-\subsection{Experimental Validation}
-We experimentally validate our derivation of expected classification loss for different graph models, noise levels, reconstruction methods and versions of $f$. Subfigures (b) and (c) of Figs. \ref{subfig:BA_noiseless_simple_LS}-\ref{subfig:SBM_noiseless_sgc_LS} display the empirical loss calculations via directly reconstructing signals, and the analytic loss calculations using Theorem \ref{thm:general_class_err} respectively. We see that the empirical results largely agree with our theoretical derivations.
-%We do not display the $f_{simple}$ cases, which look very similar to the $f_{sgc}$ cases.
+\FloatBarrier
 
-We also see that under \bs{noiseless} LS reconstruction (Figs. \ref{subfig:BA_noiseless_simple_LS}, \ref{subfig:BA_noiseless_sgc_LS} and \ref{subfig:SBM_noiseless_sgc_LS}), our classification loss looks like $x \to \arccos\left(\sqrt{x}\right)$, which follows the theoretical interpretation in \bs{\ref{sec:Gen_Theory}}.
+\subsection{Experimental Validation}
+We experimentally validate our derivation of expected classification loss for different graph models, noise levels, reconstruction methods and versions of $f$. Subfigures (b) and (c) of Figs. \ref{subfig:BA_noiseless_simple_LS}-\ref{subfig:SBM_noiseless_sgc_LS} display the empirical loss calculations via directly reconstructing signals, and the analytic loss calculations using Theorem \ref{thm:general_class_err} respectively. We see that the empirical results match the analytic derivations in all cases, both in terms of magnitude and in terms of comparison between sampling schemes. We also see that under \bs{noiseless} LS reconstruction (Figs. \ref{subfig:BA_noiseless_simple_LS}, \ref{subfig:BA_noiseless_sgc_LS} and \ref{subfig:SBM_noiseless_sgc_LS}), our classification loss looks like $x \to \arccos\left(\sqrt{x}\right)$, which follows the theoretical interpretation in Section \ref{sec:Gen_Theory}.
 
 
 \subsection{Optimal Sampling}
@@ -672,10 +908,7 @@ In the noisy case \bs{(Fig. \ref{subfig:BA_noisy_vs_noisy_sgc_LS})}, we see clas
 
 In our real-world fMRI dataset (Fig. \ref{fig:fmri}) we find, for classification loss, both reconstruction and classification-optimal sampling outperforming random sampling, with our novel classification-optimal sampling scheme marginally outperforming at sample sizes over 90.
 
-\begin{mccorrection}
-    
-For CoRA, we find reconstruction-optimal sampling is the best for reconstruction and the worst for classification, with our method showing significant improvement over both random and reconstruction-optimal sampling. This experiment shows that even though we may have assumed binary classification and independent features to compute our sampling scheme, this does not reduce its applicability to similar downstream tasks like multi-class classification.
-\end{mccorrection}
+For CoRA, we find reconstruction-optimal sampling is the best for reconstruction and the worst for classification, with our method showing significant improvement over both random and reconstruction-optimal sampling. This experiment shows that even though we may have assumed binary classification and independent features to compute our sampling scheme, it can also be applied to similar downstream tasks like multi-class classification.
 
 
 

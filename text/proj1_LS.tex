@@ -16,9 +16,7 @@ Graph signal processing (GSP) generalises the highly successful tools of samplin
 
 In the literature, the vast majority of studies on graph-based sampling focus on designing efficient sampling schemes that are approximately optimal under certain criteria \cite[Chapter 6]{pukelsheim2006optimal}, because optimal vertex choice under noise is in general NP-hard \cite{nikolov2022proportional, chamon2017greedy}. While \xd{these studies provide useful understanding in terms of sampling and reconstruction for graph signals, they} focus on the performance of sampling schemes at fixed sample sizes \cite{xie2019bayesian, puy2018random,shomorony2014sampling, tremblay2017determinantal,wang2018optimal,wang2019low, bai2020fast,  anis2016efficient}, while much less attention has been paid to understanding the impact of varying sample size on the mean squared error (MSE) of reconstruction. Sample size is an important parameter in both understanding and using sampling schemes, especially in the common setting of a fixed sample budget. %across all possible levels of noise, which is important for the application of graph sampling to domains such as finance \cite{nabar2023conservative} where the noise may be greater than the signal and domains where observing more samples might not be feasible and subsampling is more feasible.
 
-\begin{mccorrection}
 The literature studies the impact of sample size both empirically and theoretically, as summarised in Chapter \ref{ch:2-litreview}, Table \ref{tbl:Lit_review}. As per this summary, we note that the theoretical results present in the literature do not cover the full breadth of settings studied empirically, for example, requiring noiselessness \cite{shomorony2014sampling} or requiring reconstruction with a specific form of regularised LS\cite{chamon2017greedy}, Optimal Bayesian Reconstruction, which is Bayesian-optimal and requires exact knowledge of noise levels.
-\end{mccorrection}
 
 \iffalse
 \begin{table}[ht]
@@ -64,9 +62,9 @@ The literature studies the impact of sample size both empirically and theoretica
 %can give insight to the impact of MSE, as they are in a different setting to the empirical results they do not apply in that setting.
 \fi
 
-In this chapter, we provide a theoretical characterisation of the impact of sample size on \bs{the average} MSE \bs{ (or MMSE  -- see Section \ref{sec:Optimality_Criteria})} across the full range of possible sample sizes in some of the most common settings, i.e. noisy observations and unregularised LS  reconstruction, \mccorrect{filling some of the gap in the literature described in Section BLAH [link to Background Chapter]}. More specifically, we focus on whether under sufficiently low SNRs, decreasing sample size may actually decrease MSE. Furthermore, we investigate both the full range of sample sizes and all possible levels of noise, which is important for the application of graph sampling to domains where the noise may be greater than the signal (e.g. finance, with typically low signal-to-noise ratio \cite{nabar2023conservative}, or environmental sciences,  with inaccurate measurements from low-cost sensors \cite{bush2023impact}) or when observing more samples might not be feasible (e.g. resource-constrained settings). This breadth is only possible through our rigorous theoretical characterisation which allows us to understand behaviour at high noise levels, to characterise behaviour on arbitrarily large graphs, and to show when certain behaviours of MSE happen and why. %While theorems often need to be narrow in scope to allow for tractable proofs, our results are notable in how loose their restrictions are; our results for LS reconstruction apply to all graphs and every determinstic sampling scheme in the literature, while the conditions of our main result for GLR reconstruction under full-band noise, empirically, hold for every Erdős–Rényi, Stochastic Blockmodel and Barabasi-Albert graph tested (Table \ref{tbl:empirical_probabilities_conditions}).
+In this chapter, we provide a theoretical characterisation of the impact of sample size on the average MSE (or MMSE  -- see Chapter \ref{ch:2-litreview}, Section \ref{sec:thesis_define_MMSE}) across the full range of possible sample sizes in some of the most common settings, i.e. noisy observations and unregularised LS  reconstruction, filling some of the gap in the literature described in Chapter \ref{ch:2-litreview}, Section \ref{sec:thesis_lit_review}. \mccorrect{We focus on general theory applicable to any linear reconstruction method, then specialise to least squares (LS) reconstruction for our existence and asymptotic results, leaving more challenging reconstruction settings such as graph Laplacian regularisation (GLR) to the next chapter.} More specifically, we focus on whether under sufficiently low SNRs, decreasing sample size may actually decrease MSE. Furthermore, we investigate both the full range of sample sizes and all possible levels of noise, which is important for the application of graph sampling to domains where the noise may be greater than the signal (e.g. finance, with typically low signal-to-noise ratio \cite{nabar2023conservative}, or environmental sciences,  with inaccurate measurements from low-cost sensors \cite{bush2023impact}) or when observing more samples might not be feasible (e.g. resource-constrained settings). This breadth is only possible through our rigorous theoretical characterisation which allows us to understand behaviour at high noise levels, to characterise behaviour on arbitrarily large graphs, and to show when certain behaviours of MSE happen and why. %While theorems often need to be narrow in scope to allow for tractable proofs, our results are notable in how loose their restrictions are; our results for LS reconstruction apply to all graphs and every determinstic sampling scheme in the literature, while the conditions of our main result for GLR reconstruction under full-band noise, empirically, hold for every Erdős–Rényi, Stochastic Blockmodel and Barabasi-Albert graph tested (Table \ref{tbl:empirical_probabilities_conditions}).
 
-Our results begin by using a Bias-Variance decomposition to explain why decreasing sample size may decrease MSE for any linear reconstruction method \xd{(Section \ref{sec:general})}, and we then specialise to LS. We prove that under LS reconstruction of a $k$-bandlimited signal, if the samples were chosen to be optimal in the noiseless case then we can always reduce MSE under high noise by reducing sample size from $k$ to $k-1$ {\color{black}(Section \ref{sec:LS_full_band}, Theorem \ref{thm:noiseless_optimality_means_noise_sensitivity})}. Our experiments (Section \ref{sec:experiments_LS}) validate this for  large Stochastic Blockmodel and Barabasi-Albert graphs as well, demonstrating the applicability of our results to graphs with community structure and large scale-free networks. We also investigate how sensitive our results are to different kinds of noise by presenting variants of our theoretical and empirical results under both bandlimited \bs{(Sections \ref{sec:LS_bandlimited})} and full-band noise (Sections \ref{sec:LS_full_band}). Although our results are mainly of theoretical nature, they may provide useful guidance on choosing the appropriate sample size in light of noise levels in the data.
+Our results begin by using a Bias-Variance decomposition to explain why decreasing sample size may decrease MSE for any linear reconstruction method \xd{(Section \ref{sec:general})}, and we then specialise to LS \mccorrect{to show the existence of conditions under which decreasing sample size} \emph{will} \mccorrect{decrease sample size for this unregularised reconstruction method. We leave the more challenging setting of showing conditions under which decreasing sample size will decrease}. We prove that under LS reconstruction of a $k$-bandlimited signal, if the samples were chosen to be optimal in the noiseless case then we can always reduce MSE under high noise by reducing sample size from $k$ to $k-1$ {\color{black}(Section \ref{sec:LS_full_band}, Theorem \ref{thm:noiseless_optimality_means_noise_sensitivity})}. Our experiments (Section \ref{sec:experiments_LS}) validate this for  large Stochastic Blockmodel and Barabasi-Albert graphs as well, demonstrating the applicability of our results to graphs with community structure and large scale-free networks. We also investigate how sensitive our results are to different kinds of noise by presenting variants of our theoretical and empirical results under both bandlimited \bs{(Sections \ref{sec:LS_bandlimited})} and full-band noise (Sections \ref{sec:LS_full_band}). Although our results are mainly of theoretical nature, they may provide useful guidance on choosing the appropriate sample size in light of noise levels in the data.
 
 \iffalse
 This presents four primary contributions: 
@@ -98,13 +96,13 @@ For our theoretical results and experiments, we assume:
         \item full-band, so we observe a non-bandlimited signal.
         \item $k$-bandlimited, so we observe a $k$-bandlimited signal.
     \end{itemize}
-    \item Linear reconstruction, in particular LS.
+    \item Linear reconstruction, in particular LS (as defined in \eqref{eq:LS_Defn}).
 \end{itemize}
 
 In this chapter, though our experiments all use the combinatorial Laplacian, our theoretical results apply to any positive semi-definite shift operator (including the symmetrically normalized Laplacian).
 
 
-\noindent We briefly give a symbolic definition of our signal and noise model. We assume we observe a corrupted signal $\vect{y} = \vect{x} + \vect{n}$ %at a subset of the vertices $\set{S}$ 
+We briefly give a symbolic definition of our signal and noise model. We assume we observe a corrupted signal $\vect{y} = \vect{x} + \vect{n}$ %at a subset of the vertices $\set{S}$ 
 where
 \begin{itemize}
     \item $\vect{x}$ is a random $k$-bandlimited signal with $\expect{\vect{x}} = 0$ and $\text{Cov}(\vect{x}) = \projbl$,
@@ -145,15 +143,11 @@ Our general approach for a reconstruction method and noise type is described in 
 \begin{figure}[htbp]
     \centering
     \input{figures/proj1/tikz/reconstruction_flowchart.tikz}
-    \caption{\mccorrect{General approach for reconstruction methods}}
+    \caption{General approach for our theoretical analysis}
     \label{fig:theory_structure_flowchart}
 \end{figure}
-
-
 For LS, we simplify the problem by only considering decreasing the sample size by one at a time, which we call the `single vertex' simplification. We pay particular attention to subsets sampled by sampling schemes that are optimal in the noiseless setting (Subsection \ref{sec:LS_full_band}). 
- 
 We consider reconstruction both under full-band noise (Section \ref{sec:LS_full_band}) and bandlimited noise (Subsection \ref{sec:LS_bandlimited}) to show that the reduction in MSE from reducing sample size is not sensitive to our noise model, nor due to the high frequency component of the noise.
-
 An overview of the four steps in our general approach together with the main results are summarised in Table \ref{tbl:general_theory_LS}.
 
 
@@ -360,8 +354,10 @@ We define some shorthands for use with the `single vertex' simplification. For a
 \end{align}
 
 \subsubsection{Characterisation}
-We start by looking at possible combinations of signs of $\Delta_{1}(\set{S},v)$ and $\Delta_{2}(\set{S},v)$, which we present in Table \ref{tbl:LS_Reconstruction_Delta}.
-
+We start by looking at possible combinations of signs of $\Delta_{1}(\set{S},v)$ and $\Delta_{2}(\set{S},v)$, which we present in the following Lemma. %Table \ref{tbl:LS_Reconstruction_Delta}.
+\begin{lemma}
+\label{lemma:LS_sign_table}
+Under LS and full-band noise, only the combinations of signs of $\Delta_{1}(\set{S},v)$ and $\Delta_{2}(\set{S},v)$ marked with a $\checkmark$ in Table \ref{tbl:LS_Reconstruction_Delta} are possible.%; combinations of signs marked with a $\times$ in Table \ref{tbl:LS_Reconstruction_Delta} are impossible.
 \begin{table}[h]
 \centering
         \begin{tabular}{lcc}
@@ -376,8 +372,10 @@ We start by looking at possible combinations of signs of $\Delta_{1}(\set{S},v)$
 \caption{Possible signs of $\Delta_{1}(\set{S},v)$ and $\Delta_{2}(\set{S},v)$ under LS and full-band noise}
        \label{tbl:LS_Reconstruction_Delta}
 \end{table}
-
-\noindent In Table \ref{tbl:LS_Reconstruction_Delta}, $\checkmark$ can happen and $\times$ cannot happen. A more detailed explanation of the table and proofs of the `$\times$' subcases are presented in Appendix \ref{app:table_delta_proof}. %We now discuss LS and GLR separately in the following sections.
+\end{lemma}
+\begin{proof}[Proof Sketch] \mccorrect{We first show that under LS,} $\Delta_{1}(\set{S},v)$ can only be $-1$ or $0$. \mccorrect{We then use a spectral argument via Cauchy's Interlacing Theorem for each case to show whether} $\Delta_{2}$ \mccorrect{is increasing or decreasing. See} Appendix \ref{app:table_delta_proof} for a full proof.
+\end{proof}
+%\noindent In Table \ref{tbl:LS_Reconstruction_Delta}, $\checkmark$ can happen and $\times$ cannot happen. A more detailed explanation of the table and proofs of the `$\times$' subcases are presented in Appendix \ref{app:table_delta_proof}. %We now discuss LS and GLR separately in the following sections.
 
 
 By Table \ref{tbl:LS_Reconstruction_Delta} we can eliminate conditions (\ref{eq:main_thm_cond:d1pos}) and (\ref{eq:main_thm_cond:d1zero}) in Theorem \ref{main_general} for the single-vertex simplification under LS.
@@ -826,7 +824,8 @@ Our theoretical results show how the relationship between sample size and MSE ch
 
 %Note that we always consider SNR in ratio form --- as $10^{x}$ rather than $\frac{x}{10} dB$ --- which is always positive. For the SNR to be below a given threshold (and so for us to show reducing sample size will decrease MSE) the threshold must be positive.
 \begin{mccorrection}
-We first demonstrate the applicability of our results with plots of the thresholds $\tau(\set{S},v)$ against sample size (Fig. \ref{LS_SNR_Threshold_plots_all}). These plots show concrete SNR values for the thresholds, giving a practical understanding of how high noise levels need to be for reducing sample size to reduce MSE for different random graph models and parameters.  We then demonstrate the validity of our results by plotting $\textrm{MSE}_{\set{S}}$ against sample size (Figs. \ref{LS_ER_MSE_fig}) at SNRs below, near and above the derived thresholds, showing that the behaviour of $\textrm{MSE}_{\set{S}}$ follows our theoretical results. We finally present similar results on real-world datasets, validating the applicability of our results to real world datasets.
+We first demonstrate the applicability of our results with plots of the thresholds $\tau(\set{S},v)$ against sample size (Figs. \ref{LS_SNR_Threshold_plots_all} - \ref{LS_SNR_Threshold_plots_big_BA}). These plots show concrete SNR values for the thresholds, giving a practical understanding of how high noise levels need to be for reducing sample size to reduce MSE for different random graph models and parameters.  We then demonstrate the validity of our results by plotting $\textrm{MSE}_{\set{S}}$ against sample size (Figs. \ref{LS_ER_MSE_fig} - \ref{LS_BA_MSE_bandlimited_fig}) at SNRs below, near and above the derived thresholds, showing that the behaviour of $\textrm{MSE}_{\set{S}}$ follows our theoretical results. We finally present similar results on real-world datasets (Figs. \ref{LS_SNR_Threshold_plots_all_real} \& \ref{LS_real_MSE_fig}), validating the applicability of our results to real world datasets.
+
 \end{mccorrection}
 
 \subsection{Experimental Setup}
@@ -1314,7 +1313,9 @@ We see that the real world results are broadly in line with the synthetic experi
 
 \section{Conclusion}
 In this Chapter we studied the impact of sample size on linear reconstruction of noisy graph signals. We showed theoretically and experimentally, in the same settings as much of the sample set selection literature, that reconstruction error is not always monotonic in sample size, i.e., at sufficiently low SNRs, reconstruction error can sometimes be improved by \emph{reducing} sample size. %, even if the sample set was picked by a greedy optimal sampling scheme given a fixed sample size.
-Our finding reveals that existing results in the literature for the noiseless setting may not necessarily generalise to the noisy case,  even when considering regularised reconstruction methods. It also demonstrates the need to consider both optimal sample size selection and reconstruction methods at the same time, and motivates assessment of noise levels in datasets to do so. %For example, the limitation of ordinary LS reconstruction may be mitigated by regularisation schemes such as that proposed in \cite{chamon2017greedy}.
+Our finding reveals that existing results in the literature for the noiseless setting may not necessarily generalise to the noisy case,  even when considering regularised reconstruction methods. It also demonstrates the need to consider both optimal sample size selection and reconstruction methods at the same time, and motivates assessment of noise levels in datasets to do so. 
+
+%For example, the limitation of ordinary LS reconstruction may be mitigated by regularisation schemes such as that proposed in \cite{chamon2017greedy}.
 % This paper demonstrates the potential limitation of a focus on efficient optimal sample set selection, and the importance of both constructing efficient regularised reconstruction operators in reconstructing graph signals. Furthermore, it demonstrates the need for sample size bounds and guidelines specifically catering to the noisy reconstruction case with operators used in the literature, rather than optimal Bayesian operators.
 
 One practical implication of our theoretical results is that it can provide useful guidance on how to make use of the sampling budget available. For example, if one is aware of potentially high noise present in the observed signals, to minimise MSE under LS reconstruction, it might be preferable to not use all of the provided sampling budget.
@@ -1322,14 +1323,6 @@ One practical implication of our theoretical results is that it can provide usef
 Another use case could be a practical sampling algorithm. %for both the LS and GLR reconstructions.
 For LS reconstruction, if one has chosen $k$ or fewer nodes by some noiseless-optimal scheme, one can calculate $\tau(\set{S},v)$ for each element of $\set{S}$, remove $v$ if $\text{SNR} < \tau(\set{S},v)$, and repeat until it is no longer possible to find a node $v$ in our remaining set $\set{S}_{rem}$ where $\text{SNR} < \tau(\set{S}_{rem},v)$.
 
-\iffalse
-For the GLR reconstruction, with a fixed $\mu$ and belief that the signal model in Section \ref{sec:every_x} applies (the latter could be assessed based on past observations and is required for computation of the SNR threshold $\tau$), then our results suggest the following sampling algorithm can be considered. Given the graph structure, before observing any nodes:
-\begin{enumerate}
-    \item Check whether condition \ref{eq:GLR_exist_thm_B_constraint} in Theorem \ref{thm:main_GLR_exist} applies (this only depend on graph structure);
-    \item If they do, compute $\tau_{GLR}$;
-    \item If it is believed that $\text{SNR} < \tau_{GLR}$ holds, sample $m_{opt}$ (approximately $\sqrt{N}$) nodes at random and reconstruct from those nodes.
-\end{enumerate}
-\fi
 
 %We finally remark that future work includes extending the analysis on GLR to the normalised graph Laplacian, providing bounds on $\xi_2$ for LS, analysing other graph models such as Ring graphs or studying a mode detailed ``early-stopping'' mechanism in sequential sampling schemes that do not use the full sample budget.
 
