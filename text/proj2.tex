@@ -3,6 +3,13 @@
 %%%% Some specific notation
 %% To Do: use msub to factor out these things
 
+\begin{savequote}[8cm]
+``Would you tell me, please, which way I ought to walk from here?'' \\ 
+``That depends a good deal on where you want to get to,''  said the Cat.\\
+%``I don't much care where--'' said Alice.\\
+%``Then it doesn't matter which way you walk,'' said the Cat.
+  \qauthor{--- Alice \& The Cheshire Cat, \emph{Alice's Adventures in Wonderland}}
+\end{savequote}
 \chapter{\label{ch:proj2}On the Impact of Downstream Tasks on Sampling and Reconstructing Noisy Graph Signals}
 
 %\minitoc
@@ -43,7 +50,7 @@ The signal processing community has addressed this by generalising classical sam
 %While the machine learning literature on this setting is centered around empirical results \cite{rossi2021unreasonable}, the signal processing community has generalised classical sampling and reconstruction tools to the graph setting, with a focus on efficient reconstruction of signals via sample choice or reconstruction method \cite{wang2018optimal}[cite]. However, theoretical results in graph signal processing have mainly focused on the performance of signal reconstruction and sample choice under reconstruction loss [cites], rather than with the loss induced by more complex downstream tasks such as classification with a GCN.
 \fi
 
-The graph signal processing (GSP) community has addressed the issue of noisy and incomplete data by generalising the tools of sampling and reconstruction from classical signal processing, via extending the classical shift operator to a graph shift operator \cite{ortega2018graph} such as the Laplacian. The majority of studies on graph-based sampling focus on designing efficient sampling schemes for criteria which approximate \cite{wang2018optimal, wang2019low, mfn, tremblay2017graph, jayawant2021doptimal,puy2018random, pakiyarajah2025graph} or bound \cite{bai2020fast,eoptimalchen} reconstruction loss, grounded in the optimal design of experiments \cite{pukelsheim2006optimal}, \bs{with some work simultaneously learning the underlying graph topology \cite{zhang2025graph, berger2020efficient, sridhara2024towards}}.  Theoretical results have also been derived on the performance of sample choice and signal reconstruction under reconstruction loss \cite{pesenson2008sampling, puy2018random, chamon2016near, chamon2017greedy, shomorony2014sampling, chen2016signal} -- \mccorrect{see also Chapters} \ref{ch:proj1_LS} \& \ref{ch:proj1_GLR}. %with those on perfect reconstruction \cite{pesenson2008sampling} generalising to other downstream tasks, as perfect reconstruction of the data implies perfect reconstruction of any function of the data. 
+The graph signal processing (GSP) community has addressed the issue of noisy and incomplete data by generalising the tools of sampling and reconstruction from classical signal processing, via extending the classical shift operator to a graph shift operator \cite{ortega2018graph} such as the Laplacian. The majority of studies on graph-based sampling focus on designing efficient sampling schemes for criteria which approximate \cite{wang2018optimal, wang2019low, mfn, tremblay2017graph, jayawant2021doptimal,puy2018random, pakiyarajah2025graph} or bound \cite{bai2020fast,eoptimalchen} reconstruction loss, grounded in the optimal design of experiments \cite{pukelsheim2006optimal}, \bs{with some work simultaneously learning the underlying graph topology \cite{zhang2025graph, berger2020efficient, sridhara2024towards}}.  Theoretical results have also been derived on the performance of sample choice and signal reconstruction under reconstruction loss \cite{pesenson2008sampling, puy2018random, chamon2016near, chamon2017greedy, shomorony2014sampling, chen2016signal} -- {see also Chapters} \ref{ch:proj1_LS} \& \ref{ch:proj1_GLR}. %with those on perfect reconstruction \cite{pesenson2008sampling} generalising to other downstream tasks, as perfect reconstruction of the data implies perfect reconstruction of any function of the data. 
 %However, those results require a bandlimited signal model and computationally expensive reconstruction, and are sensitive to these assumptions \cite{sripathmanathan2024impact}, limiting their applicability. 
 However, these results do not immediately carry over to other tasks such as classification, as they rely on the specific structure of reconstruction loss -- e.g., the proof of near-optimality of greedy sampling on graphs \cite{chamon2016near} relies on the loss's (approximate) supermodularity. Only a handful of precious studies have considered linear transforms of the signal \cite{chamon2017greedy, gama2020rethinking}; however, the requirement of linearity restricts the scope of these works. Thus, there is a significant lack of investigation in the GSP literature of the impact of incomplete data on downstream learning tasks. %with Graph Neural Networks (GNNs).}
 
@@ -108,7 +115,7 @@ We consider the following losses:
     &\text{Reconstruction Loss} = \expect{||{\vect{X} - \hat{\vect{X}}}||^{2}_{F}}.
     %\text{Classification Loss} &= \expect{\# \text{ misclassifications}}.
 \end{align}
-\mccorrect{We also define a multi-class classification loss specifically for our experiments in Section} \ref{sec:experimental_setup}.
+{We also define a multi-class classification loss specifically for our experiments in Section} \ref{sec:experimental_setup}.
 The classification loss defined above is the sum of per-node misclassification probabilities. We refer to $f(\matr{X}) \in \mathbb{R}^{N}$ and $f(\hat{\matr{X}}) \in \mathbb{R}^{N}$ as vectorial `clean output' and `reconstructed output', respectively, and $f(\matr{X}) - f(\hat{\matr{X}})$ as the `output error'. We let $f(\matr{X})_{i}$ denote the component of $f(\matr{X})$ at node $i$. %Our results also apply to the trivial GCN $f(\matr{X})=\matr{X}$, which gives a simple extension of the GSP reconstruction setting.
 
 
@@ -210,8 +217,7 @@ We now characterise our losses for a class of linear $f$. This class of $f$ incl
      &=  \sum_{i \in \set{V}} \left(\phi_{i}(\matr{I})\right)^{2} + \left(\nu_{i}(\matr{I})\right)^{2} - 2c_{i}(\matr{I})
      %&= \sum_{i \in \set{V}} \text{Var}(\matr{X}_{i}) + \text{Var}(\hat{\matr{X}}_{i}) - 2\text{Cov}(\hat{\matr{X}}_{i}, \matr{X}_{i}) \\
     \end{align}
-   where we use $\expect{\matr{X}} = \expect{\hat{\matr{X}}} = 0$ to compute \eqref{eq:variance_calc_zero_mean}.
-    
+   where we use $\expect{\matr{X}} = \expect{\hat{\matr{X}}} = 0$ to compute \eqref{eq:variance_calc_zero_mean}. 
 \end{proof}
 
 % Note that classification loss is only dependent on $\matr{G}$, not $\vect{w}$.
@@ -220,7 +226,7 @@ We now characterise our losses for a class of linear $f$. This class of $f$ incl
  
  We consider the application of Theorem \ref{thm:general_class_err} to certain classes of $\matr{G}$ and their implications.
 
-\paragraph{GSP Extension}As a special case, if we consider $d=1$ and let  $\matr{G} = \matr{I}$, we get an extension of the standard GSP sampling and reconstruction theory to the classification setting. In this case, the losses are both transformations of $\phi_{i}(\matr{I}), \nu_{i}(\matr{I})$ and $c_{i}(\matr{I})$, allowing us to more directly compare the two losses. This is not immediately possible in the case of general $\matr{G}$\mccorrect{, thus this `simple' case is a helpful experimental setup for understanding the relationship between the two losses.}
+\paragraph{GSP Extension}As a special case, if we consider $d=1$ and let  $\matr{G} = \matr{I}$, we get an extension of the standard GSP sampling and reconstruction theory to the classification setting. In this case, the losses are both transformations of $\phi_{i}(\matr{I}), \nu_{i}(\matr{I})$ and $c_{i}(\matr{I})$, allowing us to more directly compare the two losses. This is not immediately possible in the case of general $\matr{G}${, thus this `simple' case is a helpful experimental setup for understanding the relationship between the two losses.}
 
 \paragraph{GNNs} If we let $\matr{G}$ be a polynomial $p$ of $\tilde{\matr{A}}_{\gamma}$, then $\vect{l} = \text{sign}(p(\tilde{\matr{A}}_{\gamma})\matr{X}\matr{w})$, which corresponds to a multi-layer SGC \cite{wu2019simplifying} (see Section \ref{sec:GNN_background}) or a single layer polynomial-based GNN\footnote{We assume that all feature dimensions share the same polynomial filter.} like Chebnet \cite{defferrard2016convolutional}, FavardGNN \cite{guo2023Favard}, JacobiNet \cite{guo2023manipulating} or BernNet \cite{he2021bernnet}. Then the classification loss in Theorem \ref{thm:general_class_err} is the difference in output when applying the GNN to the full data $\matr{X}$ versus to the reconstructed data $\hat{\matr{X}}$. Note that in the case where the columns of $\matr{X}$ are independent, $\matr{C} = \matr{\Sigma}$, and therefore for SGC the classification loss does not depend on the weights, only on the number of layers. 
 
@@ -272,6 +278,8 @@ and for every node $i$, the following is always a valid triangle.
 
 
 For SGCs, $||\matr{G}|| \leq 1$ (as $||\tilde{\matr{A}}|| \leq 1$ by Gershgorin's Disc Theorem \cite{horn-and-johnson}, so $\forall \gamma\geq 0:||\tilde{\matr{A}}_{\gamma}|| \leq 1$ by \cite[Theorem 1]{wu2019simplifying} and therefore $||\tilde{\matr{A}}_{\gamma}^{r}|| \leq 1$ for all $r \geq 1$). Therefore, by \eqref{eq:bound_final_layer}, the sum of the per-node normalized output errors (which are directly related to the per-node misclassification probabilities, as shown in Fig. \ref{fig:class_rec_rel_fig}) is upper bounded by the reconstruction loss.
+
+While inequality \eqref{eq:bound_final_layer} suggests optimising reconstruction loss to minimise $\sum_{i \in \set{V}} \text{Error}_{out,i}$, the non-linear relationship between $\text{Error}_{out,i}$ and the classification loss at node $i$ make this sum a poor proxy for total classification error. We discuss experimental results around optimising reconstruction loss as a proxy for classification loss in Section \ref{sec:optimal_sampling_results}.
 \iffalse
 Figure \ref{fig:class_rec_rel_fig} shows the relationship between error of reconstruction of the final layer output (i.e., ${\expect{||(f(\matr{X}))_i - (f(\hat{\matr{X}}))_i||^{2}_{2}}}$) and per-node misclassification probability (i.e., per-node classification loss), namely that they form a triangle, which follows from Theorem \ref{thm:general_class_err} and the law of cosines:
 

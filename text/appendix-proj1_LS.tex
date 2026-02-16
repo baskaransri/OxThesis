@@ -291,9 +291,9 @@ We can now prove the overall result:
     For LS, $\Delta_{1} < 0 $ if and only if $ \Delta_{2} > 0$.
 \end{lemma}
 \begin{proof}
-As $\Delta_{1} \in \{0,1\}$ (Lemma \ref{lemma:LS_xi_1_is_rank}), we instead prove that $\Delta_{1} = 0$ if and only if $ \Delta_{2} \leq 0$.
+As $\Delta_{1} \in \{0,-1\}$ (Lemma \ref{lemma:LS_xi_1_is_rank}), we instead prove that $\Delta_{1} = 0$ if and only if $ \Delta_{2} \leq 0$.
 
-     Write the eigenvalues of $[\matr{\Pi}_{bl(\set{K})}]_{\set{S}}$ as $\lambda_{1}, \dots, \lambda_{n}$ and the eigenvalues of $[\matr{\Pi}_{bl(\set{K})}]_{\set{S} \backslash \{v\}}$ as $\mu_{1}, \dots \mu_{n+1}$. As $[\matr{\Pi}_{bl(\set{K})}]_{\set{S} \backslash \{v\}}$ is a principal submatrix of $[\matr{\Pi}_{bl(\set{K})}]_{\set{S}}$, by Cauchy's Interlacing Theorem \cite[p.~59]{bhatia2013matrix},
+     \mccorrect{Write the eigenvalues of $[\matr{\Pi}_{bl(\set{K})}]_{\set{S} \backslash \{v\}}$ as $\lambda_{1}, \dots, \lambda_{n}$ and the eigenvalues of $[\matr{\Pi}_{bl(\set{K})}]_{\set{S} }$ as $\mu_{1}, \dots \mu_{n+1}$.} As $[\matr{\Pi}_{bl(\set{K})}]_{\set{S} \backslash \{v\}}$ is a principal submatrix of $[\matr{\Pi}_{bl(\set{K})}]_{\set{S}}$, by Cauchy's Interlacing Theorem \cite[p.~59]{bhatia2013matrix},
      \begin{equation}
          0 \leq \mu_{1} \leq \lambda_{1} \leq \dots \leq \lambda_{n} \leq \mu_{n+1} \leq 1 \label{eq:MUUM_nonnegative}
      \end{equation} 
@@ -337,7 +337,7 @@ By Cauchy's interlacing theorem, $\lambda_i \geq \mu_i$ and so
 \begin{equation}
     \sum_{I\leq i \leq n} { \frac{1}{\lambda_{i}^{\set{S}}}} \leq \sum_{I\leq i \leq n} { \frac{1}{\mu_{i}^{\set{S}}}} <  \sum_{I \leq i \leq n+1} { \frac{1}{\mu_{i}^{\set{S}}}}. \label{eq:eig_sum_ineq2_intermediate}
 \end{equation}
-With the left inequality by matching terms via (\ref{eq:lambda_mu_match2}) and then summing over (\ref{eq:lambda_mu_inv_ineq2}), and the right inequality because (\ref{eq:mu_nonzero}) means $\frac{1}{\mu_{n+1}} > 0$. We then note the left and the right terms in this equality say:
+With the left inequality by matching terms via (\ref{eq:lambda_mu_match2}) and then summing over (\ref{eq:lambda_mu_inv_ineq2}), and the right inequality because (\ref{eq:mu_nonzero}) means $\frac{1}{\mu_{n+1}} > 0$. We then note the left and the right terms in this \mccorrect{inequality} say:
 \begin{equation}
      \sum_{\lambda_{i}^{\set{S}} \neq 0} { \frac{1}{\lambda_{i}^{\set{S}}}} < \sum_{\mu_{i}^{\set{S}} \neq 0} { \frac{1}{\mu_{i}^{\set{S}}}} \label{eq:eig_sum_ineq2}
  \end{equation}
@@ -359,7 +359,7 @@ $\set{S} \backslash \set{T}$ is better than $\set{S}$ if and only if $\textrm{MS
 \begin{equation}
     \Delta_{1}(\set{S},\set{T}) + \sigma^{2} \cdot \Delta_{2}(\set{S},\set{T}) > 0.
 \end{equation}
-By substituting in $\sigma^{2} = {\color{black} \frac{\expect{\sqnormvec{\vect{x}}}}{\expect{\sqnormvec{\vect{\epsilon}}}} }  \cdot \textrm{SNR}$ and multiplying both sides by SNR (which does not change the direction of the inequality, as $\textrm{SNR} > 0$), $\set{S} \backslash \set{T}$ is better than $\set{S}$ if and only if
+By substituting in $\sigma^{2} = {\color{black} \frac{\expect{\sqnormvec{\vect{x}}}}{\expect{\sqnormvec{\vect{\epsilon}}}} }  \cdot \frac{1}{\textrm{SNR}}$ and multiplying both sides by SNR (which does not change the direction of the inequality, as $\textrm{SNR} > 0$), $\set{S} \backslash \set{T}$ is better than $\set{S}$ if and only if
 \begin{equation}
 \label{eq:proof_main_general_intermediate}
    {\color{black} \frac{\expect{\sqnormvec{\vect{x}}}}{\expect{\sqnormvec{\vect{\epsilon}}}} } \cdot \Delta_{2}(\set{S},\set{T}) > -\Delta_{1}(\set{S},\set{T}) \cdot \textrm{SNR}. 
@@ -447,7 +447,7 @@ We reframe the Proposition to the following equivalent statement:
 By Lemma \ref{lemma:LS_xi_1_is_rank} in Appendix \ref{proof_appendix_LS}: 
 \begin{align}
     &\xi_{1}(\set{S}_{i}) = k -\text{rank}([\matr{U}]_{\set{S}_{i}, \set{K}}), \\
-    &\Delta_{1} \in \{0,1\}
+    &\Delta_{1} \in \{0,-1\}
 \end{align}
  and as $\text{rank}(\matrsubU{N}) = k$, $\xi_{1}(\set{S}_{N}) = 0$. As $\xi_{1}(\set{S}_{0}) = k$, we must have exactly $k$ indices for which $\Delta_{1}(\set{S}_{i}, v_{i}) = -1$, and by Lemma \ref{lemma:LS_delta_1_improvement_means_delta_2_worse} in Appendix \ref{proof_appendix_LS}  
   we have exactly $k$ indices for which $\Delta_{2}(\set{S}_{i}, v_{i}) > 0$. As $\tau (\set{S}_{i}, v_{i})= \frac{k}{N} \Delta_{2}(\set{S}_{i}, v_{i})$, we're done.
@@ -562,7 +562,7 @@ Then, by Appendix \ref{proof_appendix_LS}, Lemma \ref{lemma:LS_delta_1_improveme
 \begin{equation}
     \forall m' > k: \enskip \forall v \in \set{S}_{m'} \backslash \set{S}_{k}: \enskip \Delta_{2}(\set{S}_{m'},v) \leq 0 
 \end{equation}
-and, like for (\ref{eq:greedy_sampling_first_k}, as $\tau(\set{S}_{m},v) = \frac{k}{N}\Delta_{2}(\set{S}_{m},v)$ and $\frac{k}{N} > 0$,
+and, like for (\ref{eq:greedy_sampling_first_k}), as $\tau(\set{S}_{m},v) = \frac{k}{N}\Delta_{2}(\set{S}_{m},v)$ and $\frac{k}{N} > 0$,
 \begin{equation}
      \forall m' > k: \enskip \forall v \in \set{S}_{m'}\backslash \set{S}_{k} : \enskip \tau(\set{S}_{m'},v) \leq 0. 
 \end{equation}
@@ -573,7 +573,7 @@ and, like for (\ref{eq:greedy_sampling_first_k}, as $\tau(\set{S}_{m},v) = \frac
 \label{app:proof_of_remark_ADE_are_noiseless_optimal}
 
 \subsection*{A-Optimality}
-A-optimality depends on the existence of the inverse of $\projbl[S]$  existing, which requires it to be of full rank. By Appendix \ref{proof_appendix_LS}, Lemma \ref{lemma:square_to_rect_rank}, if an A-optimal scheme picks a set $\set{S}$ of size $k$, then $\text{rank}([\matr{U}]_{\set{S},\set{K}}) = k$. Therefore, $\set{S}$ is a uniqueness set \cite{{anis2016efficient}} and can perfectly reconstruct any $k$-bandlimited signal.
+A-optimality depends on the existence of the inverse of $\projbl[S]$  existing, which requires it to be of full rank \mccorrect{(at $|\set{S}| = k$ our definition of $\matr{P}$ requires $\matrsubU{S}^{T}\matrsubU{S}$ invertible; this implies $\projbl[S]$ invertible as $0 < \text{det}(\matrsubU{S}^{T}\matrsubU{S}) = \text{det}(\matrsubU{S}^{T})\text{det}(\matrsubU{S}) = \text{det}(\matrsubU{S}\matrsubU{S}^{T})$ )}. By Appendix \ref{proof_appendix_LS}, Lemma \ref{lemma:square_to_rect_rank}, if an A-optimal scheme picks a set $\set{S}$ of size $k$, then $\text{rank}([\matr{U}]_{\set{S},\set{K}}) = k$. Therefore, $\set{S}$ is a uniqueness set \cite{anis2016efficient} and can perfectly reconstruct any $k$-bandlimited signal.
 
 
 \subsection*{D- and E-optimality}

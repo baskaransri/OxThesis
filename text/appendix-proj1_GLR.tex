@@ -7,12 +7,12 @@ We first simplify $\xi_{1}(\set{S})$:
     &\matrsubU{N} - \matr{R}_{\set{S}}\matrsubU{S} \\
     &= \left(\matr{I} - \left(\proj{S} + \mu\matr{L} \right)^{-1}\proj{S}\right)\matrsubU{N}  \\
     &=  \left(\proj{S} + \mu\matr{L} \right)^{-1}\mu\matr{L}\matrsubU{N} \\
-    &=  \left(\proj{S} + \mu\matr{L} \right)^{-1}\matrsubU{N}\matr{\Lambda}_{k}
+    &=  \left(\proj{S} + \mu\matr{L} \right)^{-1}\matrsubU{N}\left(\mu\matr{\Lambda}_{k}\right)
 \end{align}
 where $\matr{\Lambda}_{k}$ is a $k \times k$ diagonal matrix with the corresponding graph frequencies to $\matrsubU{N}$ as its diagonal. Write $u_{i}$ for the $i^{\textrm{th}}$ column of $\matrsubU{N}$, so $\vect{u}_{i}$ is an eigenvector of $\matr{L}$. 
 \begin{align}
     \xi_{1}(\set{S}) &= \sqfrob{\matrsubU{N} - \matr{R}_{\set{S}}\matrsubU{S}}  \\
-    &= \sum_{i=2}^{k} \mu\lambda_{i}\vect{u}_{i}^{T}\left(\proj{S} + \mu\matr{L} \right)^{-2}\vect{u}_{i} \label{eq:GLR_corr_proof:xi_1_def}
+    &= \sum_{i=2}^{k} \left(\mu\lambda_{i}\right)^{2}\vect{u}_{i}^{T}\left(\proj{S} + \mu\matr{L} \right)^{-2}\vect{u}_{i} \label{eq:GLR_corr_proof:xi_1_def}
 \end{align}
 
 Note that the condition is equivalent to the following:
@@ -21,6 +21,17 @@ Note that the condition is equivalent to the following:
 \end{equation}
 that is, the projection is idempotent on each of the $k-1$ non-constant eigenvectors. We consider the cases where this is and is not true and correlate them to cases in Theorem \ref{main_general}.
 
+\subsection{The projection is idempotent}
+\label{subapp:GLR_iff_proof:idempotent}
+As $\proj{S}\vect{u}_{i} = \vect{u}_{i}$,
+\begin{equation}
+   (\proj{S} + \mu \matr{L})\vect{u}_{i} = (1 + \mu\lambda_{i})\vect{u}_{i} 
+\end{equation}
+therefore $\vect{u}_{i}$ is an eigenvector of $(\proj{S} + \mu \matr{L})$ with eigenvalue $1 + \mu\lambda_{i}$ and
+\begin{align}
+    \vect{u}_{i}^{T}(\proj{S} + \mu \matr{L})^{-2}\vect{u}_{i} = (1 + \mu\lambda_{i})^{-2}.
+\end{align}
+By Lemma \ref{lemma:GLR_full_observation_MSE}, in this case $\xi_{1}(\set{S}) = \xi_{1}(\set{N})$, i.e. that $\Delta_{1}(\set{N},\set{S}^{c}) = 0$. This corresponds to condition (\ref{eq:main_thm_cond:d1zero}), and gives us condition (\ref{eq:GLR_corol_iff_weird}) in our Corollary.
 \subsection{The projection is idempotent}
 \label{subapp:GLR_iff_proof:idempotent}
 as $\proj{S}\vect{u}_{i} = \vect{u}_{i}$,
@@ -32,27 +43,32 @@ therefore $\vect{u}_{i}$ is an eigenvector of $(\proj{S} + \mu \matr{L})$ with e
     \vect{u}_{i}^{T}(\proj{S} + \mu \matr{L})^{-2}\vect{u}_{i} = (1 + \mu\lambda_{i})^{-2}.
 \end{align}
 By Lemma \ref{lemma:GLR_full_observation_MSE}, in this case $\xi_{1}(\set{S}) = \xi_{1}(\set{N})$, i.e. that $\Delta_{1}(\set{N},\set{S}^{c}) = 0$. This corresponds to condition (\ref{eq:main_thm_cond:d1zero}), and gives us condition (\ref{eq:GLR_corol_iff_weird}) in our Corollary.
+
 \subsection{The projection is not idempotent}
 Applying Cauchy-Schwartz to $\vect{x} = (\proj{S} + \mu \matr{L})^{-1}\vect{u}_{i}$ and  $\vect{y} = (\proj{S} + \mu \matr{L})\vect{u}_{i}$ gives, as $\vect{u}_{i}^{T}\vect{u}_{i} = 1$,
 \begin{align}
-    1 \leq \vect{u}_{i}^{T}(\proj{S} + \mu \matr{L})^{-2}\vect{u}_{i} \vect{u}_{i}^{T}(\proj{S} + \mu \matr{L})^{2}\vect{u}_{i}.
+    1 \leq \vect{u}_{i}^{T}(\proj{S} + \mu \matr{L})^{-2}\vect{u}_{i} \vect{u}_{i}^{T}(\proj{S} + \mu \matr{L})^{2}\vect{u}_{i}. \label{eq:cs_for_non_idempotent_GLR_proj}
 \end{align}
 
-We note that 
+We note that
 \begin{align}
-    \sqnormvec{\proj{S}\vect{u}_{i}} = \sum_{j \in \set{S}} \left(\vect{u}_{i}\right)_{j} < \sum_{j =1}^{N} \left(\vect{u}_{i}\right)_{j} = \sqnormvec{\vect{u}_{i}} = 1
+    \sqnormvec{\proj{S}\vect{u}_{i}} = \sum_{j \in \set{S}} \left(\vect{u}_{i}\right)_{j}^{2} \leq \sum_{j =1}^{N} \left(\vect{u}_{i}\right)_{j}^{2} = \sqnormvec{\vect{u}_{i}} = 1. \label{eq:proj_idempotent_ineq_for_special_i}
 \end{align}
-with a strict inequality as some component of $\vect{u}_{i}$ in $\set{S}^{c}$ is nonzero, by the assumption.
-Therefore
+\mccorrect{and see that} (\ref{eq:proj_idempotent_ineq_for_special_i}) \mccorrect{must be strict for at least one} $i\in [2,k]$, because some component of $\vect{u}_{i}$ in $\set{S}^{c}$ is \mccorrect{nonzero for at least one} $i \in [2,k]$. Therefore
 \begin{align}
     \vect{u}_{i}^{T}(\proj{S} + \mu \matr{L})^{2}\vect{u}_{i} &= (\mu\lambda_{i})^{2} + (1 + 2\mu\lambda_{i}) \sqnormvec{\proj{S}\vect{u}_{i}} \\
     &\leq (1 + \mu\lambda_{i})^{2}.
 \end{align}
-Therefore, by Lemma \ref{lemma:GLR_full_observation_MSE} and (\ref{eq:GLR_corr_proof:xi_1_def}),
+and substituting into \eqref{eq:cs_for_non_idempotent_GLR_proj}:
+\begin{align}
+    \left(\frac{1}{1 + \mu\lambda_{i}}\right)^{2} \leq \vect{u}_{i}^{T}(\proj{S} + \mu \matr{L})^{-2}\vect{u}_{i}
+\end{align}
+\mccorrect{with these inequality being strict for at least one $i \in [2,k]$.} Therefore, by Lemma \ref{lemma:GLR_full_observation_MSE} and (\ref{eq:GLR_corr_proof:xi_1_def}),
 \begin{equation}
     \xi_{1}(\set{S}) > \xi_{1}(\set{N})
 \end{equation}
 so $\Delta_{1}(\set{N},\set{S}^{c}) < 0$.
+
 
 \subsection{Simplifying Theorem \ref{main_general}}
 We see that the projection is idempotent on $(\vect{u}_{i})_{i=2}^{k}$ implies $\Delta_{1}(\set{N},\set{S}^{c}) = 0$, and the projection is not idempotent implies $\Delta_{1}(\set{N},\set{S}^{c}) < 0$. As the projection must either be idempotent or not idempotent, these implications must be `if and only if' statements. We therefore rule out (\ref{eq:main_thm_cond:d1pos}) in Theorem \ref{main_general}. 
@@ -64,9 +80,9 @@ We see that the projection is idempotent on $(\vect{u}_{i})_{i=2}^{k}$ implies $
 We restate the following definitions from Lemmas \ref{lemma:GLR_xi_2_bound_main} and \ref{lemma:GLR_xi_2_bound_main_bl}:
 \begin{align}
         r &= \omega\left( \frac{\lambda_{N}}{\lambda_{2}}\right) \\
-        B(m) &= r \frac{N}{m} + \sum^{m}_{i=1}\omega\left(\max\left[1,\frac{\lambda_{N+2-i}}{\lambda_{i}}\right]\right) \\
+        B(m) &= r \frac{N}{m} + \sum^{m}_{i=2}\omega\left(\max\left[1,\frac{\lambda_{N+2-i}}{\lambda_{i}}\right]\right) \\
         r_{bl} &= \omega\left( \frac{\lambda_{k}}{\lambda_{2}}\right) \\
-        B_{k}(m) &= r_{bl} \frac{N}{m} + \sum^{m}_{i=1}\omega\left(\max\left[1,\frac{\lambda_{k+2-i}}{\lambda_{i}}\right]\right)
+        B_{k}(m) &= r_{bl} \frac{N}{m} + \sum^{m}_{i=2}\omega\left(\max\left[1,\frac{\lambda_{k+2-i}}{\lambda_{i}}\right]\right)
 \end{align}
 
 
@@ -93,7 +109,7 @@ We start by calculating $\xi_{i}(\set{N})$.
     Set $\matr{R}_{\set{N}}= (\matr{I} + \mu \matr{L})^{-1}$ in (\ref{eq:xi_1_def}) and (\ref{eq:xi_2_def}), noting $\matrsubU{N}$ are eigenvectors for $\matr{R}_{\set{N}}$.
 \end{proof}
 
-Let $\set{S}$ be any sample set of size $m$. We show that under our conditions $\Delta_{2}(\set{S}) > 0$ and then apply Corollary \ref{corr:main_GLR_iff}. 
+Let $\set{S}$ be any sample set of size $m$. We show that under our conditions $\Delta_{2}(\set{N},\set{S}^{c}) > 0$ and then apply Corollary \ref{corr:main_GLR_iff}. 
 To do so, we use the following bounds:
 \begin{align}
     \xi_{2}(\set{S}) &\leq B(m) \\
@@ -246,14 +262,14 @@ Finally, we bound (\ref{eq:GLR_Proof_intro:small1}) and (\ref{eq:GLR_Proof_intro
 \end{equation}
 We use another variant to show that (Subsection  \ref{subapp:GLR_Proof:off_diag_err})
 \begin{equation}
-    \sqfrob{\msubgen[\set{N},\Theta]{\matr{L}^{\dagger}}\msub[\Theta]{\matr{L}^{\dagger}}^{-1}} \leq \sum^{m}_{i=2}\omega \left( \max\left[1,\frac{\lambda_{N-2+i}}{\lambda_{i}}\right] \right)
+    \sqfrob{\msubgen[\set{N},\Theta]{\matr{L}^{\dagger}}\msub[\Theta]{\matr{L}^{\dagger}}^{-1}} \leq \sum^{m}_{i=2}\omega \left( \max\left[1,\frac{\lambda_{N+2-i}}{\lambda_{i}}\right] \right)
 \end{equation}
 
 Combine these bounds with (\ref{eq:GLR_Proof_intro:muless_ineq} - \ref{eq:GLR_Proof_intro:small2}) to prove the first inequality in the Lemma.
 
 The second, weaker bound follows as $\omega$ is increasing so 
 \begin{equation}
-    \omega \left( \max\left[1,\frac{\lambda_{N-2+i}}{\lambda_{i}}\right] \right) \leq \omega\left(\frac{\lambda_{N}}{\lambda_{2}}\right) =r.
+    \omega \left( \max\left[1,\frac{\lambda_{N+2-i}}{\lambda_{i}}\right] \right) \leq \omega\left(\frac{\lambda_{N}}{\lambda_{2}}\right) =r.
 \end{equation}
 
 \subsection{Row Decomposition}
@@ -385,7 +401,8 @@ where in (\ref{eq:proof_GLR_fb_kantorovich_proj_expand_rminus1}) we use $ \msub[
 
  We now apply a matrix variant of Kantorovich which holds for positive semi-definite matrices -- \cite[Theorem 3]{liu1997kantorovich} with $\matr{X} = \matrsub[N,\Theta]{I}$,  $\matr{H} = \matr{L}\matr{L}^{\dagger} =\matr{I}_{N} - \frac{1}{N}\vect{1}_{N \times N}$ and $\matr{G} = \matr{L}^{\dagger}$. 
  
- This version has extra constraints on the ranges of $\matr{X}, \matr{G}$ and $\matr{H}$ to handle the semi-definiteness, which we now check. First, $\matr{G}\matr{H} = \matr{H}\matr{G}  = \matr{L}^{\dagger} \geq 0$.   Now $\text{range}(\matr{G}) = \text{range}(\matr{L}^{\dagger}) = \text{range}(\matr{L}\matr{L}^{\dagger}) = \text{range}(\matr{I}-\frac{1}{N}\vect{1}_{N \times N}) = \text{range}(\matr{H})$. As $\vectsub[\Theta]{1_{N}} = \matr{X}\vect{1}_{N} = \vect{0}$ we see that $\text{range}(\matr{X})\subseteq \text{range}(\matr{G})$ and $\text{range}(\matr{X})\subseteq \text{range}(\matr{H})$. 
+ This version has extra constraints on the ranges of $\matr{X}, \matr{G}$ and $\matr{H}$ to handle the semi-definiteness, which we now check. First, $\matr{G}\matr{H} = \matr{H}\matr{G}  = \matr{L}^{\dagger} \geq 0$.   Now $\text{range}(\matr{G}) = \text{range}(\matr{L}^{\dagger}) = \text{range}(\matr{L}\matr{L}^{\dagger}) = \text{range}(\matr{I}-\frac{1}{N}\vect{1}_{N \times N}) = \text{range}(\matr{H})$. As $\vectsub[\Theta]{1_{N}} = \matr{X}^{T}\vect{1}_{N} = \vect{0}$, \mccorrect{ so} $\text{range}(\vect{1}_{N}\vect{1}_{N}^{T}) \subseteq \text{ker}(\matr{X}^{T})$, \mccorrect{and by the Fundamental Theorem of Linear Algebra} $\text{ker}(
+ X^{T})^{\perp} = \text{range}(\matr{X})$\mccorrect{, so}, we see that $\text{range}(\matr{X})\subseteq \text{range}(\matr{G})$ and $\text{range}(\matr{X})\subseteq \text{range}(\matr{H})$. 
 
  Applying \cite[Theorem 3]{liu1997kantorovich} gives
  \begin{equation}
@@ -402,7 +419,7 @@ By (\ref{eq:proof_GLR_fb_kantorovich_rminus1_first}-\ref{eq:proof_GLR_fb_kantoro
 \end{equation}
 therefore, 
 \begin{equation}
-\left(\frac{N}{m}\right) \sqnormvec{\msubgen[\{1\}, \Theta]{\matr{L}^{\dagger}}\msub[\Theta]{\matr{L}^{\dagger}}}
+\left(\frac{N}{m}\right) \sqnormvec{\msubgen[\{1\}, \Theta]{\matr{L}^{\dagger}}\msub[\Theta]{\matr{L}^{\dagger}}^{-1}}
 \leq \left(\frac{N}{m} \right)(r-1).
 \end{equation}
 
@@ -607,7 +624,7 @@ We now show that $m_{opt} \in \left[ \left\lfloor \sqrt{N} \right\rfloor, \left\
 \end{equation}
 and
 \begin{equation}
-    B(m+1) - B(m) = r_{m} - \frac{rN}{m(m+1)}
+    B(m+1) - B(m) = r_{m+1} - \frac{rN}{m(m+1)}
 \end{equation}
 As $B(m_{opt})$ is a global minimum it is a local minimum, so
 $B(m_{opt} + 1) \geq B(m_{opt})$ and $B(m_{opt} - 1) \geq B(m_{opt})$. This can be written:
@@ -884,14 +901,14 @@ and therefore ${\mu_{ub}\left(m_{opt}\right)\lambda_{2}} \overset{p}{\to} \infty
 
 Finally, we bound $\tau_{GLR}$. We first take limits of $\left(\frac{1}{1 + \mu\lambda_{i}}\right)^{2}$. Note that
 \begin{align}
-    1 \leq \frac{\lambda_{i}}{\lambda_{2}} \leq \frac{N}{\lambda_{2}} \overset{p}{\to} 1, \\
+    1 \leq \frac{\lambda_{i}}{\lambda_{2}} \leq \frac{\lambda_{N}}{\lambda_{2}} \overset{p}{\to} 1, \\
     1 \geq \frac{\lambda_{i}}{\lambda_{N}} \geq \frac{\lambda_{2}}{\lambda_{N}} \overset{p}{\to} 1
 \end{align}
-and $\frac{\lambda_{i}}{\sqrt{\lambda_{2}\lambda_{N}}} \in \left[ \frac{\lambda_{i}}{\lambda_{N}}, \frac{\lambda_{i}}{\lambda_{2}} \right]$ and so $\frac{\lambda_{i}}{\sqrt{\lambda_{2}\lambda_{N}}} \overset{p}{\to} 1$. Therefore, for all three choices of $\mu$, $\mu\lambda_{i} \overset{p}{\to} 1$. As
+and $\frac{\lambda_{i}}{\sqrt{\lambda_{2}\lambda_{N}}} \in \left[ \frac{\lambda_{i}}{\lambda_{N}}, \frac{\lambda_{i}}{\lambda_{2}} \right]$ and so $\frac{\lambda_{i}}{\sqrt{\lambda_{2}\lambda_{N}}} \overset{p}{\to} 1$. Therefore, for all three choices of $\mu$, $\mu\lambda_{i} \overset{p}{\to} c$. As
 
 \begin{align}
-    \frac{1}{N} + \frac{N}{N-1}\left(\frac{1}{1 + \mu\lambda_{N}}\right)^{2} &\leq \frac{1}{N}\sum_{i = 1}^{N}\left(\frac{1}{1+  \mu \lambda_{i}} \right)^{2} \\
-    \frac{1}{N} + \frac{N}{N-1}\left(\frac{1}{1 + \mu\lambda_{2}}\right)^{2} &\geq \frac{1}{N}\sum_{i = 1}^{N}\left(\frac{1}{1+  \mu \lambda_{i}} \right)^{2}
+    \frac{1}{N} + \frac{N-1}{N}\left(\frac{1}{1 + \mu\lambda_{N}}\right)^{2} &\leq \frac{1}{N}\sum_{i = 1}^{N}\left(\frac{1}{1+  \mu \lambda_{i}} \right)^{2} \\
+    \frac{1}{N} + \frac{N-1}{N}\left(\frac{1}{1 + \mu\lambda_{2}}\right)^{2} &\geq \frac{1}{N}\sum_{i = 1}^{N}\left(\frac{1}{1+  \mu \lambda_{i}} \right)^{2}
 \end{align}
 For all three choices of $\mu$, 
 \begin{equation}
@@ -1032,7 +1049,7 @@ This gives that
 We show that
 \begin{align}
     \sqfrob{\msubgen[\set{N},\Theta]{\matr{L}^{\dagger}} \msubgen[\Theta]{\matr{L}^{\dagger}_{\mu}}^{-1}\msubgen[\set{\Theta},2:k]{\matr{U}}} \leq 
-\sum^{m}_{i=1}\omega\left(\max\left[1,\frac{\lambda_{k+2-i}}{\lambda_{i}}\right]\right).
+\sum^{m}_{i=2}\omega\left(\max\left[1,\frac{\lambda_{k+2-i}}{\lambda_{i}}\right]\right).
 \end{align}
 
 \begin{proof}
@@ -1090,7 +1107,7 @@ We now note that $\matr{A}^{2} \leq \matr{B}^{2}$ means $\forall \vect{x}: \vect
     &= \trace{\matrsub[N,\Theta]{H}\msubgen[\Theta]{\matr{G}\matr{H}}^{-1}\msubgen[\Theta]{\projgen{bl(2:k)}} \msubgen[\Theta]{\matr{G}\matr{H}}^{-1}\matrsub[\Theta,N]{H} } \\
     &\leq \trace{\matrsub[N,\Theta]{H}\msubgen[\Theta]{\matr{G}\matr{H}}^{-1}\msubgen[\Theta]{\matr{G}^{2}} \msubgen[\Theta]{\matr{G}\matr{H}}^{-1}\matrsub[\Theta,N]{H} } \\
     &= \trace{\msubgen[\Theta]{\matr{G}\matr{H}}^{-1}\msubgen[\Theta]{\matr{G}^{2}} \msubgen[\Theta]{\matr{G}\matr{H}}^{-1}\msubgen[\Theta]{\matr{H}^{2}} } \\
-    &\leq \sum^{m}_{i=1}\omega\left(\max\left[1,\frac{\lambda_{k+2-i}}{\lambda_{i}}\right]\right).
+    &\leq \sum^{m}_{i=2}\omega\left(\max\left[1,\frac{\lambda_{k+2-i}}{\lambda_{i}}\right]\right).
 \end{align}
 where the equalities are via the cyclic properties or via (\ref{eq:bandlimited_kantorovich:GH_eq}).
 
@@ -1106,9 +1123,9 @@ Let $\matr{A}, \matr{B}$ be positive semi-definite, and let $\projgen{k}$ be a p
 \begin{equation}
     \exists\, 0<m\leq M: \quad m\projgen{k} \leq \matr{A}\projgen{k} \leq M\projgen{k}.
 \end{equation}
- i.e. it bandlimits $\matr{A}$ to between $m$ and $M$. Furthermore, assume $\matr{A}$ has no \mccorrect{non-zero} eigenvalues less than $m$.
+ i.e. it bandlimits $\matr{A}$ to between $m$ and $M$. Furthermore, assume $\matr{A}$ has no {non-zero} eigenvalues less than $m$.
     
-    Assume $\matr{B}\matr{A} = \matr{A}\matr{B}$ and $\matr{B} \leq \matr{I}$. Then for any projection $\proj{X}$ where $\proj{X}\matr{A}\matr{A}^{\dagger}\proj{X}$ is idempotent,
+    Assume $\matr{B}\matr{A} = \matr{A}\matr{B}$ and $ \matr{B} \leq \matr{I}$. Then for any projection $\proj{X}$ where $\proj{X}\matr{A}\matr{A}^{\dagger}\proj{X}$ is idempotent,
     \begin{equation}
 \sigma_{max}\left(\sqrt{\matr{B}\matr{A}^{\dagger}}\proj{X}\sqrt{\matr{A}} \projgen{k} \right) \leq \sqrt{\frac{(M + m)^{2}}{4Mm}}.
     \end{equation}
@@ -1160,12 +1177,12 @@ Let $\matr{A}, \matr{B}$ be positive semi-definite, and let $\projgen{k}$ be a p
     is a projection because $\proj{!} = \proj{!}^{T} = \proj{!}^{2}$, and thus its eigenvalues are 0 or 1 (i.e the real roots of $\lambda = \lambda^{2}$). Thus, for any vector $\vect{v}$ with $\sqnormvec{v} = 1$,
     \begin{align}
     &\sqnormvec{\vect{v}^{T}\sqrt{\matr{A}^{\dagger}}\proj{X}\sqrt{\matr{A}}\projgen{k} } \label{eq:bandlimited_kantorovich_proof_end1}\\
-        &=\vect{v}^{T}\msubgen[\set{N},\set{X}]{\sqrt{\matr{B}\matr{A}^{\dagger}}}\msubgen[\set{X}]{\matr{A}\projbl} \msubgen[\set{X},\set{N}]{\sqrt{\matr{B}\matr{A}^{\dagger}}}\vect{v}\\
+        &=\vect{v}^{T}\msubgen[\set{N},\set{X}]{\sqrt{\matr{B}\matr{A}^{\dagger}}}\msubgen[\set{X}]{\matr{A}\projgen{k}} \msubgen[\set{X},\set{N}]{\sqrt{\matr{A}^{\dagger}\matr{B}}}\vect{v}\\
         &\leq \frac{(M+m)^{2}}{4Mm} \vect{v}^{T}\sqrt{\matr{B}}\proj{!}\sqrt{\matr{B}}\vect{v} \\
         &\leq \frac{(M+m)^{2}}{4Mm} \sqnormvec{\sqrt{\matr{B}\vect{v}}} \\
         &\leq \frac{(M+m)^{2}}{4Mm} \label{eq:bandlimited_kantorovich_proof_end2}
     \end{align}
-    where we have $\sqrt{\matr{A}} \projgen{k} \sqrt{\matr{A}} = \matr{A}\proj{A}$ because $\sqrt{\matr{A}}$ commutes with $\projgen{k}$ (as they are both diagonal in the same basis).
+    where we have $\sqrt{\matr{A}} \projgen{k} \sqrt{\matr{A}} = \matr{A}\proj{k}$ because $\sqrt{\matr{A}}$ commutes with $\projgen{k}$ (as they are both diagonal in the same basis).
     
     As (\ref{eq:bandlimited_kantorovich_proof_end1} - \ref{eq:bandlimited_kantorovich_proof_end2}) holds true for all normalised $\vect{v}$, taking square roots gives the proof.
 \end{proof}
@@ -1201,16 +1218,16 @@ Note that because $\projgen{\matr{L}}\matrsub[N,\Theta]{I} = \matrsub[N,\Theta]{
         \projgen{\mu^{c}} &= \matr{I} - \proj{\mu}
     \end{align}
     which can be checked by seeing that $\proj{\mu} = \proj{\mu}^{T} = \proj{\mu}^{2}$.
-As $\projgen{\matr{L}}\msubgen[\set{N},2:k]{\matr{U}} = \msubgen[\set{S},2:k]{\matr{U}}$,
+As $\projgen{\matr{L}}\msubgen[\set{N},2:k]{\matr{U}} = \msubgen[\set{N},2:k]{\matr{U}}$,
 \begin{align} 
     &{\vect{v}_{1}^{T}{\left( \matr{I} - \msubgen[\set{N},\Theta]{\matr{L}_{\mu -}^{\dagger}} \msubgen[\Theta]{ \matr{L}_{\mu}^{\dagger}}^{-1}\msubgen[\Theta,\set{N}]{\matr{I}}\right)\msubgen[\set{N},2:k]{\matr{U}}}} \\
-    &=\vect{v}_{1}^{T}\sqrt{\matr{L}^{\dagger}_{\mu-}}\proj{\mu}\sqrt{\left(\matr{L}^{\dagger}_{\mu-}\right)^{\dagger}} \msubgen[\set{N},2:k]{\matr{U}}
+    &=\vect{v}_{1}^{T}\sqrt{\matr{L}^{\dagger}_{\mu-}}\projgen{\mu^{c}}\sqrt{\left(\matr{L}^{\dagger}_{\mu-}\right)^{\dagger}} \msubgen[\set{N},2:k]{\matr{U}}
 \end{align}
 Therefore
 \begin{align}
     &\sqnormvec{\vect{v}_{1}^{T}{\left( \matr{I} - \msubgen[\set{N},\Theta]{\matr{L}^{\dagger}} \msubgen[\Theta]{ \matr{L}_{\mu}^{\dagger}}^{-1}\msubgen[\Theta,\set{N}]{\matr{I}}\right)\msubgen[\set{N},2:k]{\matr{U}}}} \\
-    &= \sqnormvec{ \vect{v}_{1}^{T}\sqrt{\matr{L}^{\dagger}_{\mu-}}\proj{\mu}\sqrt{\left(\matr{L}^{\dagger}_{\mu-}\right)^{\dagger}} \msubgen[\set{N},2:k]{\matr{U}}} \\
-    &\leq \sigma_{max}^{2}\left(\sqrt{\matr{L}^{\dagger}_{\mu-}}\proj{\mu}\sqrt{\left(\matr{L}^{\dagger}_{\mu-}\right)^{\dagger}} \msubgen[\set{N},2:k]{\matr{U}} \right)
+    &= \sqnormvec{ \vect{v}_{1}^{T}\sqrt{\matr{L}^{\dagger}_{\mu-}}\projgen{\mu^{c}}\sqrt{\left(\matr{L}^{\dagger}_{\mu-}\right)^{\dagger}} \msubgen[\set{N},2:k]{\matr{U}}} \\
+    &\leq \sigma_{max}^{2}\left(\sqrt{\matr{L}^{\dagger}_{\mu-}}\projgen{\mu^{c}}\sqrt{\left(\matr{L}^{\dagger}_{\mu-}\right)^{\dagger}} \msubgen[\set{N},2:k]{\matr{U}} \right)
 \end{align}
 We now apply Lemma \ref{lemma:bandlimited_kantorovich} with $\matr{A} = {\left(\matr{L}^{\dagger}_{\mu-}\right)^{\dagger}}$, $\matr{B}=\matr{I}$ and $\projgen{k} = \msubgen[\set{N},2:k]{\matr{U}}\msubgen[\set{N},2:k]{\matr{U}}^{T}$. Then
 \begin{align}
@@ -1219,7 +1236,7 @@ We now apply Lemma \ref{lemma:bandlimited_kantorovich} with $\matr{A} = {\left(\
 \end{align}
 so
 \begin{align}
-\sigma_{max}^{2}\left(\sqrt{\matr{L}^{\dagger}_{\mu-}}\proj{\mu}\sqrt{\left(\matr{L}^{\dagger}_{\mu-}\right)^{\dagger}} \msubgen[\set{N},2:k]{\matr{U}} \right) \leq \frac{(M+m)^{2}}{4Mm} 
+\sigma_{max}^{2}\left(\sqrt{\matr{L}^{\dagger}_{\mu-}}\projgen{\mu^{c}}\sqrt{\left(\matr{L}^{\dagger}_{\mu-}\right)^{\dagger}} \msubgen[\set{N},2:k]{\matr{U}} \right) \leq \frac{(M+m)^{2}}{4Mm} 
 \end{align}
 Note that 
 \begin{align}
