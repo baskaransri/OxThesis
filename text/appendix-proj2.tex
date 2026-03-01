@@ -1,0 +1,40 @@
+\chapter{\label{app:3-proj2}Chapter \ref{ch:proj2} Appendix}
+
+\section{Proof of Lemma \ref{lemma:gaussian_sign}}
+\label{app:proof_sheppard}
+
+\begin{proof}
+ Let $X' = \frac{X}{\phi}, Y' = \frac{Y}{\nu}$, then $\binom{X'}{Y'} \sim \mathcal{N}\left( \vect{0}, \begin{psmallmatrix} 1 & \rho \\ \rho & 1 \end{psmallmatrix} \right)$. Note that $\text{sign}(X) \neq \text{sign}(Y) \iff XY < 0 \iff X'Y' < 0$; therefore $\prob{\text{sign}(X) \neq \text{sign}(Y) } = \prob{X'Y' < 0}$. \bs{Therefore we only need to prove the lemma for $X'$ and $Y'$, i.e., when $\phi=\nu=1$ and $c=\rho$.}
+
+\iffalse
+Let $r = \frac{\rho}{\sqrt{1-\rho^2}}$ and $Z' = \frac{1}{\sqrt{1-\rho^{2}}}(\rho X' - Y')$. Then $\binom{X'}{Z'} \sim \mathcal{N}\left(\vect{0}, \matr{I}\right)$ and $\prob{X'Y'<0} = \prob{rX'^{2} < X'Z'} = \prob{\{rX' < Z' \text{ and } X' > 0\} \cup \{rX' > Z' \text{ and } X' < 0 \}}$. We depict this set as the shaded area in Figure \ref{fig:proof_fig}. 
+
+\begin{figure}[H]
+    \centering
+    \input{figures/proj2/tikz/easy-proof.tikz}
+    \caption{$\{rX'^{2} < X'Z' \}$}
+    \label{fig:proof_fig}
+\end{figure}
+\fi
+\begin{figure}[H]
+    \begin{minipage}[T]{0.48\columnwidth}
+        \raggedright
+        Let $r = \frac{\rho}{\sqrt{1-\rho^2}}$ and $Z' = rX' - \sqrt{1+r^{2}} Y'$ \iffalse $Z' = \frac{1}{\sqrt{1-\rho^{2}}}(\rho X' - Y')$\fi. 
+        Then $\binom{X'}{Z'} \sim \set{N}\left(\vect{0}, \matr{I}\right)$ and 
+        $\prob{X'Y'<0}$
+        \noindent$ = \prob{rX'^{2} < X'Z'} $ 
+        \noindent$= 
+        \mathbb{P}(\{rX' < Z' \text{ and } X' > 0\} \cup \{rX' > Z' \text{ and } X' < 0 \})$. 
+        We depict this set as the shaded area in Figure \ref{fig:proof_fig}.
+    \end{minipage}
+    \hfill
+    \begin{minipage}[T]{0.48\columnwidth}
+        \centering
+        \input{figures/proj2/tikz/easy-proof-narrow.tikz}
+        \captionof{figure}{$\{rX'^{2} < X'Z' \}$}
+        \label{fig:proof_fig}
+    \end{minipage}
+\end{figure}
+
+Note that $\theta = \text{arccos}(\rho)$. The distribution of $\binom{X'}{Z'}$ is rotationally invariant, so for any positive integer $m$, if $\frac{m\pi}{\theta} \in \mathbb{Z}$, we can copy and rotate the shaded area $\frac{m\pi}{\theta}$ times to cover the plane $m$ times (one covering of the plane corresponds to $\prob{X' \in \mathbb{R}, Z' \in \mathbb{R}} = 1$). Thus the shaded area is $\prob{X'Y'<0} = \frac{\theta}{\pi}$. Otherwise let $\theta_{m} = \frac{m\pi}{\left\lceil\frac{m\pi}{\theta} \right\rceil}$ and our argument applies if the shaded area were shrunk to $\theta_{m}$. Then $\theta_{m}$ tends to $\theta$ from below as $m \to \infty$ and by countable additivity of measures, $\prob{X'Y' < 0} = \lim_{m\to\infty} \frac{\theta_{m}}{\pi} = \frac{\theta}{\pi}$.
+\end{proof}
