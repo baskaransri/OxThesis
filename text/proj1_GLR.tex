@@ -693,6 +693,8 @@ As $N \to \infty$, condition (\ref{eq:GLR_exist_thm_B_constraint_bl}) in Theorem
 
 {\color{black} We see that the parameters asymptotically behave the same as the non-bandlimited parameters for large Erdős–Rényi graphs.}
 
+\subsection{{\color{blue}Relationship with Graph Structure}}
+\mccorrect{We briefly discuss the relationship of our results with graph structure. Our theoretical results are centered around the eigenvalue ratio $r$ (or $r_{bl}$), and our results hold when this ratio is small -- that is, when the spectrum is narrow. Narrow spectra, as previously stated, imply homogenous node degrees; we thus expect graphs with homogenous node degrees to have stronger non-monotonicity patterns than otherwise (though this is not rigorously proven). Secondly, as the denominator is the algebraic connectivity, we expect less connected graphs to have bigger $r$ and $r_{bl}$, and thus be \emph{more} robust to non-montonicity, like in the previous chapter. }
 
 \iffalse
 \subsection{Generalising the Noise Model}
@@ -1496,6 +1498,8 @@ Another use case could be a practical sampling algorithm. For GLR reconstruction
     \item If they do, compute $\tau_{GLR}$;
     \item If it is believed that $\text{SNR} < \tau_{GLR}$ holds, sample $m_{opt}$ (approximately $\sqrt{N}$) nodes at random and reconstruct from those nodes.
 \end{enumerate}
+
+\mccorrect{Finally we discuss exceptions to the `more data can hurt narrative'. The main proof of monotonicity with increasing sample size requires Bayes-optimality, generally requires restricting to zero-mean signals, as per }\cite{belkin2004regularization}.\mccorrect{ Switching to LapRLS, which introduces a ridge-like penalty term, and tuning the parameters either via knowledge of the data model or an empirical method like cross-validation will give provable monotonicity via bayesian framing under the appropriate data models. It is future work to prove whether it is possible to tune such a method to be monotonic in MSE with sample size under our data model.}
 
 %We finally remark that future work includes extending the analysis on GLR to the normalised graph Laplacian, providing bounds on $\xi_2$ for LS, analysing other graph models such as Ring graphs or studying a mode detailed ``early-stopping'' mechanism in sequential sampling schemes that do not use the full sample budget.
 
