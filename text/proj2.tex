@@ -459,7 +459,7 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 
 
 \clearpage
-\setlength{\belowcaptionskip}{-3pt}
+\setlength{\belowcaptionskip}{4pt}
 %\captionsetup[subfigure]{aboveskip=-1pt,belowskip=-4pt}
 %\captionsetup[subfigure]{aboveskip=-1pt,belowskip=-2.5pt}
 %\setlength{\abovecaptionskip}{-3pt}
@@ -468,23 +468,20 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 %%% Simple, LS, BA, Noiseless
 \begin{figure*}%
     \centering
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/simple/BA_bl_LS_0_noise_500_nodes_recon.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/simple/BA_bl_LS_0_noise_500_nodes_recon.png}
     \caption{Reconstruction Loss}%
     \label{subsubfig:BA_noiseless_simple_LS_rec}
     \end{subfigure}
     \hfill%
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/simple/BA_bl_LS_0_noise_500_nodes_classif.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/simple/BA_bl_LS_0_noise_500_nodes_classif.png}
     \caption{Class. Loss (Analytic)}
     \label{subsubfig:BA_noiseless_simple_LS_class_anal}
     \end{subfigure}%
     \hfill
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/simple/BA_bl_LS_0_noise_500_nodes_class_empiric.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/simple/BA_bl_LS_0_noise_500_nodes_class_empiric.png}
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noiseless_simple_LS_class_emp}
     \end{subfigure}%
@@ -495,7 +492,7 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 \begin{figure*}%
     \centering
     \iffalse
-    \begin{subfigure}[T]{0.33\columnwidth}
+    \begin{subfigure}[T]{0.32\textwidth}
     \resizebox{\width}{0.62\columnwidth}{
     \includegraphics[width=\columnwidth, trim={1000cm 2cm 0 0}, clip]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_class_vs_rec.png}}
     \caption{Loss Comparison \\}
@@ -503,23 +500,20 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
     \end{subfigure}
     \hfill
     \fi
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_recon.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_recon.png}
     \caption{Reconstruction Loss}%
     \label{subsubfig:BA_noiseless_sgc_LS_rec}
     \end{subfigure}
-    %\hfill%
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_classif.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_classif.png}
     \caption{Class. Loss (Analytic)}
     \label{subsubfig:BA_noiseless_sgc_LS_class_anal}
     \end{subfigure}%
-    %\hfill
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_class_empiric.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0_noise_500_nodes_1_layers_class_empiric.png}
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noiseless_sgc_LS_class_emp}
     \end{subfigure}%
@@ -532,30 +526,26 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
     \centering
     \iffalse
     \begin{subfigure}[T]{0.5\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_200_nodes_1_layers_class_vs_rec.png}}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_200_nodes_1_layers_class_vs_rec.png}
     \caption{Loss Comparison \\}
     \label{subsubfig:BA_noiseless_sgc_feat_prop_comp}
     \end{subfigure}
     \hfill
     \fi
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_500_nodes_1_layers_recon.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_500_nodes_1_layers_recon.png}
     \caption{Reconstruction Loss}%
     \label{subsubfig:BA_noiseless_sgc_feat_prop_rec}
     \end{subfigure}
-    %\hfill%
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_500_nodes_1_layers_classif.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_500_nodes_1_layers_classif.png}
     \caption{Class. Loss (Analytic)}
     \label{subsubfig:BA_noiseless_sgc_feat_prop_class_anal}
     \end{subfigure}%
-    %\hfill
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_500_nodes_1_layers_class_empiric.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_feat_prop_0_noise_500_nodes_1_layers_class_empiric.png}
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noiseless_sgc_feat_prop_class_emp}
     \end{subfigure}%
@@ -569,30 +559,26 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
     \centering
     \iffalse
     \begin{subfigure}[T]{0.5\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_class_vs_rec.png}}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_class_vs_rec.png}
     \caption{Loss Comparison}
     \label{subsubfig:BA_noisy_sgc_LS_comp}
     \end{subfigure}
     \hfill
     \fi
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_recon.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_recon.png}
     \caption{Reconstruction Loss}%
     \label{subsubfig:BA_noisy_sgc_LS_rec}
     \end{subfigure}
-    %\hfill%
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_classif.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_classif.png}
     \caption{Class. Loss (Analytic)}
     \label{subsubfig:BA_noisy_sgc_LS_class_anal}
     \end{subfigure}%
-    %\hfill
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_class_empiric.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/BA_bl_LS_0.03162277660168379_noise_500_nodes_1_layers_class_empiric.png}
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noisy_sgc_LS_class_emp}
     \end{subfigure}%
@@ -605,31 +591,27 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 \begin{figure*}[h]%
     \centering
     \iffalse
-    \begin{subfigure}[T]{0.3\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_class_vs_rec.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_class_vs_rec.png}
     \caption{Loss Comparison \\}
     \label{subsubfig:SBM_noiseless_sgc_LS_comp}
     \end{subfigure}
     \fi
-    %\hfill
-    \begin{subfigure}[T]{0.3\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_recon.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_recon.png}
     \caption{Reconstruction Loss}%
     \label{subsubfig:SBM_noiseless_sgc_LS_rec}
     \end{subfigure}
-    %\hfill%
-    \begin{subfigure}[T]{0.3\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_classif.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_classif.png}
     \caption{Class. Loss (Analytic)}
     \label{subsubfig:SBM_noiseless_sgc_LS_class_anal}
     \end{subfigure}%
-    %\hfill
-    \begin{subfigure}[T]{0.333\columnwidth}
-    \resizebox{\width}{0.55\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_class_empiric.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-paper/SBM_bl_LS_0_noise_500_nodes_1_layers_class_empiric.png}
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:SBM_noiseless_sgc_LS_class_emp}
     \end{subfigure}%
@@ -643,23 +625,20 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 
 \begin{figure*}%
     \centering
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/simple-lpinv/BA_lap_pinv_LS_0_noise_500_nodes_recon.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/simple-lpinv/BA_lap_pinv_LS_0_noise_500_nodes_recon.png}
     \caption{Reconstruction Loss}%
     \label{subsubfig:BA_noiseless_simple_LS_rec_lpinv}
     \end{subfigure}
     \hfill%
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/simple-lpinv/BA_lap_pinv_LS_0_noise_500_nodes_classif.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/simple-lpinv/BA_lap_pinv_LS_0_noise_500_nodes_classif.png}
     \caption{Class. Loss (Analytic)}
     \label{subsubfig:BA_noiseless_simple_LS_class_anal_lpinv}
     \end{subfigure}%
     \hfill
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/simple-lpinv/BA_lap_pinv_LS_0_noise_500_nodes_class_empiric.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/simple-lpinv/BA_lap_pinv_LS_0_noise_500_nodes_class_empiric.png}
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noiseless_simple_LS_class_emp_lpinv}
     \end{subfigure}%
@@ -669,23 +648,20 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 %%% SGC, LS, BA, Noiseless
 \begin{figure*}%
     \centering
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0_noise_500_nodes_1_layers_recon.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0_noise_500_nodes_1_layers_recon.png}
     \caption{Reconstruction Loss}%
     \label{subsubfig:BA_noiseless_sgc_LS_rec_lpinv}
     \end{subfigure}
-    %\hfill%
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0_noise_500_nodes_1_layers_classif.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0_noise_500_nodes_1_layers_classif.png}
     \caption{Class. Loss (Analytic)}
     \label{subsubfig:BA_noiseless_sgc_LS_class_anal_lpinv}
     \end{subfigure}%
-    %\hfill
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0_noise_500_nodes_1_layers_class_empiric.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0_noise_500_nodes_1_layers_class_empiric.png}
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noiseless_sgc_LS_class_emp_lpinv}
     \end{subfigure}%
@@ -696,23 +672,20 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 %%% SGC, feat_prop, BA, Noiseless
 \begin{figure*}%
     \centering
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_feat_prop_0_noise_500_nodes_1_layers_recon.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_feat_prop_0_noise_500_nodes_1_layers_recon.png}
     \caption{Reconstruction Loss}%
     \label{subsubfig:BA_noiseless_sgc_feat_prop_rec_lpinv}
     \end{subfigure}
-    %\hfill%
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_feat_prop_0_noise_500_nodes_1_layers_classif.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_feat_prop_0_noise_500_nodes_1_layers_classif.png}
     \caption{Class. Loss (Analytic)}
     \label{subsubfig:BA_noiseless_sgc_feat_prop_class_anal_lpinv}
     \end{subfigure}%
-    %\hfill
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_feat_prop_0_noise_500_nodes_1_layers_class_empiric.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_feat_prop_0_noise_500_nodes_1_layers_class_empiric.png}
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noiseless_sgc_feat_prop_class_emp_lpinv}
     \end{subfigure}%
@@ -724,23 +697,20 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 \begin{figure*}%
 
     \centering
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0.03162277660168379_noise_500_nodes_1_layers_recon.png}}
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0.03162277660168379_noise_500_nodes_1_layers_recon.png}
     \caption{Reconstruction Loss}%
     \label{subsubfig:BA_noisy_sgc_LS_rec_lpinv}
     \end{subfigure}
-    %\hfill%
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0.03162277660168379_noise_500_nodes_1_layers_classif.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0.03162277660168379_noise_500_nodes_1_layers_classif.png}
     \caption{Class. Loss (Analytic)}
     \label{subsubfig:BA_noisy_sgc_LS_class_anal_lpinv}
     \end{subfigure}%
-    %\hfill
-    \begin{subfigure}[T]{0.33\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0.03162277660168379_noise_500_nodes_1_layers_class_empiric.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/BA_lap_pinv_LS_0.03162277660168379_noise_500_nodes_1_layers_class_empiric.png}
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:BA_noisy_sgc_LS_class_emp_lpinv}
     \end{subfigure}%
@@ -752,24 +722,21 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 %%% SGC, LS, SBM, Noiseless
 \begin{figure*}[h]%
     \centering
-    %\hfill
-    \begin{subfigure}[T]{0.3\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/SBM_lap_pinv_LS_0_noise_500_nodes_1_layers_recon.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/SBM_lap_pinv_LS_0_noise_500_nodes_1_layers_recon.png}
     \caption{Reconstruction Loss}%
     \label{subsubfig:SBM_noiseless_sgc_LS_rec_lpinv}
     \end{subfigure}
-    %\hfill%
-    \begin{subfigure}[T]{0.3\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/SBM_lap_pinv_LS_0_noise_500_nodes_1_layers_classif.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/SBM_lap_pinv_LS_0_noise_500_nodes_1_layers_classif.png}
     \caption{Class. Loss (Analytic)}
     \label{subsubfig:SBM_noiseless_sgc_LS_class_anal_lpinv}
     \end{subfigure}%
-    %\hfill
-    \begin{subfigure}[T]{0.333\columnwidth}
-    \resizebox{\width}{0.55\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/sgc-thesis/SBM_lap_pinv_LS_0_noise_500_nodes_1_layers_class_empiric.png}}
+    \hfill
+    \begin{subfigure}[T]{0.32\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/sgc-thesis/SBM_lap_pinv_LS_0_noise_500_nodes_1_layers_class_empiric.png}
     \caption{Class. Loss (Empirical)}%
     \label{subsubfig:SBM_noiseless_sgc_LS_class_emp_lpinv}
     \end{subfigure}%
@@ -790,23 +757,18 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
     \centering
     \iffalse
     \begin{subfigure}[T]{0.5\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/real-paper/real_fmri_fb_LS_0.03162277660168379_noise_367_nodes_class_vs_rec.png}}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/real-paper/real_fmri_fb_LS_0.03162277660168379_noise_367_nodes_class_vs_rec.png}
     \caption{Loss Comparison}
     \label{subfig:fmri_LS_comp}
     \end{subfigure}
     \fi
-    %\hfill
-    \begin{subfigure}[T]{0.4\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/real-paper/real_fmri_fb_LS_0.03162277660168379_noise_367_nodes_rec_empiric.png}}
+    \begin{subfigure}[T]{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/real-paper/real_fmri_fb_LS_0.03162277660168379_noise_367_nodes_rec_empiric.png}
     \caption{Rec. Loss (Empirical)}%
     \label{subfig:fmri_LS_rec}
-    \end{subfigure}
-    %\hfill%
-    \begin{subfigure}[T]{0.4\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/real-paper/real_fmri_fb_LS_0.03162277660168379_noise_367_nodes_class_empiric.png}}
+    \end{subfigure}\hfill
+    \begin{subfigure}[T]{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/real-paper/real_fmri_fb_LS_0.03162277660168379_noise_367_nodes_class_empiric.png}
     \caption{Class. Loss (Empirical)}
     \label{subfig:fmri_noiseless_sgc_LS_class_anal}
     \end{subfigure}%
@@ -817,13 +779,13 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 %%% SGC, LS, CoRA, Noiseless
 \begin{figure*}
     \centering
-    \begin{subfigure}[T]{0.4\columnwidth}
-    \includesvg[width=\columnwidth]{figures/proj2/plots/real-thesis/real_Cora_LS_SGC_bl_0pt031_noise_2485_nodes_500_samples_bandwidth_248_rec_empiric_log.svg}
+    \begin{subfigure}[T]{0.48\textwidth}
+    \includesvg[width=\linewidth]{figures/proj2/plots/real-thesis/real_Cora_LS_SGC_bl_0pt031_noise_2485_nodes_500_samples_bandwidth_248_rec_empiric_log.svg}
     \caption{Rec. Loss (Empirical)}
     \label{subfig:cora_LS_rec}
-    \end{subfigure}
-    \begin{subfigure}[T]{0.4\columnwidth}
-    \includesvg[width=\columnwidth]{figures/proj2/plots/real-thesis/real_Cora_LS_SGC_bl_0pt031_noise_2485_nodes_500_samples_bandwidth_248_class_empiric.svg}
+    \end{subfigure}\hfill
+    \begin{subfigure}[T]{0.48\textwidth}
+    \includesvg[width=\linewidth]{figures/proj2/plots/real-thesis/real_Cora_LS_SGC_bl_0pt031_noise_2485_nodes_500_samples_bandwidth_248_class_empiric.svg}
     \caption{Class. Loss (Empirical)}
     \label{subfig:cora_LS_class}
     \end{subfigure}
@@ -834,17 +796,16 @@ Fig. \ref{fig:fmri}                            & --- & --- & \texttt{''} & fMRI 
 %%% SGC, LS, CoRA, Noiseless
 \begin{figure*}[hbtp]%
     \centering
-    \begin{subfigure}[T]{0.4\columnwidth}
+    \begin{subfigure}[T]{0.48\textwidth}
     \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/real-thesis/real_Cora_LS_SGC_bl_0.03162277660168379_noise_2485_nodes_500_samples_bandwidth_248_rec_empiric_log.png}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/real-thesis/real_Cora_LS_SGC_bl_0.03162277660168379_noise_2485_nodes_500_samples_bandwidth_248_rec_empiric_log.png}
     \caption{Rec. Loss (Empirical)}%
     \label{subfig:cora_LS_rec}
     \end{subfigure}
-    %\hfill%
+    \hfill
     \iffalse
-    \begin{subfigure}[T]{0.4\columnwidth}
-    \resizebox{\width}{0.62\columnwidth}{
-    \includegraphics[width=\columnwidth]{figures/proj2/plots/real-thesis/real_Cora_LS_SGC_bl_0.03162277660168379_noise_2485_nodes_500_samples_bandwidth_248_class_empiric.png}}
+    \begin{subfigure}[T]{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/proj2/plots/real-thesis/real_Cora_LS_SGC_bl_0.03162277660168379_noise_2485_nodes_500_samples_bandwidth_248_class_empiric.png}
     \caption{Class. Loss (Empirical)}
     \label{subfig:cora_noiseless_sgc_LS_class_anal}
     \end{subfigure}%
