@@ -325,7 +325,12 @@ We use Theorem \ref{thm:general_class_err} to design a sampling scheme specifica
 \end{algorithm}
 
 %and compare it to random and A-optimal sampling under both reconstruction and classification.
-
+\subsection{{\color{blue}Multi-Class Loss}}
+{\color{blue} Theorem \ref{thm:general_class_err} focuses on binary class loss, which is an important but fairly simple loss, which Sheppard's lemma allows us to get a closed form solution for. While it is much harder to even get a closed form solution for multi-class loss, we can bound the loss by our binary classification loss:
+\begin{remark}
+    
+\end{remark}
+}
 \subsection{Relations to previous work}
 We now discuss our work in relation to Gama et al. \cite{gama2020rethinking} and Chamon et al. \cite{chamon2017greedy}, the main works in the GSP literature focusing on downstream tasks in the context of sampling. We first survey their theoretical results. Gama et al. focus on designing efficient joint sampling and reconstruction schemes under a linear reconstruction task represented by a matrix $\matr{H}$. They seek to construct an optimal `sketching operator' $\matr{H}_{\set{S}}$ which, when applied to the noisy observations, most closely approximates $\matr{H}$ applied to the true signal. From \cite[Proposition 2]{gama2020rethinking}, we can view their sketching operator as a combination of applying $\matr{H}$ after applying a reconstruction operator which they express as $\matr{R}_{X}\matr{C}^{T}\left(\matr{C}(\matr{R}_{X} + \matr{R}_{w})\matr{C}^{T}\right)^{-1}$, which in our notation would be $\msubgen[\set{N},\set{S}]{\text{Cov}(\vect{x})}\msubgen[\set{S}]{\text{Cov}(\matr{x}) + \text{Cov}(\matr{w})}^{-1}$. We mirror this definition in Line \ref{alg:defn_H_S} of our algorithm.  This \cite[Proposition 2]{gama2020rethinking}, along with \cite[(17) \& (18)]{gama2020rethinking} can be seen as a version of our Theorem \ref{thm:general_class_err} for linear downstream tasks. \iffalse We note that their \cite[Proposition 2]{gama2020rethinking} capture\fi Chamon et al. \cite{chamon2017greedy}, on the other hand, focus on greedy sampling and submodularity; similarly to Gama et al., they both optimize the sampling algorithm and the reconstruction operator. While their theoretical results do incorporate a linear `transform', understanding the impact of this transform, or downstream task, is not the focus of their work, and so analysis in this direction is limited.
 
