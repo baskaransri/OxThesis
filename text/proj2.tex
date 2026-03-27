@@ -326,10 +326,11 @@ We use Theorem \ref{thm:general_class_err} to design a sampling scheme specifica
 
 %and compare it to random and A-optimal sampling under both reconstruction and classification.
 \subsection{{\color{blue}Multi-Class Loss}}
-{\color{blue} Theorem \ref{thm:general_class_err} focuses on binary class loss, which is an important but fairly simple loss, which Sheppard's lemma allows us to get a closed form solution for. While it is much harder to even get a closed form solution for multi-class loss, we can bound the loss by our binary classification loss:
+{\color{blue} Theorem \ref{thm:general_class_err} focuses on binary class loss, which is an important but fairly simple loss, which Sheppard's lemma allows us to get a closed form solution for. While it is much harder to even get a closed form solution for multi-class loss, we can bound the loss by the method we derived our binary classification loss:
 \begin{remark}
     
 \end{remark}
+
 }
 \subsection{Relations to previous work}
 We now discuss our work in relation to Gama et al. \cite{gama2020rethinking} and Chamon et al. \cite{chamon2017greedy}, the main works in the GSP literature focusing on downstream tasks in the context of sampling. We first survey their theoretical results. Gama et al. focus on designing efficient joint sampling and reconstruction schemes under a linear reconstruction task represented by a matrix $\matr{H}$. They seek to construct an optimal `sketching operator' $\matr{H}_{\set{S}}$ which, when applied to the noisy observations, most closely approximates $\matr{H}$ applied to the true signal. From \cite[Proposition 2]{gama2020rethinking}, we can view their sketching operator as a combination of applying $\matr{H}$ after applying a reconstruction operator which they express as $\matr{R}_{X}\matr{C}^{T}\left(\matr{C}(\matr{R}_{X} + \matr{R}_{w})\matr{C}^{T}\right)^{-1}$, which in our notation would be $\msubgen[\set{N},\set{S}]{\text{Cov}(\vect{x})}\msubgen[\set{S}]{\text{Cov}(\matr{x}) + \text{Cov}(\matr{w})}^{-1}$. We mirror this definition in Line \ref{alg:defn_H_S} of our algorithm.  This \cite[Proposition 2]{gama2020rethinking}, along with \cite[(17) \& (18)]{gama2020rethinking} can be seen as a version of our Theorem \ref{thm:general_class_err} for linear downstream tasks. \iffalse We note that their \cite[Proposition 2]{gama2020rethinking} capture\fi Chamon et al. \cite{chamon2017greedy}, on the other hand, focus on greedy sampling and submodularity; similarly to Gama et al., they both optimize the sampling algorithm and the reconstruction operator. While their theoretical results do incorporate a linear `transform', understanding the impact of this transform, or downstream task, is not the focus of their work, and so analysis in this direction is limited.
@@ -406,17 +407,18 @@ Specifically, we set
 \end{equation}
  where $\matr{W}_{1} \in \mathbb{R}^{64 \times 32}$ and  $\matr{W}_{readout} \in \mathbb{R}^{32 \times 1}$ are both populated via Glorot initialization \cite{glorot2010understanding}.
 
-\subsubsection{Real-world Datasets}
+\subsubsection{Real-world Datasets -- {\color{blue} Binary Classification, Real-world Signal}}
 We consider an FMRI dataset with nodes corresponding to brain regions and 292 graph signals corresponding to blood oxygen levels \cite{zhi2023gaussian, sripathmanathan2024impact}, subsampling a connected graph with $N=367$ nodes using neighbourhood sampling \cite{hamilton2017inductive}. We do not bandlimit the \bs{given} signals. We construct a classification task by subtracting the mean from all signals and taking the sign as node class labels, representing high or low blood oxygen levels.
 
-We also consider the CoRA and Citeseer datasets, which are multi-class classification datasets. We take the largest connected component, bandlimit the features to each have bandwidth $k=\left\lfloor \frac{N}{10} \right\rfloor$, and construct $f$ by training an SGC (structured as in \eqref{eq:SGC_structure}, except $\matr{W}_{readout} \in \mathbb{R}^{32 \times C}$, where $C$ is the number of possible classes) using cross-entropy loss with bandlimited features and original labels. 
+\subsubsection{{\color{blue} Real-world Datasets -- Multi-class Classification, Bandlimited signal}}
+We consider the CoRA and Citeseer  datasets \mccorrect{and the three Airport datasets} \cite{ribeiro2017struc2vec}, \mccorrect{which are multi-class classification datasets. For Cora and Citeseer we use the given train/test split, and for Airports we randomly construct a 60:40 split.} We take the largest connected component, bandlimit the features to each have bandwidth $k=\left\lfloor \frac{N}{10} \right\rfloor$, and construct $f$ by training an SGC (structured as in \eqref{eq:SGC_structure}, except $\matr{W}_{readout} \in \mathbb{R}^{32 \times C}$, where $C$ is the number of possible classes) using cross-entropy loss with bandlimited features and original labels. 
 On these datasets we then evaluate `multi-class loss', between the original bandlimited signal and the reconstructed signal, which is:
 \begin{align}
     &\text{Multi-Class Classification Loss} = {\sum_{i \in \set{V}}\prob{\text{argmax}\left(f(\matr{X})_{i}\right) \neq \text{argmax}(f(\hat{\matr{X}})_{i})}}
 \end{align}
 where for each node $i$, $f(\matr{X})_{i} \in \mathbb{R}^{C}$ and argmax yields the component with the largest value in $f(\matr{X})_{i}$.
 
-These two setups each demonstrate different deviations of real world data from our synthetic setup -- the features in the FMRI do not necessarily match our bandlimited signal with additive noise signal model; however, we construct the rest of the task to match our synthetic setup. On the other hand, we bandlimit the features of the CoRA and Citeseer datasets, but change the task from a binary classifictaion to a multi-class classification task. This allows us to separately observe how these aspects of real world tasks interact with our theoretical results and proposed sampling scheme.
+These two setups each demonstrate different deviations of real world data from our synthetic setup -- the features in the FMRI do not necessarily match our bandlimited signal with additive noise signal model; however, we construct the rest of the task to match our synthetic setup. On the other hand, we bandlimit the features of the CoRA, Citeseer \mccorrect{and Airport} datasets, but change the task from a binary classifictaion to a multi-class classification task. This allows us to separately observe how these aspects of real world tasks interact with our theoretical results and proposed sampling scheme.
 
 %We use optimal sampling assuming an SNR of 20dB (i.e., $n=10^{-1.5}$) and reconstruct with a bandlimit of $\lfloor \frac{N}{10} \rfloor$.
 
